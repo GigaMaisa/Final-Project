@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textStyle="bold"
+        android:textColor="?android:textColor"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/bentonsansbold"
         android:gravity="center"
@@ -33,6 +34,7 @@
         android:fontFamily="@font/bentonsansbook"
         android:layout_gravity="center"
         android:gravity="center"
+        android:textColor="?android:textColor"
         android:lineSpacingExtra="10dp"
         android:textSize="12sp"
         android:layout_marginTop="20dp"/>

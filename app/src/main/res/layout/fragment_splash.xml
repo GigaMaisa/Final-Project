@@ -11,14 +11,7 @@
         android:layout_height="370dp"
         android:layout_gravity="center|top"
         android:scaleType="centerCrop"
-        android:src="@drawable/food_pattern_background" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="match_parent"
-        android:layout_height="370dp"
-        android:src="@drawable/fade_bottom"
-        android:layout_gravity="center|top"
-        android:scaleType="fitXY"/>
+        android:src="@drawable/food_pattern_background_with_fade" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
@@ -43,7 +36,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:text="@string/deliever_favorite_food"
-        android:textColor="@color/black"
+        android:textColor="?android:textColor"
         android:textSize="15sp"
         android:textStyle="bold" />
 

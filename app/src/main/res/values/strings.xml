@@ -8,4 +8,11 @@
     <string name="sign_up">Sign Up</string>
     <string name="foodninja">FoodNinja</string>
     <string name="deliever_favorite_food">Deliever Favorite Food</string>
+    <string name="login_to_your_account">Login To Your Account</string>
+    <string name="email_or_phone_number">Email or Phone Number</string>
+    <string name="or_continue_with">  Or Continue With</string>
+    <string name="forgot_your_password"><u>Forgot Your Password?</u></string>
+    <string name="not_a_user_sign_up_now"><u>Not a User? Sign Up Now</u></string>
+    <string name="continueee">Continue</string>
+
 </resources>

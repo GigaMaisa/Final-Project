@@ -47,8 +47,8 @@
         android:layout_marginTop="82dp"
         android:textSize="16sp"
         android:layout_gravity="center"
-        android:background="@drawable/btn_green_background"
+        android:background="@drawable/button_background"
         android:text="@string/sign_in"
-        android:textColor="?android:windowBackground"/>
+        android:textColor="@color/white"/>
 
 </LinearLayout>

@@ -20,15 +20,15 @@
         android:layout_marginTop="-70dp"
         android:src="@drawable/ic_logo" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.example.final_project.presentation.view.GradientTextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/vigaregular"
         android:text="@string/foodninja"
-        android:textColor="@color/green"
-        android:textSize="40sp" />
+        android:textSize="40sp"
+        android:layout_gravity="center" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"

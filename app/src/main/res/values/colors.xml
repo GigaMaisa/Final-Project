@@ -7,6 +7,7 @@
     <color name="light_pink">#fdf5ed</color>
     <color name="very_light_grey">#FEFEFF</color>
     <color name="grey">#828282</color>
+    <color name="dark_grey">#252525</color>
     <color name="gradient_start_color">#53E88B</color>
     <color name="gradient_end_color">#15BE77</color>
     <color name="desc_text_color">#09051C</color>

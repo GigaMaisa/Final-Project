@@ -3,11 +3,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#53E88B</color>
+    <color name="orange">#DA6317</color>
+    <color name="light_pink">#fdf5ed</color>
+    <color name="very_light_grey">#FEFEFF</color>
+    <color name="grey">#828282</color>
     <color name="gradient_start_color">#53E88B</color>
     <color name="gradient_end_color">#15BE77</color>
     <color name="desc_text_color">#09051C</color>
     <color name="stroke_color">#F4F4F4</color>
     <color name="hint_color">#3B3B3B</color>
     <color name="edit_text_input">#262626</color>
-
 </resources>

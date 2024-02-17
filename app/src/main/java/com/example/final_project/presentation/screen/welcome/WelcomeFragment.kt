@@ -12,10 +12,6 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>(FragmentWelcomeBind
         btnGoToSignIn.setOnClickListener {
 
         }
-
-        btnGoToSignUp.setOnClickListener {
-
-        }
     }
 
 

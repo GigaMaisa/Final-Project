@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Final-Project</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="find_your_comfort_food_here">Find your Comfort Food here</string>
     <string name="here_you_can_find_a_chef_or_dish_for_every_taste_and_color_enjoy">Here You Can find a chef or dish for every taste and color. Enjoy!</string>
@@ -8,11 +7,15 @@
     <string name="sign_up">Sign Up</string>
     <string name="foodninja">FoodNinja</string>
     <string name="deliever_favorite_food">Deliever Favorite Food</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="select_which_contact_details_should_we_use_to_reset_your_password">Select which contact details should we use to reset your password</string>
+    <string name="via_email">Via email:</string>
+    <string name="dot">&#11044;&#11044;&#11044;&#11044; &#160;&#11044;&#11044;&#11044;&#11044; &#160;</string>
+    <string name="via_sms">Via sms:</string>
     <string name="login_to_your_account">Login To Your Account</string>
     <string name="email_or_phone_number">Email or Phone Number</string>
     <string name="or_continue_with">  Or Continue With</string>
     <string name="forgot_your_password"><u>Forgot Your Password?</u></string>
     <string name="not_a_user_sign_up_now"><u>Not a User? Sign Up Now</u></string>
     <string name="continueee">Continue</string>
-
 </resources>

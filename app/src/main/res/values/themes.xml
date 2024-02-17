@@ -2,6 +2,7 @@
     <style name="Base.Theme.FinalProject" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:textColor">@color/black</item>
         <item name="android:windowBackground">@color/very_light_grey</item>
+        <item name="color">@color/white</item>
     </style>
 
     <style name="Theme.FinalProject" parent="Base.Theme.FinalProject" />

@@ -9,7 +9,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(Fragm
 
     private val viewModel: ForgotPasswordViewModel by viewModels()
     override fun setUp() {
-        binding.tvSmsNumber.text = resources.getText(R.string.dot).toString().plus("4569")
+        binding.tvSmsNumber.text = resources.getText(R.string.dot_sms).toString().plus("4569")
     }
 
     override fun setUpListeners() {

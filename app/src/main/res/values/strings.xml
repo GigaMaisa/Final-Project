@@ -12,4 +12,10 @@
     <string name="via_email">Via email:</string>
     <string name="dot">&#11044;&#11044;&#11044;&#11044; &#160;&#11044;&#11044;&#11044;&#11044; &#160;</string>
     <string name="via_sms">Via sms:</string>
+    <string name="login_to_your_account">Login To Your Account</string>
+    <string name="email_or_phone_number">Email or Phone Number</string>
+    <string name="or_continue_with">  Or Continue With</string>
+    <string name="forgot_your_password"><u>Forgot Your Password?</u></string>
+    <string name="not_a_user_sign_up_now"><u>Not a User? Sign Up Now</u></string>
+    <string name="continueee">Continue</string>
 </resources>

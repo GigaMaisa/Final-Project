@@ -23,4 +23,6 @@
     <string name="next">Next</string>
     <string name="sign_up_for_free">Sign Up For Free</string>
     <string name="type_your_phone_number">Type your phone number</string>
+    <string name="enter_6_digit_verification_code">Enter 6-digit Verification code</string>
+    <string name="code_send_to">Code Send to</string>
 </resources>

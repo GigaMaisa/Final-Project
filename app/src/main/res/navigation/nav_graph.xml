@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/welcomeFragment">
+    app:startDestination="@id/passcodeFragment">
 
     <fragment
         android:id="@+id/welcomeFragment"
@@ -40,5 +40,14 @@
         android:id="@+id/signUpFragment"
         android:name="com.example.final_project.presentation.screen.signup.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_passcodeFragment"
+            app:destination="@id/passcodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/passcodeFragment"
+        android:name="com.example.final_project.presentation.screen.passcode.PasscodeFragment"
+        android:label="fragment_passcode"
+        tools:layout="@layout/fragment_passcode" />
 </navigation>

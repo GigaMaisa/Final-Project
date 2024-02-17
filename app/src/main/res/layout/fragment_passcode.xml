@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:windowBackground"
+    android:orientation="vertical"
+    tools:context=".presentation.screen.passcode.PasscodeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnGoBack"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="38dp"
+            android:background="@drawable/btn_back_background"
+            android:src="@drawable/ic_back_arrow" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="247dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="21dp"
+            android:fontFamily="@font/bentonsansbold"
+            android:lineSpacingExtra="10dp"
+            android:text="@string/enter_6_digit_verification_code"
+            android:textColor="?android:textColor"
+            android:textSize="25sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSendCodeNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="19dp"
+            android:fontFamily="@font/bentonsansbook"
+            android:text="@string/code_send_to"
+            android:textColor="?android:textColor"
+            android:textSize="12sp" />
+
+        <com.fraggjkee.smsconfirmationview.SmsConfirmationView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="30dp"
+            app:scv_codeLength="6"
+            app:scv_symbolBackgroundColor="?android:windowBackground"
+            app:scv_symbolBorderActiveColor="?android:textColor"
+            app:scv_symbolBorderColor="?android:textColor"
+            app:scv_symbolBorderCornerRadius="8dp"
+            app:scv_symbolHeight="58dp"
+            app:scv_symbolTextColor="?android:textColor"
+            app:scv_symbolWidth="53dp" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGoToSignIn"
+        android:layout_width="200dp"
+        android:layout_height="57dp"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/button_background"
+        android:text="@string/next"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</FrameLayout>

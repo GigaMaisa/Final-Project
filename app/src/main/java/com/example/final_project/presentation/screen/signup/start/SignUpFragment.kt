@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.signup
+package com.example.final_project.presentation.screen.signup.start
 
 import com.example.final_project.databinding.FragmentSignUpBinding
 import com.example.final_project.presentation.base.BaseFragment

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?android:windowBackground"
+    tools:context=".presentation.screen.welcome.WelcomeFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="56dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/welcome_illustration" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/bentonsansbold"
+        android:gravity="center"
+        android:text="@string/find_your_comfort_food_here"
+        android:textSize="22sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/here_you_can_find_a_chef_or_dish_for_every_taste_and_color_enjoy"
+        android:fontFamily="@font/bentonsansbook"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:lineSpacingExtra="10dp"
+        android:textSize="12sp"
+        android:layout_marginTop="20dp"/>
+    
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGoToSignIn"
+        android:layout_width="200dp"
+        android:layout_height="57dp"
+        android:textAllCaps="false"
+        android:layout_marginTop="42dp"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_green_background"
+        android:text="@string/sign_in"
+        android:textColor="?android:windowBackground"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGoToSignUp"
+        android:layout_width="200dp"
+        android:layout_height="57dp"
+        android:text="@string/sign_up"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textColor="?android:windowBackground"
+        android:background="@drawable/btn_green_background"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>

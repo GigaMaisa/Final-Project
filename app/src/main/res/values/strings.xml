@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Final-Project</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="find_your_comfort_food_here">Find your Comfort Food here</string>
+    <string name="here_you_can_find_a_chef_or_dish_for_every_taste_and_color_enjoy">Here You Can find a chef or dish for every taste and color. Enjoy!</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="foodninja">FoodNinja</string>
+    <string name="deliever_favorite_food">Deliever Favorite Food</string>
 </resources>

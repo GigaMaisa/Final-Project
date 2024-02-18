@@ -45,28 +45,32 @@
             android:textColor="?android:textColor"
             android:textSize="12sp" />
 
-        <com.fraggjkee.smsconfirmationview.SmsConfirmationView
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPasscode"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="30dp"
-            app:scv_codeLength="6"
-            app:scv_symbolBackgroundColor="?android:windowBackground"
-            app:scv_symbolBorderActiveColor="?android:textColor"
-            app:scv_symbolBorderColor="?android:textColor"
-            app:scv_symbolBorderCornerRadius="8dp"
-            app:scv_symbolHeight="58dp"
-            app:scv_symbolTextColor="?android:textColor"
-            app:scv_symbolWidth="53dp" />
+            android:layout_marginTop="20dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvResponseMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/bentonsansbook"
+            android:textSize="18sp" />
+
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnGoToSignIn"
+        android:id="@+id/btnNext"
         android:layout_width="200dp"
         android:layout_height="57dp"
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="60dp"
-        android:background="@drawable/button_background"
+        android:background="@drawable/button_background_disabled"
+        android:clickable="false"
         android:text="@string/next"
         android:textAllCaps="false"
         android:textColor="@color/white"

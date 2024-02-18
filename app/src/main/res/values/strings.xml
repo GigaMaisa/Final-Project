@@ -37,4 +37,6 @@
     <string name="buy_now">Buy Now</string>
     <string name="find_your_favourite_food">Find Your Favourite Food</string>
     <string name="what_do_you_want_to_order">What do you want to order?</string>
+    <string name="popular">Popular</string>
+    <string name="menu">Menu</string>
 </resources>

@@ -14,4 +14,6 @@
     <color name="stroke_color">#F4F4F4</color>
     <color name="hint_color">#3B3B3B</color>
     <color name="edit_text_input">#262626</color>
+    <color name="gradient_start_color_disabled">#B3E0B2</color>
+    <color name="gradient_end_color_disabled">#8FD5A5</color>
 </resources>

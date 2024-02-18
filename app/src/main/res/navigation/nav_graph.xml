@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/signUpSuccessFragment">
+    app:startDestination="@id/welcomeFragment">
 
     <fragment
         android:id="@+id/welcomeFragment"
@@ -14,11 +14,13 @@
             android:id="@+id/action_welcomeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.final_project.presentation.screen.forgot_password.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" />
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.final_project.presentation.screen.login.LoginFragment"
@@ -31,11 +33,17 @@
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.final_project.presentation.screen.splash.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" />
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.final_project.presentation.screen.signup.start.SignUpFragment"
@@ -45,11 +53,17 @@
             android:id="@+id/action_signUpFragment_to_passcodeFragment"
             app:destination="@id/passcodeFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/passcodeFragment"
         android:name="com.example.final_project.presentation.screen.passcode.PasscodeFragment"
         android:label="fragment_passcode"
-        tools:layout="@layout/fragment_passcode" />
+        tools:layout="@layout/fragment_passcode" >
+        <action
+            android:id="@+id/action_passcodeFragment_to_signUpCredentialsFragment"
+            app:destination="@id/signUpCredentialsFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/signUpCredentialsFragment"
         android:name="com.example.final_project.presentation.screen.signup.credentials.SignUpCredentialsFragment"
@@ -59,6 +73,7 @@
             android:id="@+id/action_signUpCredentialsFragment_to_signUpSuccessFragment"
             app:destination="@id/signUpSuccessFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/signUpSuccessFragment"
         android:name="com.example.final_project.presentation.screen.signup.success.SignUpSuccessFragment"

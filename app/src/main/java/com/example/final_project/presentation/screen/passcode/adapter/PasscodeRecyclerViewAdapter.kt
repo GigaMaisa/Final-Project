@@ -17,7 +17,6 @@ import com.example.final_project.presentation.model.Passcode
 class PasscodeRecyclerViewAdapter: ListAdapter<Passcode, PasscodeRecyclerViewAdapter.PasscodeViewHolder>(CategoriesItemDiffCallback) {
 
     var onTextChangeListener: ((Passcode) -> Unit)? = null
-    var giveMeList: ((List<Passcode>) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PasscodeViewHolder {
         return PasscodeViewHolder(RecyclerPasscodeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -37,7 +36,6 @@ class PasscodeRecyclerViewAdapter: ListAdapter<Passcode, PasscodeRecyclerViewAda
                         currentNumber = text.toString().toIntOrNull()
                     )
                     onTextChangeListener?.invoke(passcode)
-                    giveMeList?.invoke(currentList)
                     when {
                         count == 1 && adapterPosition < currentList.size - 1 -> (itemView.focusSearch(
                             View.FOCUS_RIGHT

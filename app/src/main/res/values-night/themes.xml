@@ -3,5 +3,7 @@
         <item name="android:textColor">@color/very_light_grey</item>
         <item name="android:windowBackground">@color/black</item>
         <item name="color">@color/dark_grey</item>
+        <item name="colorContainer">@color/dark_grey</item>
+        <item name="colorSecondary">@color/white</item>
     </style>
 </resources>

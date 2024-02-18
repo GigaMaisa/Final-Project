@@ -34,4 +34,7 @@
     <string name="congrats">გილოცავთ!</string>
     <string name="your_profile_is_ready_to_use">თქვენი ანგარიში მზადაა გამოსაყენებლად</string>
     <string name="try_order">შეუკვეთე პირველად</string>
+    <string name="buy_now">იყიდე ახლა</string>
+    <string name="find_your_favourite_food">იპოვე შენი საყვარელი საკვები</string>
+    <string name="what_do_you_want_to_order">რას შეუკვეთავ?</string>
 </resources>

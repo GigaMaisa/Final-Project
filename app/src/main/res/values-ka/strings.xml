@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="find_your_comfort_food_here">თქვენი საყვარელი რესტორნები</string>
+    <string name="here_you_can_find_a_chef_or_dish_for_every_taste_and_color_enjoy">აქ შეგიძლიათ აღმოაჩინოთ კერძები ნებისმიერი გემოვნების ადამიანისთვის</string>
+    <string name="sign_in">შესვლა</string>
+    <string name="sign_up">რეგისტრაცია</string>
+    <string name="foodninja">FoodNinja</string>
+    <string name="deliever_favorite_food">საყვარელი საჭმლის მიტანის სერვისი</string>
+    <string name="forgot_password">დაგავიწყდათ პაროლი?</string>
+    <string name="select_which_contact_details_should_we_use_to_reset_your_password">ამოარჩიეთ პაროლის აღდგენის გზა</string>
+    <string name="via_email">ფოსტით:</string>
+    <string name="dot_sms">&#11044;&#11044;&#11044;&#11044; &#160;&#11044;&#11044;&#11044;&#11044; &#160;</string>
+    <string name="dot_email">&#11044;&#11044;&#11044;&#11044; &#160;</string>
+    <string name="via_sms">სმს კოდით:</string>
+    <string name="login_to_your_account">შედით თქვენს ანგარიშში</string>
+    <string name="email_or_phone_number">მეილი ან ტელეფონის ნომერი</string>
+    <string name="or_continue_with">  ან განაგრძეთ</string>
+    <string name="forgot_your_password"><u>დაგავიწყდათ თქვენი პაროლი?</u></string>
+    <string name="not_a_user_sign_up_now"><u>არ ხართ მომხმარებელი? დარეგისრირდი აქ</u></string>
+    <string name="already_have_account"><u>უკვე ხართ მომხმარებელი?</u></string>
+    <string name="continueee">გაგრძელება</string>
+    <string name="next">შემდეგი</string>
+    <string name="sign_up_for_free">დარეგისტრირდით უფასოდ</string>
+    <string name="type_your_phone_number">შეიყვანეთ თქვენი ტელეფონის ნომერი</string>
+    <string name="enter_6_digit_verification_code">შეიყვანეთ 6-ნიშნა ვერიფიკაციის კოდი</string>
+    <string name="code_send_to">კოდი გაიგზავნა</string>
+    <string name="fill_in_your_bio_to_get_started">შეიყვანეთ თქვენი მონაცემები</string>
+    <string name="this_data_will_help_us_manage_your_account">ეს მონაცემები დაგვეხმარება უკეთესად შემოგთავაზოთ საყვარელი ადგილები</string>
+    <string name="full_name">სახელი და გვარი</string>
+    <string name="email">ფოსტა</string>
+    <string name="password">პაროლი</string>
+    <string name="create_account">შექმენი ანგარიში</string>
+    <string name="congrats">გილოცავთ!</string>
+    <string name="your_profile_is_ready_to_use">თქვენი ანგარიში მზადაა გამოსაყენებლად</string>
+    <string name="try_order">შეუკვეთე პირველად</string>
+</resources>

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     app:behavior_peekHeight="800dp"
     app:behavior_hideable="false"
-    android:minHeight="400dp"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -111,6 +110,7 @@
             android:layout_marginTop="20dp"
             android:ellipsize="end"
             android:maxLines="3"
+            android:lineSpacingExtra="5dp"
             android:fontFamily="@font/bentonsansbook"
             android:text="Most whole Alaskan Red King Crabs get broken down into legs, claws, and lump meat. We offer all of these options as well in our online shop, but there is nothing like getting the whole . . . ."
             android:textColor="?android:textColor"
@@ -135,7 +135,7 @@
             android:id="@+id/recyclerViewMenu"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:layout_marginHorizontal="30dp"
+            android:layout_marginHorizontal="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="parent"

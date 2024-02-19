@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/restorauntDetailsFragment">
+    app:startDestination="@id/welcomeFragment">
 
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.example.final_project.presentation.screen.welcome.WelcomeFragment"
+        android:name="com.example.final_project.presentation.screen.welcome.fragment.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
             android:id="@+id/action_welcomeFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -23,7 +25,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.final_project.presentation.screen.login.LoginFragment"
+        android:name="com.example.final_project.presentation.screen.login.fragment.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -35,6 +37,9 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_passcodeFragment"
+            app:destination="@id/passcodeFragment" />
     </fragment>
 
     <fragment
@@ -49,12 +54,17 @@
 
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.final_project.presentation.screen.signup.start.SignUpFragment"
+        android:name="com.example.final_project.presentation.screen.signup.start.fragment.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_signUpFragment_to_passcodeFragment"
             app:destination="@id/passcodeFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/signUpFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -65,35 +75,39 @@
         <action
             android:id="@+id/action_passcodeFragment_to_signUpCredentialsFragment"
             app:destination="@id/signUpCredentialsFragment" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
     <fragment
         android:id="@+id/signUpCredentialsFragment"
-        android:name="com.example.final_project.presentation.screen.signup.credentials.SignUpCredentialsFragment"
+        android:name="com.example.final_project.presentation.screen.signup.credentials.fragment.SignUpCredentialsFragment"
         android:label="fragment_sign_up_credentials"
         tools:layout="@layout/fragment_sign_up_credentials" >
         <action
             android:id="@+id/action_signUpCredentialsFragment_to_signUpSuccessFragment"
             app:destination="@id/signUpSuccessFragment" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
     <fragment
         android:id="@+id/signUpSuccessFragment"
-        android:name="com.example.final_project.presentation.screen.signup.success.SignUpSuccessFragment"
+        android:name="com.example.final_project.presentation.screen.signup.success.fragment.SignUpSuccessFragment"
         android:label="fragment_sign_up_success"
         tools:layout="@layout/fragment_sign_up_success" >
         <action
             android:id="@+id/action_signUpSuccessFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.final_project.presentation.screen.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/restorauntDetailsFragment"
-        android:name="com.example.final_project.presentation.screen.restoraunt_details.RestaurantDetailsFragment"
-        android:label="fragment_restoraunt_details"
-        tools:layout="@layout/fragment_restoraunt_details" />
 </navigation>

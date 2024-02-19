@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:windowBackground"
-    tools:context=".presentation.screen.signup.start.SignUpFragment">
+    tools:context=".presentation.screen.signup.start.fragment.SignUpFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivFadedBackground"
@@ -84,6 +84,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvLoginText" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnContinue"
         android:layout_width="141dp"
         android:layout_height="57dp"
         android:layout_marginTop="60dp"

@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/welcomeFragment">
 
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.example.final_project.presentation.screen.welcome.WelcomeFragment"
+        android:name="com.example.final_project.presentation.screen.welcome.fragment.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
             android:id="@+id/action_welcomeFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -23,7 +25,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.final_project.presentation.screen.login.LoginFragment"
+        android:name="com.example.final_project.presentation.screen.login.fragment.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -35,6 +37,9 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_passcodeFragment"
+            app:destination="@id/passcodeFragment" />
     </fragment>
 
     <fragment
@@ -65,6 +70,10 @@
         <action
             android:id="@+id/action_passcodeFragment_to_signUpCredentialsFragment"
             app:destination="@id/signUpCredentialsFragment" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
     <fragment

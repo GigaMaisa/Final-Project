@@ -22,7 +22,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     override fun setUpListeners() = with(binding) {
         tvForgotPass.setOnClickListener {
-            viewModel.onUiEvent(LoginFragmentUiEvents.NavigateToSmsAuthPage(etCredentials.text.toString()))
+            viewModel.onUiEvent(LoginFragmentUiEvents.ForgotPassword)
         }
 
         tvRegister.setOnClickListener {

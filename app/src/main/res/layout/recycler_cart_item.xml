@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="103dp">
+
+    <FrameLayout
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/green"
+        android:layout_gravity="end"
+        app:layout_constraintTop_toTopOf="parent">
+        
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:src="@drawable/ic_trash"
+            android:background="@android:color/transparent"/>
+    </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/edit_text_background"
+        android:layout_height="103dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageViewCover"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_marginVertical="20dp"
+            android:layout_marginStart="17dp"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="18dp"
+            android:fontFamily="@font/bentonsansregular"
+            android:text="Spacy fresh crab"
+            android:textColor="?android:textColor"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/imageViewCover"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/bentonsansregular"
+            android:text="Waroenk kita"
+            android:textColor="@color/grey"
+            app:layout_constraintStart_toEndOf="@id/imageViewCover"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <com.example.final_project.presentation.view.GradientTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/bentonsansbold"
+            android:text="₾ 35"
+            android:textSize="19sp"
+            app:layout_constraintStart_toEndOf="@+id/imageViewCover"
+            app:layout_constraintTop_toBottomOf="@+id/tvCategory" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:id="@+id/btnAddItem"
+            android:background="@drawable/btn_green_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="11dp"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:gravity="center"
+            android:text="1"
+            android:textSize="16sp"
+            android:id="@+id/tvQuantity"
+            android:layout_marginEnd="9dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnAddItem"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:id="@+id/btnRemoveItem"
+            android:background="@drawable/btn_light_green_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="11dp"
+            android:src="@drawable/ic_minus"
+            app:layout_constraintEnd_toStartOf="@id/tvQuantity"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
+

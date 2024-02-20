@@ -5,5 +5,6 @@
         <item name="color">@color/dark_grey</item>
         <item name="colorContainer">@color/dark_grey</item>
         <item name="colorSecondary">@color/white</item>
+        <item name="strokeColor">@color/grey</item>
     </style>
 </resources>

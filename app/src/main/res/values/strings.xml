@@ -40,4 +40,9 @@
     <string name="popular">Popular</string>
     <string name="menu">Menu</string>
     <string name="minutes">minutes</string>
+    <string name="order_details">Order details</string>
+    <string name="sub_total">Sub-Total</string>
+    <string name="delivery_charge">Delivery Charge</string>
+    <string name="total">Total</string>
+    <string name="place_my_order">Place My Order</string>
 </resources>

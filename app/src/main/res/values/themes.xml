@@ -5,6 +5,7 @@
         <item name="color">@color/white</item>
         <item name="colorContainer">@color/light_pink</item>
         <item name="colorSecondary">@color/orange</item>
+        <item name="strokeColor">@color/stroke_color</item>
     </style>
 
     <style name="Theme.FinalProject" parent="Base.Theme.FinalProject" />

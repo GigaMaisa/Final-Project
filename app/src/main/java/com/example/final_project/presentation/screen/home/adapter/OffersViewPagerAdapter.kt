@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.home
+package com.example.final_project.presentation.screen.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

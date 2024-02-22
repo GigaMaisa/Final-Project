@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.model
+package com.example.final_project.presentation.model.cart
 
 data class CartCheckout(
     val id: Int,

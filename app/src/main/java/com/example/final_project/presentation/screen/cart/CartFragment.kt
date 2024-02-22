@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.databinding.FragmentCartBinding
 import com.example.final_project.presentation.base.BaseFragment
-import com.example.final_project.presentation.model.CartCheckout
+import com.example.final_project.presentation.model.cart.CartCheckout
 import com.example.final_project.presentation.screen.cart.adapter.CartRecyclerViewAdapter
 import com.example.final_project.presentation.state.CartState
+import com.example.final_project.presentation.util.CartItemTouchHelper
 import kotlinx.coroutines.launch
 
 class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::inflate), CartItemTouchHelper.RecyclerItemTouchHelperListener {

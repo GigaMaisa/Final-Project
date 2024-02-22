@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.final_project.databinding.RecyclerCartItemBinding
 import com.example.final_project.databinding.RecyclerCheckoutCartItemBinding
 import com.example.final_project.presentation.extension.loadImage
-import com.example.final_project.presentation.model.CartCheckout
+import com.example.final_project.presentation.model.cart.CartCheckout
 
 class CartRecyclerViewAdapter :
     ListAdapter<CartCheckout, ViewHolder>(CartItemDiffCallback) {

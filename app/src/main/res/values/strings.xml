@@ -45,4 +45,8 @@
     <string name="delivery_charge">Delivery Charge</string>
     <string name="total">Total</string>
     <string name="place_my_order">Place My Order</string>
+    <string name="messages">Messages</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
+    <string name="home">Home</string>
 </resources>

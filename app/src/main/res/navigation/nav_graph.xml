@@ -36,7 +36,7 @@
             app:destination="@id/signUpFragment" />
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homePage" />
         <action
             android:id="@+id/action_loginFragment_to_passcodeFragment"
             app:destination="@id/passcodeFragment" />
@@ -102,7 +102,7 @@
         tools:layout="@layout/fragment_sign_up_success" >
         <action
             android:id="@+id/action_signUpSuccessFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            app:destination="@id/homePage"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
         <action
@@ -113,12 +113,12 @@
     </fragment>
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/homePage"
         android:name="com.example.final_project.presentation.screen.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/cartFragment"
+        android:id="@+id/cartPage"
         android:name="com.example.final_project.presentation.screen.cart.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" />
@@ -127,4 +127,14 @@
         android:name="com.example.final_project.presentation.screen.restoraunt_details.RestaurantDetailsFragment"
         android:label="fragment_restoraunt_details"
         tools:layout="@layout/fragment_restoraunt_details" />
+    <fragment
+        android:id="@+id/chatPage"
+        android:name="com.example.final_project.presentation.screen.chat.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/profilePage"
+        android:name="com.example.final_project.presentation.screen.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

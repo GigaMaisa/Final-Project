@@ -4,4 +4,23 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
+
+    <style name="circleImageViewRounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="CustomBottomNavigationStyle" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="itemActiveIndicatorStyle">@style/CustomBottomNavigationActiveIndicator</item>
+    </style>
+
+    <style name="CustomBottomNavigationActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:width">70dp</item>
+        <item name="android:height">30dp</item>
+        <item name="marginHorizontal">4dp</item>
+        <item name="android:shape">oval</item>
+        <item name="shapeAppearanceOverlay">@style/circleImageViewRounded</item>
+        <item name="android:color">@color/light_green</item>
+        <item name="android:popupBackground">@drawable/circle_background</item>
+    </style>
 </resources>

@@ -45,4 +45,8 @@
     <string name="delivery_charge">მოტანის საფასური</string>
     <string name="total">ფასის ჯამი</string>
     <string name="place_my_order">შეკვეთა</string>
+    <string name="messages">მესიჯები</string>
+    <string name="cart">კალათა</string>
+    <string name="profile">პროფილი</string>
+    <string name="home">მთავარი</string>
 </resources>

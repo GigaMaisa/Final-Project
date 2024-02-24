@@ -49,4 +49,10 @@
     <string name="cart">Cart</string>
     <string name="profile">Profile</string>
     <string name="home">Home</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="error_client">Client Error</string>
+    <string name="error_server">Server Error</string>
+    <string name="error_http">Http Error</string>
+    <string name="error_timeout">Timeout Error</string>
+    <string name="unexpected_error">Unexpected Error</string>
 </resources>

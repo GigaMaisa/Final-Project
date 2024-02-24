@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         app:itemIconTint="@color/green"
         app:itemRippleColor="@null"
+        android:visibility="gone"
         android:background="@drawable/edit_text_background"
         app:itemActiveIndicatorStyle="@style/CustomBottomNavigationActiveIndicator"
         app:layout_constraintBottom_toBottomOf="parent"

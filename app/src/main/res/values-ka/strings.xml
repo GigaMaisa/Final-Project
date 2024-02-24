@@ -49,4 +49,10 @@
     <string name="cart">კალათა</string>
     <string name="profile">პროფილი</string>
     <string name="home">მთავარი</string>
+    <string name="no_internet">არ არის ინტერნეტთან კავშირი</string>
+    <string name="error_client">კლიენტის შეცდომა</string>
+    <string name="error_server">სერვერის შეცდომა</string>
+    <string name="error_http">Http შეცდომა</string>
+    <string name="error_timeout">ნელი დაკავშირება</string>
+    <string name="unexpected_error">მოულოდნელი შეცდომა</string>
 </resources>

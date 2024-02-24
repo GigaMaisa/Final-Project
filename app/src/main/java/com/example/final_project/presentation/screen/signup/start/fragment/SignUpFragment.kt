@@ -7,8 +7,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.final_project.databinding.FragmentSignUpBinding
 import com.example.final_project.presentation.base.BaseFragment
+import com.example.final_project.presentation.event.signup.SendSmsEvent
 import com.example.final_project.presentation.screen.signup.start.viewmodel.SignUpNavigationEvents
 import com.example.final_project.presentation.screen.signup.start.viewmodel.SignUpViewModel
+import com.example.final_project.presentation.state.VerificationState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -23,7 +25,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
 
     override fun setUpListeners() = with(binding) {
         btnContinue.setOnClickListener {
-            viewModel.onUiEvent(SignUpNavigationEvents.NavigateToSmsAuthPage(etPhoneNumber.text.toString()))
+            viewModel.onEvent(SendSmsEvent.SendSmsToProvidedNumber(etPhoneNumber.text.toString(), requireActivity()))
         }
 
         tvLogin.setOnClickListener {
@@ -34,8 +36,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     override fun setUpObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.navigationEvent.collect {
-                    handleNavigationEvents(events = it)
+                launch {
+                    viewModel.navigationEvent.collect {
+                        handleNavigationEvents(events = it)
+                    }
                 }
             }
         }

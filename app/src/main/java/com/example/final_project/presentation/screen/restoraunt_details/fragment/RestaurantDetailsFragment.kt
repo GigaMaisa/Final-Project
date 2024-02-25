@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.restoraunt_details
+package com.example.final_project.presentation.screen.restoraunt_details.fragment
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -6,6 +6,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.final_project.databinding.FragmentRestorauntDetailsBinding
 import com.example.final_project.presentation.base.BaseFragment
+import com.example.final_project.presentation.screen.restoraunt_details.viewmodel.RestaurantDetailsViewModel
+import com.example.final_project.presentation.screen.restoraunt_details.bottomsheet.RestaurantBottomSheet
 import kotlinx.coroutines.launch
 
 class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>(FragmentRestorauntDetailsBinding::inflate) {

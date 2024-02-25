@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.passcode
+package com.example.final_project.presentation.screen.passcode.fragment
 
 import android.graphics.Color
 import androidx.fragment.app.viewModels
@@ -13,6 +13,7 @@ import com.example.final_project.R
 import com.example.final_project.databinding.FragmentPasscodeBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.PasscodeEvent
+import com.example.final_project.presentation.screen.passcode.viewmodel.PasscodeViewModel
 import com.example.final_project.presentation.screen.passcode.adapter.PasscodeRecyclerViewAdapter
 import com.example.final_project.presentation.state.PasscodeState
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,11 +39,11 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
         }
 
         btnGoBack.setOnClickListener {
-            viewModel.onUiEvent(PasscodeNavigationEvents.NavigateBack)
+            viewModel.onUiEvent(PasscodeViewModel.PasscodeNavigationEvents.NavigateBack)
         }
 
         btnNext.setOnClickListener {
-            viewModel.onUiEvent(PasscodeNavigationEvents.NavigateToSignUpCredentialsPage(args.phoneNumber))
+            viewModel.onUiEvent(PasscodeViewModel.PasscodeNavigationEvents.NavigateToSignUpCredentialsPage(args.phoneNumber))
         }
     }
 
@@ -64,13 +65,13 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
         }
     }
 
-    private fun handleNavigationState(state: PasscodeNavigationEvents) {
+    private fun handleNavigationState(state: PasscodeViewModel.PasscodeNavigationEvents) {
         when (state) {
-            is PasscodeNavigationEvents.NavigateBack -> {
+            is PasscodeViewModel.PasscodeNavigationEvents.NavigateBack -> {
                 findNavController().navigateUp()
             }
 
-            is PasscodeNavigationEvents.NavigateToSignUpCredentialsPage -> {
+            is PasscodeViewModel.PasscodeNavigationEvents.NavigateToSignUpCredentialsPage -> {
                 findNavController().navigate(PasscodeFragmentDirections.actionPasscodeFragmentToSignUpCredentialsFragment(state.phoneNumber))
             }
         }

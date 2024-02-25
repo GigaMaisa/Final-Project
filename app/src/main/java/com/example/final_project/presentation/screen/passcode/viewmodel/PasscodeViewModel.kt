@@ -1,11 +1,10 @@
-package com.example.final_project.presentation.screen.passcode
+package com.example.final_project.presentation.screen.passcode.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.R
 import com.example.final_project.presentation.event.PasscodeEvent
 import com.example.final_project.presentation.model.Passcode
-import com.example.final_project.presentation.screen.signup.start.viewmodel.SignUpNavigationEvents
 import com.example.final_project.presentation.state.PasscodeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -41,7 +40,11 @@ class PasscodeViewModel @Inject constructor() : ViewModel() {
 
             is PasscodeNavigationEvents.NavigateToSignUpCredentialsPage -> {
                 viewModelScope.launch {
-                    _navigationEvent.emit(PasscodeNavigationEvents.NavigateToSignUpCredentialsPage(events.phoneNumber))
+                    _navigationEvent.emit(
+                        PasscodeNavigationEvents.NavigateToSignUpCredentialsPage(
+                            events.phoneNumber
+                        )
+                    )
                 }
             }
         }
@@ -74,9 +77,9 @@ class PasscodeViewModel @Inject constructor() : ViewModel() {
             }
         }
     }
-}
 
-sealed class PasscodeNavigationEvents {
-    object NavigateBack : PasscodeNavigationEvents()
-    data class NavigateToSignUpCredentialsPage(val phoneNumber: String?) : PasscodeNavigationEvents()
+    sealed class PasscodeNavigationEvents {
+        object NavigateBack : PasscodeNavigationEvents()
+        data class NavigateToSignUpCredentialsPage(val phoneNumber: String?) : PasscodeNavigationEvents()
+    }
 }

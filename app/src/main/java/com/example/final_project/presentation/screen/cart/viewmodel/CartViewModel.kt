@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.cart
+package com.example.final_project.presentation.screen.cart.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.final_project.presentation.model.cart.CartItem

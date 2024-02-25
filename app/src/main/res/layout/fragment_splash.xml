@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.screen.splash.SplashFragment">
+    tools:context=".presentation.screen.splash.fragment.SplashFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"

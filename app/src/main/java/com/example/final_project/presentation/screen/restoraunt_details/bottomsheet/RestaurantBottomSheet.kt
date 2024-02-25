@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.restoraunt_details
+package com.example.final_project.presentation.screen.restoraunt_details.bottomsheet
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.final_project.databinding.RestaurantDetailsBottomSheetDialogBinding
 import com.example.final_project.presentation.model.RestaurantMenu
+import com.example.final_project.presentation.screen.restoraunt_details.adapter.RestaurantMenuRecyclerViewAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

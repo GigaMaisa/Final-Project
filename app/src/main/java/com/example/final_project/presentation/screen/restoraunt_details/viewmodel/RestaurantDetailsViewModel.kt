@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.restoraunt_details
+package com.example.final_project.presentation.screen.restoraunt_details.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.final_project.presentation.model.RestaurantMenu

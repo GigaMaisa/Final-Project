@@ -10,7 +10,6 @@ import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.screen.signup.success.viewmodel.SignUpSuccessNavigationEvents
 import com.example.final_project.presentation.screen.signup.success.viewmodel.SignUpSuccessViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -43,7 +42,7 @@ class SignUpSuccessFragment : BaseFragment<FragmentSignUpSuccessBinding>(Fragmen
     private fun handleNavigationEvent(event: SignUpSuccessNavigationEvents) {
         when (event) {
             is SignUpSuccessNavigationEvents.NavigateToHomePage -> {
-                findNavController().navigate(SignUpSuccessFragmentDirections.actionSignUpSuccessFragmentToHomeFragment())
+                findNavController().navigate(SignUpSuccessFragmentDirections.actionSignUpSuccessFragmentToPlaceholderDestination())
             }
         }
     }

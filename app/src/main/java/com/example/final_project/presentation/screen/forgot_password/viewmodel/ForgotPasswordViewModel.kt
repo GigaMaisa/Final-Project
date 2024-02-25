@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.forgot_password
+package com.example.final_project.presentation.screen.forgot_password.viewmodel
 
 import androidx.lifecycle.ViewModel
 

@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.restoraunt_details
+package com.example.final_project.presentation.screen.restoraunt_details.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,9 @@ import com.example.final_project.databinding.RecyclerRestaurantMenuItemBinding
 import com.example.final_project.presentation.extension.loadImage
 import com.example.final_project.presentation.model.RestaurantMenu
 
-class RestaurantMenuRecyclerViewAdapter : ListAdapter<RestaurantMenu, RestaurantMenuRecyclerViewAdapter.RestaurantMenuViewHolder>(RestaurantMenuItemDiffCallback) {
+class RestaurantMenuRecyclerViewAdapter : ListAdapter<RestaurantMenu, RestaurantMenuRecyclerViewAdapter.RestaurantMenuViewHolder>(
+    RestaurantMenuItemDiffCallback
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantMenuViewHolder {
         return RestaurantMenuViewHolder(

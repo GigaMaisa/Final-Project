@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.chat
+package com.example.final_project.presentation.screen.chat.fragment
 
 import com.example.final_project.databinding.FragmentChatBinding
 import com.example.final_project.presentation.base.BaseFragment

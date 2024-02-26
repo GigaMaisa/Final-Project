@@ -55,4 +55,5 @@
     <string name="error_http">Http Error</string>
     <string name="error_timeout">Timeout Error</string>
     <string name="unexpected_error">Unexpected Error</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>

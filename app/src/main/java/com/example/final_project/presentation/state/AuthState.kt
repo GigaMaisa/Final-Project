@@ -1,7 +1,9 @@
 package com.example.final_project.presentation.state
 
-data class VerificationState(
+import com.google.firebase.auth.AuthResult
+
+data class AuthState (
     val isLoading: Boolean = false,
-    val data: String? = null,
+    val data: AuthResult? = null,
     val errorMessage: Int? = null
 )

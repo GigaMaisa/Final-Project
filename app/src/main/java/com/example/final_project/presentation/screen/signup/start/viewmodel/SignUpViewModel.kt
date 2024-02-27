@@ -1,7 +1,6 @@
 package com.example.final_project.presentation.screen.signup.start.viewmodel
 
-import android.app.Activity
-import android.util.Log.d
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
@@ -10,11 +9,12 @@ import com.example.final_project.domain.usecase.validators.PhoneNumberValidatorU
 import com.example.final_project.presentation.event.signup.SendSmsEvent
 import com.example.final_project.presentation.state.VerificationState
 import com.example.final_project.presentation.util.getErrorMessage
+import com.google.firebase.auth.PhoneAuthOptions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,10 +24,12 @@ class SignUpViewModel @Inject constructor(
     private val sendVerificationCodeUseCase: SendVerificationCodeUseCase,
     private val phoneNumberValidatorUseCase: PhoneNumberValidatorUseCase
 ) : ViewModel() {
+
     private val _navigationEvent = MutableSharedFlow<SignUpNavigationEvents>()
     val navigationEvent: SharedFlow<SignUpNavigationEvents> get() = _navigationEvent
 
     private val _verificationState = MutableStateFlow(VerificationState())
+    val verificationState: StateFlow<VerificationState> get() = _verificationState
 
     fun onUiEvent(events: SignUpNavigationEvents) {
         when (events) {
@@ -37,9 +39,9 @@ class SignUpViewModel @Inject constructor(
                 }
             }
 
-            is SignUpNavigationEvents.NavigateToSmsAuthPage -> {
+            is SignUpNavigationEvents.NavigateToOtpFillPage -> {
                 viewModelScope.launch {
-                    _navigationEvent.emit(SignUpNavigationEvents.NavigateToSmsAuthPage(events.phoneNumber, events.verificationId))
+                    _navigationEvent.emit(SignUpNavigationEvents.NavigateToOtpFillPage(events.phoneNumber, events.verificationId))
                 }
             }
         }
@@ -47,14 +49,14 @@ class SignUpViewModel @Inject constructor(
 
     fun onEvent(event: SendSmsEvent) {
         when (event) {
-            is SendSmsEvent.SendSmsToProvidedNumber -> sendVerificationCodeToPhoneNumber(event.phoneNumber, event.activity)
+            is SendSmsEvent.SendSmsToProvidedNumber -> sendVerificationCodeToPhoneNumber(event.phoneNumber, event.options)
         }
     }
 
-    private fun sendVerificationCodeToPhoneNumber(phoneNumber: String, activity: Activity) {
+    private fun sendVerificationCodeToPhoneNumber(phoneNumber: String, options: PhoneAuthOptions.Builder) {
         viewModelScope.launch {
             if (phoneNumberValidatorUseCase(phoneNumber)) {
-                sendVerificationCodeUseCase(phoneNumber, activity).collect { resource ->
+                sendVerificationCodeUseCase(phoneNumber, options).collect { resource ->
                     when (resource) {
                         is Resource.Loading -> _verificationState.update { currentState ->
                             currentState.copy(isLoading = true)
@@ -65,9 +67,8 @@ class SignUpViewModel @Inject constructor(
                                 currentState.copy(data = resource.response)
                             }
 
-                            d("fuchuriko", resource.response)
                             _navigationEvent.emit(
-                                SignUpNavigationEvents.NavigateToSmsAuthPage(
+                                SignUpNavigationEvents.NavigateToOtpFillPage(
                                     phoneNumber = phoneNumber,
                                     verificationId = resource.response
                                 )
@@ -90,5 +91,5 @@ class SignUpViewModel @Inject constructor(
 
 sealed class SignUpNavigationEvents {
     data object NavigateToSignInPage : SignUpNavigationEvents()
-    data class NavigateToSmsAuthPage(val phoneNumber: String, val verificationId: String) : SignUpNavigationEvents()
+    data class NavigateToOtpFillPage(val phoneNumber: String, val verificationId: String) : SignUpNavigationEvents()
 }

@@ -55,7 +55,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             }
 
             is LoginFragmentUiEvents.NavigateToSmsAuthPage -> {
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToPasscodeFragment(events.phoneNumber))
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToPasscodeFragment(events.phoneNumber, verificationId = null))
             }
 
             is LoginFragmentUiEvents.ForgotPassword -> {

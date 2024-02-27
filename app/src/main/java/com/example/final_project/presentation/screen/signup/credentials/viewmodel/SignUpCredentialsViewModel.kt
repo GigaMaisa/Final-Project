@@ -3,8 +3,10 @@ package com.example.final_project.presentation.screen.signup.credentials.viewmod
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.presentation.screen.signup.start.viewmodel.SignUpNavigationEvents
+import com.example.final_project.presentation.state.VerificationState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,4 +29,5 @@ class SignUpCredentialsViewModel @Inject constructor(): ViewModel() {
 
 sealed class SignUpCredentialsNavigationEvents {
     object NavigateToSuccessPage : SignUpCredentialsNavigationEvents()
+
 }

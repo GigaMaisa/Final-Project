@@ -52,7 +52,7 @@ android {
 }
 
 dependencies {
-
+    implementation("com.hbb20:ccp:2.5.0")
     implementation("com.github.fraggjkee:sms-confirmation-view:1.8.1")
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("com.google.android.gms:play-services-maps:18.2.0")

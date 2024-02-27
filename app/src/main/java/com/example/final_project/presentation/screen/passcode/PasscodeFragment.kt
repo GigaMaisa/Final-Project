@@ -1,6 +1,8 @@
 package com.example.final_project.presentation.screen.passcode
 
 import android.graphics.Color
+import android.util.Log
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +16,7 @@ import com.example.final_project.databinding.FragmentPasscodeBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.PasscodeEvent
 import com.example.final_project.presentation.screen.passcode.adapter.PasscodeRecyclerViewAdapter
+import com.example.final_project.presentation.state.AuthState
 import com.example.final_project.presentation.state.PasscodeState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +45,8 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
         }
 
         btnNext.setOnClickListener {
-            viewModel.onUiEvent(PasscodeNavigationEvents.NavigateToSignUpCredentialsPage(args.phoneNumber))
+            val smsCodeUserInput = viewModel.passcodeStateFlow.value.passcode.joinToString()
+            viewModel.onEvent(PasscodeEvent.SignInWithVerificationCode(args.verificationId!!, smsCodeUserInput))
         }
     }
 
@@ -58,6 +62,12 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
                 launch {
                     viewModel.navigationEvent.collect {
                         handleNavigationState(state = it)
+                    }
+                }
+
+                launch {
+                    viewModel.authStateFlow.collect {
+                        handleAuthState(state = it)
                     }
                 }
             }
@@ -88,10 +98,19 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
             }
 
             state.successMessage?.let {
-                text = handleStringResource(it)
                 binding.btnNext.isClickable = true
                 binding.btnNext.setBackgroundResource(R.drawable.button_background)
                 setTextColor(Color.GREEN)
+            }
+        }
+    }
+
+    private fun handleAuthState(state: AuthState) {
+        with(binding) {
+            progressBar.isVisible = state.isLoading
+
+            state.errorMessage?.let {
+                // handle errors
             }
         }
     }

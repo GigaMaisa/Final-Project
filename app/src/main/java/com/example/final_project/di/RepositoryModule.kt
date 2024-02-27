@@ -1,6 +1,7 @@
 package com.example.final_project.di
 
 import com.example.final_project.data.repository.remote.FirebaseAuthRepositoryImpl
+import com.example.final_project.di.DispatchersModule.IoDispatcher
 import com.example.final_project.domain.repository.auth.FirebaseAuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
@@ -15,7 +16,7 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Provides
     @Singleton
-    fun provideFirebaseAuthRepository(auth: FirebaseAuth, @DispatchersModule.IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebaseAuthRepository {
+    fun provideFirebaseAuthRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebaseAuthRepository {
         return FirebaseAuthRepositoryImpl(auth = auth, ioDispatcher = ioDispatcher)
     }
 }

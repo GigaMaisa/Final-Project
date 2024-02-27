@@ -51,7 +51,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             }
 
             is LoginFragmentUiEvents.NavigateToHomePage -> {
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToPlaceholderDestination())
             }
 
             is LoginFragmentUiEvents.NavigateToSmsAuthPage -> {

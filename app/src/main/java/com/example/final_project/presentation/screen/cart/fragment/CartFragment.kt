@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.cart
+package com.example.final_project.presentation.screen.cart.fragment
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.databinding.FragmentCartBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.model.cart.CartCheckout
+import com.example.final_project.presentation.screen.cart.viewmodel.CartViewModel
 import com.example.final_project.presentation.screen.cart.adapter.CartRecyclerViewAdapter
 import com.example.final_project.presentation.state.CartState
 import com.example.final_project.presentation.util.CartItemTouchHelper

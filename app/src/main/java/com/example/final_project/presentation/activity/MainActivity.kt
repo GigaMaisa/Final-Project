@@ -16,16 +16,5 @@ class MainActivity @Inject constructor() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-
-//        val navController = findNavController(R.id.nav_host_fragment)
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.homePage, R.id.profilePage, R.id.cartPage, R.id.chatPage
-//            )
-//        )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//        navView.setupWithNavController(navController)
     }
 }

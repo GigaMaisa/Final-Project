@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.home
+package com.example.final_project.presentation.screen.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.final_project.presentation.model.Offer

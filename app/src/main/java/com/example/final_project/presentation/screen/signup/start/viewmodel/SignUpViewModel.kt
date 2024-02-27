@@ -56,7 +56,6 @@ class SignUpViewModel @Inject constructor(
     private fun sendVerificationCodeToPhoneNumber(phoneNumber: String, options: PhoneAuthOptions.Builder) {
         viewModelScope.launch {
             if (phoneNumberValidatorUseCase(phoneNumber)) {
-                Log.d("RACXA SHESVLA", "SHEVIDAA")
                 sendVerificationCodeUseCase(phoneNumber, options).collect { resource ->
                     when (resource) {
                         is Resource.Loading -> _verificationState.update { currentState ->

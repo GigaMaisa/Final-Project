@@ -81,6 +81,10 @@
             android:name="phoneNumber"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="verificationId"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
     <fragment

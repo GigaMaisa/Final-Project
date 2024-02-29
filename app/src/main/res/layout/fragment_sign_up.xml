@@ -7,6 +7,18 @@
     android:background="?android:windowBackground"
     tools:context=".presentation.screen.signup.start.fragment.SignUpFragment">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/gradient_end_color"
+        android:progressTint="@color/gradient_start_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivFadedBackground"
         android:layout_width="match_parent"
@@ -66,22 +78,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDesc" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etPhoneNumber"
-        android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/edit_text_background"
-        android:hint="@string/type_your_phone_number"
-        android:inputType="phone"
-        android:paddingHorizontal="10dp"
-        android:textColor="@color/edit_text_input"
-        android:textColorHint="@color/hint_color"
-        android:textSize="14sp"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/phoneNumberContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLoginText" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLoginText">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:padding="9dp"
+            app:ccp_autoDetectCountry="true"
+            app:ccp_showFullName="false"
+            app:ccp_showNameCode="false"
+            app:ccp_showPhoneCode="true"
+            app:ccp_textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/edit_text_background"
+            android:hint="@string/type_your_phone_number"
+            android:inputType="phone"
+            android:paddingHorizontal="15dp"
+            android:textColor="@color/edit_text_input"
+            android:textColorHint="@color/hint_color"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLoginText" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnContinue"
@@ -95,7 +130,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPhoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumberContainer" />
 
     <com.example.final_project.presentation.view.GradientTextView
         android:id="@+id/tvLogin"

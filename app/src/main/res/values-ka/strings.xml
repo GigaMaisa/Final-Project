@@ -43,7 +43,7 @@
     <string name="order_details">შეკვეთის დეტალები</string>
     <string name="sub_total">პროდუქტების ფასი</string>
     <string name="delivery_charge">მოტანის საფასური</string>
-    <string name="total">ჯამური ფასი</string>
+    <string name="total">ფასის ჯამი</string>
     <string name="place_my_order">შეკვეთა</string>
     <string name="messages">მესიჯები</string>
     <string name="cart">კალათა</string>

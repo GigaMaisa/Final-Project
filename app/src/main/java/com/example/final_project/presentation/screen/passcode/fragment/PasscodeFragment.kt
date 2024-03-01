@@ -14,9 +14,9 @@ import com.example.final_project.R
 import com.example.final_project.databinding.FragmentPasscodeBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.PasscodeEvent
-import com.example.final_project.presentation.screen.passcode.viewmodel.PasscodeNavigationEvents
 import com.example.final_project.presentation.screen.passcode.viewmodel.PasscodeViewModel
 import com.example.final_project.presentation.screen.passcode.adapter.PasscodeRecyclerViewAdapter
+import com.example.final_project.presentation.screen.passcode.viewmodel.PasscodeNavigationEvents
 import com.example.final_project.presentation.state.AuthState
 import com.example.final_project.presentation.state.PasscodeState
 import dagger.hilt.android.AndroidEntryPoint
@@ -84,8 +84,6 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
             is PasscodeNavigationEvents.NavigateToSignUpCredentialsPage -> {
                 findNavController().navigate(PasscodeFragmentDirections.actionPasscodeFragmentToSignUpCredentialsFragment(state.phoneNumber))
             }
-
-            else -> {}
         }
     }
 

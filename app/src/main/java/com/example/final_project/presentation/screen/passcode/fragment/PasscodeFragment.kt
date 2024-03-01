@@ -1,6 +1,7 @@
 package com.example.final_project.presentation.screen.passcode.fragment
 
 import android.graphics.Color
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +16,8 @@ import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.PasscodeEvent
 import com.example.final_project.presentation.screen.passcode.viewmodel.PasscodeViewModel
 import com.example.final_project.presentation.screen.passcode.adapter.PasscodeRecyclerViewAdapter
+import com.example.final_project.presentation.screen.passcode.viewmodel.PasscodeNavigationEvents
+import com.example.final_project.presentation.state.AuthState
 import com.example.final_project.presentation.state.PasscodeState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -39,11 +42,12 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
         }
 
         btnGoBack.setOnClickListener {
-            viewModel.onUiEvent(PasscodeViewModel.PasscodeNavigationEvents.NavigateBack)
+            viewModel.onUiEvent(PasscodeNavigationEvents.NavigateBack)
         }
 
         btnNext.setOnClickListener {
-            viewModel.onUiEvent(PasscodeViewModel.PasscodeNavigationEvents.NavigateToSignUpCredentialsPage(args.phoneNumber))
+            val smsCodeUserInput = viewModel.passcodeStateFlow.value.passcode.joinToString()
+            viewModel.onEvent(PasscodeEvent.SignInWithVerificationCode(args.verificationId!!, smsCodeUserInput))
         }
     }
 
@@ -61,17 +65,23 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
                         handleNavigationState(state = it)
                     }
                 }
+
+                launch {
+                    viewModel.authStateFlow.collect {
+                        handleAuthState(state = it)
+                    }
+                }
             }
         }
     }
 
-    private fun handleNavigationState(state: PasscodeViewModel.PasscodeNavigationEvents) {
+    private fun handleNavigationState(state: PasscodeNavigationEvents) {
         when (state) {
-            is PasscodeViewModel.PasscodeNavigationEvents.NavigateBack -> {
+            is PasscodeNavigationEvents.NavigateBack -> {
                 findNavController().navigateUp()
             }
 
-            is PasscodeViewModel.PasscodeNavigationEvents.NavigateToSignUpCredentialsPage -> {
+            is PasscodeNavigationEvents.NavigateToSignUpCredentialsPage -> {
                 findNavController().navigate(PasscodeFragmentDirections.actionPasscodeFragmentToSignUpCredentialsFragment(state.phoneNumber))
             }
         }
@@ -89,10 +99,19 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
             }
 
             state.successMessage?.let {
-                text = handleStringResource(it)
                 binding.btnNext.isClickable = true
                 binding.btnNext.setBackgroundResource(R.drawable.button_background)
                 setTextColor(Color.GREEN)
+            }
+        }
+    }
+
+    private fun handleAuthState(state: AuthState) {
+        with(binding) {
+            progressBar.isVisible = state.isLoading
+
+            state.errorMessage?.let {
+                // handle errors
             }
         }
     }

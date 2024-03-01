@@ -2,10 +2,14 @@ package com.example.final_project.presentation.screen.passcode.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.final_project.R
+import com.example.final_project.data.remote.common.Resource
+import com.example.final_project.domain.usecase.signup.SignInWithAuthCredentialUseCase
 import com.example.final_project.presentation.event.PasscodeEvent
 import com.example.final_project.presentation.model.Passcode
+import com.example.final_project.presentation.state.AuthState
 import com.example.final_project.presentation.state.PasscodeState
+import com.example.final_project.presentation.util.getErrorMessage
+import com.google.firebase.auth.PhoneAuthProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,17 +20,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PasscodeViewModel @Inject constructor() : ViewModel() {
+class PasscodeViewModel @Inject constructor(
+    private val signInWithAuthCredentialUseCase: SignInWithAuthCredentialUseCase
+) : ViewModel() {
     private val _passcodeStateFlow = MutableStateFlow(PasscodeState())
     val passcodeStateFlow = _passcodeStateFlow.asStateFlow()
 
     private val _navigationEvent = MutableSharedFlow<PasscodeNavigationEvents>()
     val navigationEvent: SharedFlow<PasscodeNavigationEvents> get() = _navigationEvent
 
+    private val _authStateFlow = MutableStateFlow(AuthState())
+    val authStateFlow = _authStateFlow.asStateFlow()
+
     fun onEvent(event: PasscodeEvent) {
         when(event) {
             is PasscodeEvent.ChangeTextInputEvent -> changeTextInput(passcode = event.passcode)
             is PasscodeEvent.ResetPasscode -> resetPasscode()
+            is PasscodeEvent.SignInWithVerificationCode -> signInWithVerificationCode(
+                verificationId = event.verificationId
+            )
         }
     }
 
@@ -50,6 +62,48 @@ class PasscodeViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    private fun signInWithVerificationCode(verificationId: String) {
+        viewModelScope.launch {
+            val smsCode = _passcodeStateFlow.value.passcode
+                .mapNotNull { it.currentNumber?.toString() }
+                .reduceOrNull { acc, s -> acc + s }
+
+            val credential = PhoneAuthProvider.getCredential(verificationId, smsCode!!)
+
+
+            signInWithAuthCredentialUseCase(credential).collect {resource ->
+                when (resource) {
+                    is Resource.Loading -> _authStateFlow.update { currentState ->
+                        currentState.copy(isLoading = true)
+                    }
+
+                    is Resource.Success -> {
+                        _authStateFlow.update { currentState ->
+                            currentState.copy(data = resource.response)
+                        }
+
+                        _navigationEvent.emit(
+                            PasscodeNavigationEvents.NavigateToSignUpCredentialsPage(
+                                phoneNumber = resource.response.user?.phoneNumber
+                            )
+                        )
+                    }
+
+                    is Resource.Error -> {
+                        updateErrorMessage(getErrorMessage(resource.error))
+                        _passcodeStateFlow.update { currentState -> currentState.copy(errorMessage = getErrorMessage(resource.error)) }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateErrorMessage(errorMessage: Int?) {
+        _authStateFlow.update { currentState ->
+            currentState.copy(errorMessage = errorMessage, isLoading = false)
+        }
+    }
+
     private fun resetPasscode() {
         _passcodeStateFlow.update { currentState -> currentState.copy(passcode = (1..6).map { Passcode(it) }) }
     }
@@ -66,20 +120,12 @@ class PasscodeViewModel @Inject constructor() : ViewModel() {
         _passcodeStateFlow.update { currentState -> currentState.copy(passcode = newPasscode) }
 
         if (passcode.id == 6) {
-            val enteredPasscode = _passcodeStateFlow.value.passcode
-                .mapNotNull { it.currentNumber?.toString() }
-                .reduceOrNull { acc, s -> acc + s }
-
-            if (enteredPasscode == "999999") {
-                _passcodeStateFlow.update { currentState -> currentState.copy(successMessage = R.string.dot_sms) }
-            }else {
-                _passcodeStateFlow.update { currentState -> currentState.copy(errorMessage = R.string.dot_email) }
-            }
+            _passcodeStateFlow.update { currentState -> currentState.copy(successMessage = true) }
         }
     }
+}
 
-    sealed class PasscodeNavigationEvents {
-        object NavigateBack : PasscodeNavigationEvents()
-        data class NavigateToSignUpCredentialsPage(val phoneNumber: String?) : PasscodeNavigationEvents()
-    }
+sealed class PasscodeNavigationEvents {
+    object NavigateBack : PasscodeNavigationEvents()
+    data class NavigateToSignUpCredentialsPage(val phoneNumber: String?) : PasscodeNavigationEvents()
 }

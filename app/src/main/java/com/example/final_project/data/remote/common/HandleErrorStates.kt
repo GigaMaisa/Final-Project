@@ -2,6 +2,7 @@ package com.example.final_project.data.remote.common
 
 import retrofit2.HttpException
 import java.io.IOException
+import java.lang.Exception
 import java.util.concurrent.TimeoutException
 
 sealed class HandleErrorStates(val errorCode: ErrorCode) {
@@ -19,7 +20,7 @@ sealed class HandleErrorStates(val errorCode: ErrorCode) {
     }
 
     companion object {
-        fun handleException(throwable: Throwable): HandleErrorStates {
+        fun handleException(throwable: Exception): HandleErrorStates {
             return when (throwable) {
                 is IOException -> NetworkError
                 is HttpException -> when (throwable.code()) {

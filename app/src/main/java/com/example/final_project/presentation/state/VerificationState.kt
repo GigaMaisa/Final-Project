@@ -4,5 +4,4 @@ data class VerificationState(
     val isLoading: Boolean = false,
     val data: String? = null,
     val errorMessage: Int? = null
-) {
-}
+)

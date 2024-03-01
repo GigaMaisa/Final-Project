@@ -1,7 +1,6 @@
-package com.example.final_project.presentation.screen.passcode
+package com.example.final_project.presentation.screen.passcode.fragment
 
 import android.graphics.Color
-import android.util.Log
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -15,6 +14,8 @@ import com.example.final_project.R
 import com.example.final_project.databinding.FragmentPasscodeBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.PasscodeEvent
+import com.example.final_project.presentation.screen.passcode.PasscodeNavigationEvents
+import com.example.final_project.presentation.screen.passcode.PasscodeViewModel
 import com.example.final_project.presentation.screen.passcode.adapter.PasscodeRecyclerViewAdapter
 import com.example.final_project.presentation.state.AuthState
 import com.example.final_project.presentation.state.PasscodeState

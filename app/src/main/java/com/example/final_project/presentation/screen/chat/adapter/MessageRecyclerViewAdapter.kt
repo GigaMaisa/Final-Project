@@ -10,7 +10,7 @@ import com.example.final_project.databinding.SendMessageRecyclerItemBinding
 import com.example.final_project.presentation.model.Message
 import com.google.firebase.auth.FirebaseAuth
 
-class MessageRecyclerViewAdapter(): ListAdapter<Message, RecyclerView.ViewHolder>(MessageItemDiffCallback) {
+class MessageRecyclerViewAdapter: ListAdapter<Message, RecyclerView.ViewHolder>(MessageItemDiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
             ITEM_RECEIVE -> ReceiveMessageViewHolder(ReceiveMessageRecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))

@@ -6,10 +6,14 @@
     app:startDestination="@id/homePage">
 
     <fragment
-        android:id="@+id/chatPage"
-        android:name="com.example.final_project.presentation.screen.chat.fragment.ChatFragment"
+        android:id="@+id/chatFragment"
+        android:name="com.example.final_project.presentation.screen.chat.chat_messaging.fragment.ChatFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat" >
+        <argument
+            android:name="uuid"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/homePage"
         android:name="com.example.final_project.presentation.screen.home.fragment.HomeFragment"
@@ -25,4 +29,13 @@
         android:name="com.example.final_project.presentation.screen.cart.fragment.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" />
+    <fragment
+        android:id="@+id/chatPage"
+        android:name="com.example.final_project.presentation.screen.chat.chat_contacts.ChatContactsFragment"
+        android:label="fragment_chat_contacts"
+        tools:layout="@layout/fragment_chat_contacts" >
+        <action
+            android:id="@+id/action_chatPage_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
 </navigation>

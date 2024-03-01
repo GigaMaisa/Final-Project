@@ -1,6 +1,6 @@
-package com.example.final_project.presentation.model
+package com.example.final_project.data.remote.model
 
-data class Message(
+data class MessageDto(
     val id: Long?,
     val message: String?,
     val senderId: String?

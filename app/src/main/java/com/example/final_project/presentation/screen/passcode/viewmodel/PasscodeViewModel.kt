@@ -1,8 +1,7 @@
-package com.example.final_project.presentation.screen.passcode
+package com.example.final_project.presentation.screen.passcode.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.final_project.R
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.domain.usecase.signup.SignInWithAuthCredentialUseCase
 import com.example.final_project.presentation.event.PasscodeEvent
@@ -53,7 +52,11 @@ class PasscodeViewModel @Inject constructor(
 
             is PasscodeNavigationEvents.NavigateToSignUpCredentialsPage -> {
                 viewModelScope.launch {
-                    _navigationEvent.emit(PasscodeNavigationEvents.NavigateToSignUpCredentialsPage(events.phoneNumber))
+                    _navigationEvent.emit(
+                        PasscodeNavigationEvents.NavigateToSignUpCredentialsPage(
+                            events.phoneNumber
+                        )
+                    )
                 }
             }
         }

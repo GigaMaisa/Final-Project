@@ -14,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ProfileBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: ProfileBottomSheetBinding
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+    lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private val profileFavouritesAdapter = ProfileFavouritesRecyclerViewAdapter()
 
     var switchListener: ((isChecked: Boolean) -> Unit)? = null

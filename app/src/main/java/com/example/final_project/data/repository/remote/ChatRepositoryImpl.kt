@@ -18,11 +18,13 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 import javax.inject.Inject
 
 class ChatRepositoryImpl @Inject constructor(private val databaseReference: DatabaseReference) : ChatRepository {
 
     private val senderUid = FirebaseAuth.getInstance().currentUser?.uid
+
     override suspend fun getMessages(receiverUuid: String): Flow<Resource<List<GetMessage>>> = callbackFlow {
         trySend(Resource.Loading(loading = true))
         val senderRoom = receiverUuid.plus(senderUid)
@@ -44,7 +46,7 @@ class ChatRepositoryImpl @Inject constructor(private val databaseReference: Data
 
         }
     }.catch {
-        emit(Resource.Error(HandleErrorStates.handleException(it), throwable = it))
+        emit(Resource.Error(HandleErrorStates.handleException(it as Exception), throwable = it))
     }.flowOn(IO)
 
     override suspend fun addMessage(message: GetMessage, receiverUuid: String): Unit = withContext(IO) {

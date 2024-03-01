@@ -20,7 +20,7 @@ import javax.inject.Inject
 class FirebaseAuthRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) : FirebaseAuthRepository{
+) : FirebaseAuthRepository {
 
     override suspend fun firebaseSendVerificationCodeToPhoneNumber(phoneNumber: String, optionsBuilder: PhoneAuthOptions.Builder): Flow<Resource<String>> {
         return callbackFlow {

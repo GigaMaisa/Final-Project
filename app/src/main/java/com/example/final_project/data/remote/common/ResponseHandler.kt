@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onCompletion
 import retrofit2.HttpException
 import retrofit2.Response
+import java.lang.Exception
 import javax.inject.Inject
 
 class ResponseHandler @Inject constructor() {
@@ -21,7 +22,7 @@ class ResponseHandler @Inject constructor() {
             throw HttpException(response)
         }
     }.catch { e ->
-        emit(Resource.Error(error = HandleErrorStates.handleException(e), throwable = e))
+        emit(Resource.Error(error = HandleErrorStates.handleException(e as Exception), throwable = e))
     }.onCompletion {
         emit(Resource.Loading(false))
     }

@@ -31,6 +31,9 @@ class SignUpViewModel @Inject constructor(
     private val _verificationState = MutableStateFlow(VerificationState())
     val verificationState: StateFlow<VerificationState> get() = _verificationState
 
+    private val _userUid = MutableStateFlow<String?>(null)
+    val userUid: StateFlow<String?> = _userUid
+
     fun onUiEvent(events: SignUpNavigationEvents) {
         when (events) {
             is SignUpNavigationEvents.NavigateToSignInPage -> {
@@ -64,6 +67,7 @@ class SignUpViewModel @Inject constructor(
 
                         is Resource.Success -> {
                             _verificationState.update { currentState ->
+
                                 currentState.copy(data = resource.response)
                             }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.final_project.presentation.activity.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Component
 import dagger.Module
 import dagger.Provides
@@ -21,6 +22,10 @@ object FirebaseModule {
     @Provides
     @Singleton
     fun provideFirebaseAuth() = FirebaseAuth.getInstance()
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestore() = FirebaseFirestore.getInstance()
 
     @Provides
     fun providePhoneAuthOptions(auth: FirebaseAuth, @ActivityContext activity: Context): PhoneAuthOptions.Builder {

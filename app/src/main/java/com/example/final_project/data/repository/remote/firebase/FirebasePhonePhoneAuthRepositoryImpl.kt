@@ -1,9 +1,9 @@
-package com.example.final_project.data.repository.remote
+package com.example.final_project.data.repository.remote.firebase
 
 import com.example.final_project.data.remote.common.HandleErrorStates
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.di.DispatchersModule.IoDispatcher
-import com.example.final_project.domain.repository.auth.FirebaseAuthRepository
+import com.example.final_project.domain.repository.auth.FirebasePhoneAuthRepository
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -17,10 +17,10 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class FirebaseAuthRepositoryImpl @Inject constructor(
+class FirebasePhonePhoneAuthRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) : FirebaseAuthRepository {
+) : FirebasePhoneAuthRepository {
 
     override suspend fun firebaseSendVerificationCodeToPhoneNumber(phoneNumber: String, optionsBuilder: PhoneAuthOptions.Builder): Flow<Resource<String>> {
         return callbackFlow {

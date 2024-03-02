@@ -22,6 +22,7 @@ object FirebaseModule {
     @Provides
     @Singleton
     fun provideDatabaseReference() = Firebase.database.reference
+
     @Provides
     @Singleton
     fun provideFirebaseAuth() = FirebaseAuth.getInstance()

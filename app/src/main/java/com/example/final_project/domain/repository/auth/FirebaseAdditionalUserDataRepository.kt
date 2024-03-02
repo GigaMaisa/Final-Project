@@ -11,5 +11,4 @@ interface FirebaseAdditionalUserDataRepository {
     suspend fun addUserFullName(userData: GetUserAdditionalData) : Flow<Resource<Boolean>>
     suspend fun addUserEmail(userData: GetUserAdditionalData) : Flow<Resource<Boolean>>
     suspend fun addUserPassword(userData: GetUserAdditionalData) : Flow<Resource<Boolean>>
-    fun getUserUuid() : String
 }

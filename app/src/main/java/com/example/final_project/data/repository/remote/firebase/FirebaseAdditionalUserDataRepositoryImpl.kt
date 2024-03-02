@@ -1,23 +1,18 @@
-package com.example.final_project.data.repository.remote
+package com.example.final_project.data.repository.remote.firebase
 
 import com.example.final_project.data.remote.common.HandleErrorStates
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.di.DispatchersModule.IoDispatcher
 import com.example.final_project.domain.model.GetUserAdditionalData
 import com.example.final_project.domain.repository.auth.FirebaseAdditionalUserDataRepository
-import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.auth.userProfileChangeRequest
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class FirebaseAdditionalUserDataRepositoryImpl @Inject constructor(
@@ -89,9 +84,5 @@ class FirebaseAdditionalUserDataRepositoryImpl @Inject constructor(
             trySend(Resource.Loading(false))
             awaitClose {}
         }.flowOn(ioDispatcher)
-    }
-
-    override fun getUserUuid(): String {
-        return currentUser?.uid ?: throw Exception()
     }
 }

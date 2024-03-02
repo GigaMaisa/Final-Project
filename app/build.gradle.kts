@@ -27,7 +27,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "MOCKY_BASE_URL", "\"https://run.mocky.io/v3/\"")
+        }
+
         release {
+            buildConfigField("String", "MOCKY_BASE_URL", "\"https://run.mocky.io/v3/\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -53,7 +58,6 @@ android {
 
 dependencies {
     implementation("com.hbb20:ccp:2.5.0")
-    implementation("com.github.fraggjkee:sms-confirmation-view:1.8.1")
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")

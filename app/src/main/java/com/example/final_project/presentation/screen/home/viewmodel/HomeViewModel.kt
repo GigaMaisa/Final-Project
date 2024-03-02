@@ -1,21 +1,46 @@
 package com.example.final_project.presentation.screen.home.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.final_project.presentation.model.Offer
+import androidx.lifecycle.viewModelScope
+import com.example.final_project.data.remote.common.Resource
+import com.example.final_project.domain.usecase.home.GetBannersUseCase
+import com.example.final_project.presentation.event.home.HomeEvent
+import com.example.final_project.presentation.mapper.home.toPresentation
+import com.example.final_project.presentation.state.HomeState
+import com.example.final_project.presentation.util.getErrorMessage
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
-    val offers = listOf(
-        Offer(1, "https://cdn.pixabay.com/photo/2016/02/23/17/42/orange-1218158_640.png", "Orange for only today"),
-        Offer(2, "https://cdn.pixabay.com/photo/2016/02/24/17/31/fruit-1220367_640.png", "Grapefruit for only today"),
-        Offer(3, "https://cdn.pixabay.com/photo/2016/03/03/17/15/fruit-1234656_1280.png", "Apple for only today"),
-        Offer(4, "https://pixabay.com/illustrations/fruit-orange-png-transparent-1218158/", "Orange for only today"),
-        Offer(5, "https://pixabay.com/illustrations/fruit-orange-png-transparent-1218158/", "Orange for only today"),
-        Offer(6, "https://pixabay.com/illustrations/fruit-orange-png-transparent-1218158/", "Orange for only today"),
-    )
-    private val _offerStateFlow = MutableStateFlow(offers)
-    val offerStateFlow = _offerStateFlow.asStateFlow()
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val getBannersUseCase: GetBannersUseCase) : ViewModel() {
 
+    private val _homeStateFlow = MutableStateFlow(HomeState())
+    val homeStateFlow = _homeStateFlow.asStateFlow()
 
+    fun onEvent(event: HomeEvent) {
+        when(event) {
+            is HomeEvent.GetBannersEvent -> getBanners()
+            is HomeEvent.UpdateErrorMessageEvent -> updateErrorMessage(errorMessage = event.errorMessage)
+        }
+    }
+
+    private fun getBanners() {
+        viewModelScope.launch {
+            getBannersUseCase().collect {resource ->
+                when(resource) {
+                    is Resource.Loading -> _homeStateFlow.update { currentState -> currentState.copy(isLoading = resource.loading) }
+                    is Resource.Success -> _homeStateFlow.update { currentState -> currentState.copy(banners = resource.response.map { it.toPresentation() }) }
+                    is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
+                }
+            }
+        }
+    }
+
+    private fun updateErrorMessage(errorMessage: Int?) {
+        _homeStateFlow.update { currentState -> currentState.copy(errorMessage = errorMessage) }
+    }
 }

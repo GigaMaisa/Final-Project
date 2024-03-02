@@ -1,6 +1,6 @@
 package com.example.final_project.presentation.state
 
-import com.example.final_project.presentation.model.Contact
+import com.example.final_project.presentation.model.chat.Contact
 
 data class ContactsState(
     val contacts: List<Contact>? = null,

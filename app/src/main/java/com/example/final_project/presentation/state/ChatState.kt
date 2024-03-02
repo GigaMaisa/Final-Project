@@ -1,6 +1,6 @@
 package com.example.final_project.presentation.state
 
-import com.example.final_project.presentation.model.Message
+import com.example.final_project.presentation.model.chat.Message
 
 data class ChatState(
     val messages: MutableList<Message>? = null,

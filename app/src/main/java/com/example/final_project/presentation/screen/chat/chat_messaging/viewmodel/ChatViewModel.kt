@@ -6,9 +6,9 @@ import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.domain.usecase.chat.AddMessageUseCase
 import com.example.final_project.domain.usecase.chat.GetMessagesUseCase
 import com.example.final_project.presentation.event.chat.ChatEvent
-import com.example.final_project.presentation.mapper.toDomain
-import com.example.final_project.presentation.mapper.toPresentation
-import com.example.final_project.presentation.model.Message
+import com.example.final_project.presentation.mapper.chat.toDomain
+import com.example.final_project.presentation.mapper.chat.toPresentation
+import com.example.final_project.presentation.model.chat.Message
 import com.example.final_project.presentation.state.ChatState
 import com.example.final_project.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel

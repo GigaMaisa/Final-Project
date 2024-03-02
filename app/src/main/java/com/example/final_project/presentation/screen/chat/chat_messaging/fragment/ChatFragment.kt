@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.databinding.FragmentChatBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.chat.ChatEvent
-import com.example.final_project.presentation.model.Message
+import com.example.final_project.presentation.model.chat.Message
 import com.example.final_project.presentation.screen.chat.adapter.MessageRecyclerViewAdapter
 import com.example.final_project.presentation.screen.chat.chat_messaging.viewmodel.ChatViewModel
 import com.example.final_project.presentation.state.ChatState

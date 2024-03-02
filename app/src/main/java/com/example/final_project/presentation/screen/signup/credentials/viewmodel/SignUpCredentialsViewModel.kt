@@ -1,6 +1,5 @@
 package com.example.final_project.presentation.screen.signup.credentials.viewmodel
 
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
@@ -11,16 +10,13 @@ import com.example.final_project.domain.usecase.validators.PasswordValidatorUseC
 import com.example.final_project.presentation.event.signup.SendUserDataEvent
 import com.example.final_project.presentation.mapper.toDomain
 import com.example.final_project.presentation.model.AdditionalData
-import com.example.final_project.presentation.screen.signup.start.viewmodel.SignUpNavigationEvents
 import com.example.final_project.presentation.state.AdditionalDataState
-import com.example.final_project.presentation.state.VerificationState
 import com.example.final_project.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject

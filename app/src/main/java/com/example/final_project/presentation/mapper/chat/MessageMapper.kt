@@ -1,7 +1,7 @@
-package com.example.final_project.presentation.mapper
+package com.example.final_project.presentation.mapper.chat
 
-import com.example.final_project.domain.model.GetMessage
-import com.example.final_project.presentation.model.Message
+import com.example.final_project.domain.model.chat.GetMessage
+import com.example.final_project.presentation.model.chat.Message
 
 fun Message.toDomain() = GetMessage(
     id = id,

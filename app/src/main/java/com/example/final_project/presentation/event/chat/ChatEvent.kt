@@ -1,6 +1,6 @@
 package com.example.final_project.presentation.event.chat
 
-import com.example.final_project.presentation.model.Message
+import com.example.final_project.presentation.model.chat.Message
 
 sealed interface ChatEvent {
     class GetMessagesEvent(val receiverUuid: String): ChatEvent

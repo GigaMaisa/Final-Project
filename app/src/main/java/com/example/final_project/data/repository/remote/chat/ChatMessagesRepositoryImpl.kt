@@ -1,11 +1,12 @@
-package com.example.final_project.data.repository.remote
+package com.example.final_project.data.repository.remote.chat
 
 import com.example.final_project.data.remote.common.HandleErrorStates
 import com.example.final_project.data.remote.common.Resource
-import com.example.final_project.data.remote.mapper.toDomain
+import com.example.final_project.data.remote.mapper.chat.toData
+import com.example.final_project.data.remote.mapper.chat.toDomain
 import com.example.final_project.data.remote.model.MessageDto
-import com.example.final_project.domain.model.GetMessage
-import com.example.final_project.domain.repository.ChatRepository
+import com.example.final_project.domain.model.chat.GetMessage
+import com.example.final_project.domain.repository.chat.ChatMessagesRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,7 +22,8 @@ import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
 
-class ChatRepositoryImpl @Inject constructor(private val databaseReference: DatabaseReference) : ChatRepository {
+class ChatMessagesRepositoryImpl @Inject constructor(private val databaseReference: DatabaseReference) :
+    ChatMessagesRepository {
 
     private val senderUid = FirebaseAuth.getInstance().currentUser?.uid
 
@@ -55,13 +57,13 @@ class ChatRepositoryImpl @Inject constructor(private val databaseReference: Data
             val receiverRoom = "$uid$receiverUuid"
 
             val messageId = databaseReference.child("chats").child(senderRoom).child("messages").push().key
-            if (messageId != null) {
-                val senderMessageRef = databaseReference.child("chats").child(senderRoom).child("messages").child(messageId)
-                val receiverMessageRef = databaseReference.child("chats").child(receiverRoom).child("messages").child(messageId)
+            messageId?.let {
+                val senderMessageRef = databaseReference.child("chats").child(senderRoom).child("messages").child(it)
+                val receiverMessageRef = databaseReference.child("chats").child(receiverRoom).child("messages").child(it)
 
-                senderMessageRef.setValue(message)
+                senderMessageRef.setValue(message.toData())
                     .addOnSuccessListener {
-                        receiverMessageRef.setValue(message)
+                        receiverMessageRef.setValue(message.toData())
                     }
                     .addOnFailureListener { exception ->
 

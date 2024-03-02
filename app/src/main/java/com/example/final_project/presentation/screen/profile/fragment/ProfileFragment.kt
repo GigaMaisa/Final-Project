@@ -1,24 +1,34 @@
 package com.example.final_project.presentation.screen.profile.fragment
 
+import android.util.Log.d
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.databinding.FragmentProfileBinding
 import com.example.final_project.presentation.base.BaseFragment
-import com.example.final_project.presentation.screen.profile.bottomsheet.ProfileBottomSheet
+import com.example.final_project.presentation.screen.profile.adapter.ProfileFavouritesRecyclerViewAdapter
 import com.example.final_project.presentation.screen.profile.viewmodel.ProfileViewModel
 import kotlinx.coroutines.launch
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
-    private val modalBottomSheet = ProfileBottomSheet()
     private val viewModel: ProfileViewModel by viewModels()
+    private val favouritesAdapter = ProfileFavouritesRecyclerViewAdapter()
     override fun setUp() {
-        setUpBottomSheet()
+        setUpRecycler()
+        binding.switchMaterial.isChecked = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
     }
 
     override fun setUpListeners() {
+        binding.interactiveImage.setOnClickListener {
+            d("itInteracts", "CLICKED")
+        }
+
+        binding.switchMaterial.setOnCheckedChangeListener { _, isChecked ->
+            changeDarkMode(isChecked)
+        }
     }
 
     override fun setUpObservers() {
@@ -26,19 +36,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.profileStateFlow.collect {
                     it.favourites?.let { favourites ->
-                        modalBottomSheet.submitDataToRecycler(favourites)
+                        favouritesAdapter.submitList(favourites)
                     }
                 }
             }
         }
     }
 
-    private fun setUpBottomSheet() {
-        modalBottomSheet.show(parentFragmentManager, ProfileBottomSheet.Profile_BOTTOM_SHEET)
-        modalBottomSheet.isCancelable = false
-        modalBottomSheet.switchListener = {
-            modalBottomSheet.dismiss()
-            changeDarkMode(it)
+    private fun setUpRecycler() {
+        with(binding.recyclerViewFavourites) {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = favouritesAdapter
         }
     }
 
@@ -49,5 +57,4 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
-
 }

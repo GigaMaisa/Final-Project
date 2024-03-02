@@ -2,14 +2,16 @@ package com.example.final_project.di
 
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
-import com.example.final_project.data.repository.remote.ChatRepositoryImpl
 import com.example.final_project.data.repository.remote.FirebaseAdditionalUserDataRepositoryImpl
 import com.example.final_project.data.repository.remote.FirebaseAuthRepositoryImpl
+import com.example.final_project.data.repository.remote.chat.ChatContactsRepositoryImpl
+import com.example.final_project.data.repository.remote.chat.ChatMessagesRepositoryImpl
 import com.example.final_project.data.repository.remote.home.BannerRepositoryImpl
 import com.example.final_project.di.DispatchersModule.IoDispatcher
-import com.example.final_project.domain.repository.ChatRepository
 import com.example.final_project.domain.repository.auth.FirebaseAdditionalUserDataRepository
 import com.example.final_project.domain.repository.auth.FirebaseAuthRepository
+import com.example.final_project.domain.repository.chat.ChatContactsRepository
+import com.example.final_project.domain.repository.chat.ChatMessagesRepository
 import com.example.final_project.domain.repository.home.BannerRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -37,7 +39,11 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideChatRepository(databaseReference: DatabaseReference): ChatRepository = ChatRepositoryImpl(databaseReference)
+    fun provideChatRepository(databaseReference: DatabaseReference): ChatMessagesRepository = ChatMessagesRepositoryImpl(databaseReference)
+
+    @Provides
+    @Singleton
+    fun provideChatContactsRepository(databaseReference: DatabaseReference): ChatContactsRepository = ChatContactsRepositoryImpl(databaseReference)
 
     @Provides
     @Singleton

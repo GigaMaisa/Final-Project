@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.databinding.ContactRecyclerItemBinding
 import com.example.final_project.presentation.extension.loadImage
-import com.example.final_project.presentation.model.Contact
+import com.example.final_project.presentation.model.chat.Contact
 
 class ContactsRecyclerViewAdapter: ListAdapter<Contact, ContactsRecyclerViewAdapter.ContactViewHolder>(ContactItemDiffCallback) {
 
@@ -24,7 +24,7 @@ class ContactsRecyclerViewAdapter: ListAdapter<Contact, ContactsRecyclerViewAdap
         fun bind() {
             val contact = currentList[adapterPosition]
             with(binding) {
-                contact.imgUrl?.let {
+                contact.imageUrl?.let {
                     shapeableImageViewCover.loadImage(it)
                 }
                 tvFullName.text = contact.fullName
@@ -40,7 +40,7 @@ class ContactsRecyclerViewAdapter: ListAdapter<Contact, ContactsRecyclerViewAdap
         private val ContactItemDiffCallback = object : DiffUtil.ItemCallback<Contact>() {
 
             override fun areItemsTheSame(oldItem: Contact, newItem: Contact): Boolean {
-                return oldItem.uuid == newItem.uuid
+                return oldItem.receiverId == newItem.receiverId
             }
 
             override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean {

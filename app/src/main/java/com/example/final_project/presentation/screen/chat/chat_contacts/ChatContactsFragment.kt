@@ -8,21 +8,25 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.databinding.FragmentChatContactsBinding
 import com.example.final_project.presentation.base.BaseFragment
+import com.example.final_project.presentation.event.chat.ChatContactEvent
 import com.example.final_project.presentation.screen.chat.adapter.ContactsRecyclerViewAdapter
 import com.example.final_project.presentation.state.ContactsState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ChatContactsFragment : BaseFragment<FragmentChatContactsBinding>(FragmentChatContactsBinding::inflate) {
 
     private val viewModel: ChatContactsViewModel by viewModels()
     private val contactsAdapter = ContactsRecyclerViewAdapter()
     override fun setUp() {
         setUpRecycler()
+        viewModel.onEvent(ChatContactEvent.GetContactsEvent)
     }
 
     override fun setUpListeners() {
         contactsAdapter.onContactClick = {
-            findNavController().navigate(ChatContactsFragmentDirections.actionChatPageToChatFragment(it.uuid))
+            findNavController().navigate(ChatContactsFragmentDirections.actionChatPageToChatFragment(it.receiverId!!))
         }
     }
 

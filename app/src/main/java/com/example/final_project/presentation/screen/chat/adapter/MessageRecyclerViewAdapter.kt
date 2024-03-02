@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.databinding.ReceiveMessageRecyclerItemBinding
 import com.example.final_project.databinding.SendMessageRecyclerItemBinding
-import com.example.final_project.presentation.model.Message
+import com.example.final_project.presentation.model.chat.Message
 import com.google.firebase.auth.FirebaseAuth
 
 class MessageRecyclerViewAdapter: ListAdapter<Message, RecyclerView.ViewHolder>(MessageItemDiffCallback) {

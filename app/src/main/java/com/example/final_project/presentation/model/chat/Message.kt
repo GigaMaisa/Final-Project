@@ -1,6 +1,6 @@
-package com.example.final_project.domain.model
+package com.example.final_project.presentation.model.chat
 
-data class GetMessage(
+data class Message(
     val id: Long?,
     val message: String?,
     val senderId: String?

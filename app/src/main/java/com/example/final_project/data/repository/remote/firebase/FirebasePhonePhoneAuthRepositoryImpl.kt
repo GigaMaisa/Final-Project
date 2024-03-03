@@ -28,7 +28,6 @@ class FirebasePhonePhoneAuthRepositoryImpl @Inject constructor(
 
             val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                 override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-
                 }
 
                 override fun onVerificationFailed(exception: FirebaseException) {
@@ -43,9 +42,7 @@ class FirebasePhonePhoneAuthRepositoryImpl @Inject constructor(
             val options = optionsBuilder.setCallbacks(callbacks).build()
             PhoneAuthProvider.verifyPhoneNumber(options)
 
-            awaitClose {
-
-            }
+            awaitClose {}
         }.flowOn(ioDispatcher)
     }
 
@@ -59,9 +56,8 @@ class FirebasePhonePhoneAuthRepositoryImpl @Inject constructor(
                     trySend(Resource.Error(error = HandleErrorStates.handleException(throwable = task.exception!!), throwable = task.exception!!))
                 }
             }
-            awaitClose {
 
-            }
+            awaitClose {}
         }.flowOn(ioDispatcher)
     }
 }

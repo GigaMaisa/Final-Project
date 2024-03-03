@@ -110,7 +110,7 @@ class SignUpCredentialsViewModel @Inject constructor(
         }
     }
 
-    private fun validateFields(fullName: String, email: String, password: String) : Boolean{
+    private fun validateFields(fullName: String, email: String, password: String) : Boolean {
         return if (fullNameValidatorUseCase(fullName)) {
             if (emailValidationUseCase(email)) {
                 passwordValidatorUseCase(password)

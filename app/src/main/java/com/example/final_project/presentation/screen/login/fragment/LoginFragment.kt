@@ -1,5 +1,6 @@
 package com.example.final_project.presentation.screen.login.fragment
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -7,14 +8,23 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.final_project.databinding.FragmentLoginBinding
 import com.example.final_project.presentation.base.BaseFragment
+import com.example.final_project.presentation.event.LoginEvent
 import com.example.final_project.presentation.screen.login.viewmodel.LoginFragmentUiEvents
 import com.example.final_project.presentation.screen.login.viewmodel.LoginViewModel
+import com.example.final_project.presentation.state.VerificationState
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
     private val viewModel: LoginViewModel by viewModels()
+
+    @Inject
+    lateinit var auth: FirebaseAuth
 
     override fun setUp() {
 
@@ -30,17 +40,38 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         }
 
         btnContinue.setOnClickListener {
-            viewModel.onUiEvent(LoginFragmentUiEvents.NavigateToHomePage)
+            val credential = binding.etCredentials.text.toString()
+            viewModel.onEvent(LoginEvent.SignInUserWithCredential(credential, providePhoneAuthOptionsBuilder(credential)))
         }
     }
 
     override fun setUpObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.navigationEvent.collect {
-                    handleNavigationEvents(events = it)
+                launch {
+                    viewModel.navigationEvent.collect {
+                        handleNavigationEvents(events = it)
+                    }
+                }
+
+                launch {
+                    viewModel.verificationState.collect {
+                        handleVerificationState(it)
+                    }
                 }
             }
+        }
+    }
+
+    private fun handleVerificationState(verificationState: VerificationState) = with(binding) {
+        if (verificationState.isLoading) {
+            progressBar.visibility = View.VISIBLE
+        } else {
+            View.GONE
+        }
+
+        verificationState.errorMessage?.let {
+            progressBar.visibility = View.GONE
         }
     }
 
@@ -55,12 +86,23 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             }
 
             is LoginFragmentUiEvents.NavigateToSmsAuthPage -> {
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToPasscodeFragment(events.phoneNumber, verificationId = null))
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToPasscodeFragment(verificationId = events.verificationId, phoneNumber = null))
             }
 
             is LoginFragmentUiEvents.ForgotPassword -> {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
             }
+
+            is LoginFragmentUiEvents.NavigateToEmailPasswordPage -> {
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToPasswordFragment(events.email))
+            }
         }
+    }
+
+    private fun providePhoneAuthOptionsBuilder(phoneNumber: String) : PhoneAuthOptions.Builder {
+        return PhoneAuthOptions.newBuilder(auth)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(requireActivity()).
+            setPhoneNumber(phoneNumber)
     }
 }

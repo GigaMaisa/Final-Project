@@ -7,6 +7,18 @@
     android:background="?android:windowBackground"
     tools:context=".presentation.screen.login.fragment.LoginFragment">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/gradient_end_color"
+        android:progressTint="@color/gradient_start_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivFadedBackground"
         android:layout_width="match_parent"

@@ -1,13 +1,26 @@
 package com.example.final_project.presentation.screen.profile.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.final_project.data.remote.common.Resource
+import com.example.final_project.domain.usecase.firebase.SignOutUseCase
+import com.example.final_project.presentation.event.ProfileNavigationUiEvents
 import com.example.final_project.presentation.model.cart.CartItem
 import com.example.final_project.presentation.state.ProfileState
+import com.example.final_project.presentation.state.SignOutState
+import com.example.final_project.presentation.util.getErrorMessage
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProfileViewModel: ViewModel() {
+@HiltViewModel
+class ProfileViewModel @Inject constructor(private val signOutUseCase: SignOutUseCase): ViewModel() {
     val cartItems = listOf(
         CartItem(1, "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Khinkali_551.jpg/1200px-Khinkali_551.jpg", "Khinkali", "Qartuli", 50.0, 2, 3.5),
         CartItem(2, "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Khinkali_551.jpg/1200px-Khinkali_551.jpg", "Khinkali", "Qartuli", 20.7, 1, 3.5),
@@ -22,7 +35,50 @@ class ProfileViewModel: ViewModel() {
     private val _profileStateFlow = MutableStateFlow(ProfileState())
     val profileStateFlow = _profileStateFlow.asStateFlow()
 
+    private val _uiEvent = MutableSharedFlow<ProfileNavigationUiEvents>()
+    val uiEvent: SharedFlow<ProfileNavigationUiEvents> get() = _uiEvent
+
+    private val _signOutState = MutableStateFlow(SignOutState())
+    val signOutState: StateFlow<SignOutState> get() = _signOutState
+
     init {
         _profileStateFlow.update { currentState -> currentState.copy(favourites = cartItems) }
+    }
+
+    fun onEvent(event: ProfileEvent) {
+        when (event) {
+            is ProfileEvent.SignOutEvent -> logOut()
+        }
+    }
+
+    private fun logOut() {
+        viewModelScope.launch {
+            signOutUseCase().collect {
+                when (it) {
+                    is Resource.Loading -> _signOutState.update { currentState ->
+                        currentState.copy(isLoading = true)
+                    }
+
+                    is Resource.Success -> {
+                        _uiEvent.emit(ProfileNavigationUiEvents.NavigateToLogIn)
+                    }
+
+                    is Resource.Error -> updateErrorMessage(getErrorMessage(it.error))
+                }
+            }
+            _uiEvent.emit(ProfileNavigationUiEvents.NavigateToLogIn)
+        }
+    }
+
+    private fun updateErrorMessage(errorMessage: Int?) {
+        _signOutState.update { currentState ->
+            currentState.copy(errorMessage = errorMessage, isLoading = false)
+        }
+    }
+
+
+
+    sealed class ProfileEvent {
+        data object SignOutEvent: ProfileEvent()
     }
 }

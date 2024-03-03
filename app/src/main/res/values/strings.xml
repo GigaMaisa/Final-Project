@@ -56,4 +56,6 @@
     <string name="error_timeout">Timeout Error</string>
     <string name="unexpected_error">Unexpected Error</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="type_your_password">Type Your Password</string>
+    <string name="login">Login</string>
 </resources>

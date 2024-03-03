@@ -2,7 +2,7 @@ package com.example.final_project.presentation.map
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Build
+import android.util.Log.d
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.example.final_project.R
@@ -26,17 +26,22 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(FragmentMapsBinding::infl
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
+        updateLocationUi(LatLng(41.7934135, 44.8025545))
     }
 
     override fun setUp() {
-        fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+
         updateCurrentLocationUI()
     }
 
     override fun setUpListeners() {
+        binding.btnSelectLocation.setOnClickListener {
+            map.addMarker(MarkerOptions().position(map.projection.visibleRegion.latLngBounds.center))
+            d("selectedLocation", map.projection.visibleRegion.latLngBounds.center.toString())
+        }
     }
 
     override fun setUpObservers() {
@@ -49,24 +54,18 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(FragmentMapsBinding::infl
             locationResult.addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     if (task.result != null) {
-//                        viewModel.onEvent(MapsEvent.ChangeLocationEvent(LatLng(task.result.latitude, task.result.longitude)))
                         updateLocationUi(LatLng(task.result.latitude, task.result.longitude))
                     }
                 } else {
                     map.uiSettings.isMyLocationButtonEnabled = false
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        requestPermission.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
-                    }
-//                    viewModel.onEvent(MapsEvent.ChangeErrorMessage(task.exception?.message.toString()))
+                    requestPermission.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
                 }
             }
         }
     }
 
     private fun updateLocationUi(latLng: LatLng) = with(map) {
-        clear()
         moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.0f))
-        addMarker(MarkerOptions().position(latLng))
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.final_project.di
 
+import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
 import com.example.final_project.data.repository.remote.firebase.FirebaseAdditionalUserDataRepositoryImpl
@@ -7,11 +8,15 @@ import com.example.final_project.data.repository.remote.firebase.FirebasePhonePh
 import com.example.final_project.data.repository.remote.chat.ChatContactsRepositoryImpl
 import com.example.final_project.data.repository.remote.chat.ChatMessagesRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAuthStateRepositoryImpl
+import com.example.final_project.data.repository.remote.firebase.FirebaseEmailLoginRepositoryImpl
+import com.example.final_project.data.repository.remote.firebase.FirebaseSignOutRepositoryImpl
 import com.example.final_project.data.repository.remote.home.BannerRepositoryImpl
 import com.example.final_project.di.DispatchersModule.IoDispatcher
 import com.example.final_project.domain.repository.auth.FirebaseAdditionalUserDataRepository
 import com.example.final_project.domain.repository.auth.FirebaseAuthStateRepository
+import com.example.final_project.domain.repository.auth.FirebaseEmailLoginRepository
 import com.example.final_project.domain.repository.auth.FirebasePhoneAuthRepository
+import com.example.final_project.domain.repository.auth.FirebaseSignOutRepository
 import com.example.final_project.domain.repository.chat.ChatContactsRepository
 import com.example.final_project.domain.repository.chat.ChatMessagesRepository
 import com.example.final_project.domain.repository.home.BannerRepository
@@ -37,6 +42,18 @@ object RepositoryModule {
     @Singleton
     fun provideFirebaseAdditionalUserDataRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebaseAdditionalUserDataRepository {
         return FirebaseAdditionalUserDataRepositoryImpl(auth = auth, ioDispatcher = ioDispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseSignOutRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebaseSignOutRepository {
+        return FirebaseSignOutRepositoryImpl(auth = auth, ioDispatcher = ioDispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEmailSignInRepository(auth: FirebaseAuth, emailSignInResponseHandler: EmailSignInResponseHandler) : FirebaseEmailLoginRepository {
+        return FirebaseEmailLoginRepositoryImpl(auth = auth, emailSignInResponseHandler = emailSignInResponseHandler)
     }
 
     @Provides

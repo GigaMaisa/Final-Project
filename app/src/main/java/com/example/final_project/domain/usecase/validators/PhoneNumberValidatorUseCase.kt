@@ -4,8 +4,7 @@ import javax.inject.Inject
 
 class PhoneNumberValidatorUseCase @Inject constructor() {
     operator fun invoke(phoneNumber: String) : Boolean {
-        val pattern = Regex("\\d{9}")
-
-        return true
+        val phoneNumberPattern = Regex("^\\+995[0-9]{9}\$")
+        return phoneNumberPattern.matches(phoneNumber)
     }
 }

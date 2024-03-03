@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/placeholderDestination">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/welcomeFragment"
@@ -42,6 +42,9 @@
             app:destination="@id/placeholderDestination"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_passwordFragment"
+            app:destination="@id/passwordFragment" />
     </fragment>
 
     <fragment
@@ -88,6 +91,9 @@
             android:name="verificationId"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_passcodeFragment_to_placeholderDestination"
+            app:destination="@id/placeholderDestination" />
     </fragment>
 
     <fragment
@@ -140,8 +146,23 @@
             app:destination="@id/loginFragment" />
     </fragment>
     <fragment
-        android:id="@+id/mapsFragment"
-        android:name="com.example.final_project.presentation.map.MapsFragment"
-        android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        android:id="@+id/profileFragment"
+        android:name="com.example.final_project.presentation.screen.profile.fragment.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordFragment"
+        android:name="com.example.final_project.presentation.screen.password.fragment.PasswordFragment"
+        android:label="fragment_password"
+        tools:layout="@layout/fragment_password" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_passwordFragment_to_placeholderDestination"
+            app:destination="@id/placeholderDestination" />
+    </fragment>
 </navigation>

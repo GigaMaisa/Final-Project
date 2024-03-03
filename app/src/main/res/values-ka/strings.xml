@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Final-Project</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="find_your_comfort_food_here">თქვენი საყვარელი რესტორნები</string>
     <string name="here_you_can_find_a_chef_or_dish_for_every_taste_and_color_enjoy">აქ შეგიძლიათ აღმოაჩინოთ კერძები ნებისმიერი გემოვნების ადამიანისთვის</string>

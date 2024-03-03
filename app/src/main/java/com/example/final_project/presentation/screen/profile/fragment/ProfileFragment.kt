@@ -29,7 +29,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     override fun setUpListeners() {
-        binding.interactiveImage.setOnClickListener {
+        binding.imageViewProfile.setOnClickListener {
             d("itInteracts", "CLICKED")
         }
 
@@ -37,7 +37,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             changeDarkMode(isChecked)
         }
 
-        binding.btnLogout.setOnClickListener {
+        binding.btnLogOut.setOnClickListener {
             viewModel.onEvent(ProfileViewModel.ProfileEvent.SignOutEvent)
         }
     }

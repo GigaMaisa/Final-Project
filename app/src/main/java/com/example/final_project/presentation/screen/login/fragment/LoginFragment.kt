@@ -6,6 +6,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.final_project.R
 import com.example.final_project.databinding.FragmentLoginBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.LoginEvent
@@ -20,14 +21,14 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
+class  LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
     private val viewModel: LoginViewModel by viewModels()
 
     @Inject
     lateinit var auth: FirebaseAuth
 
     override fun setUp() {
-
+        findNavController().popBackStack(R.id.loginFragment, false)
     }
 
     override fun setUpListeners() = with(binding) {

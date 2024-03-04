@@ -1,6 +1,5 @@
 package com.example.final_project.presentation.screen.login.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
@@ -75,7 +74,6 @@ class LoginViewModel @Inject constructor(
     private fun sendVerification(credential: String, options: PhoneAuthOptions.Builder) {
         viewModelScope.launch {
             if (phoneNumberValidatorUseCase(credential)) {
-                Log.d("telefoni bliad", credential)
                 sendVerificationCodeUseCase(credential, options).collect { resource ->
                     when (resource) {
                         is Resource.Loading -> _verificationState.update { currentState ->

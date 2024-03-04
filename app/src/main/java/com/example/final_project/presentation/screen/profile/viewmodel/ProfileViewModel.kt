@@ -1,11 +1,16 @@
 package com.example.final_project.presentation.screen.profile.viewmodel
 
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
+import com.example.final_project.domain.usecase.firebase.RetrievePhotoUseCase
 import com.example.final_project.domain.usecase.firebase.SignOutUseCase
+import com.example.final_project.domain.usecase.firebase.UploadPhotoUseCase
 import com.example.final_project.presentation.event.ProfileNavigationUiEvents
 import com.example.final_project.presentation.model.cart.CartItem
+import com.example.final_project.presentation.state.PhotoState
 import com.example.final_project.presentation.state.ProfileState
 import com.example.final_project.presentation.state.SignOutState
 import com.example.final_project.presentation.util.getErrorMessage
@@ -20,7 +25,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(private val signOutUseCase: SignOutUseCase): ViewModel() {
+class ProfileViewModel @Inject constructor(
+    private val signOutUseCase: SignOutUseCase,
+    private val uploadPhotoUseCase: UploadPhotoUseCase,
+    private val retrievePhotoUseCase: RetrievePhotoUseCase
+): ViewModel() {
     val cartItems = listOf(
         CartItem(1, "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Khinkali_551.jpg/1200px-Khinkali_551.jpg", "Khinkali", "Qartuli", 50.0, 2, 3.5),
         CartItem(2, "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Khinkali_551.jpg/1200px-Khinkali_551.jpg", "Khinkali", "Qartuli", 20.7, 1, 3.5),
@@ -41,6 +50,12 @@ class ProfileViewModel @Inject constructor(private val signOutUseCase: SignOutUs
     private val _signOutState = MutableStateFlow(SignOutState())
     val signOutState: StateFlow<SignOutState> get() = _signOutState
 
+    private val _imageUploadStatus = MutableStateFlow(PhotoState())
+    val imageUploadStatus: StateFlow<PhotoState> = _imageUploadStatus
+
+    private val _userImage = MutableStateFlow(PhotoState())
+    val userImageFlow: StateFlow<PhotoState> = _userImage
+
     init {
         _profileStateFlow.update { currentState -> currentState.copy(favourites = cartItems) }
     }
@@ -48,6 +63,68 @@ class ProfileViewModel @Inject constructor(private val signOutUseCase: SignOutUs
     fun onEvent(event: ProfileEvent) {
         when (event) {
             is ProfileEvent.SignOutEvent -> logOut()
+            is ProfileEvent.GetPhotoEvent -> getImage()
+            is ProfileEvent.UploadPhotoEvent -> uploadImage(imageUri = event.imageUri)
+        }
+    }
+
+    private fun getImage() {
+        viewModelScope.launch {
+            retrievePhotoUseCase().collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        _userImage.update { currentState ->
+                            currentState.copy(isLoading = true)
+                        }
+                    }
+
+                    is Resource.Success -> {
+                        Log.d("RACXA VIEWMODEL", it.response)
+                        _userImage.update { currentState ->
+                            currentState.copy(imageUri = it.response, isLoading = false)
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        Log.d("RACXA VIEWMODEL", "${it.error.errorCode}")
+
+                        _userImage.update { currentState ->
+                            currentState.copy(errorMessage = getErrorMessage(it.error), isLoading = false)
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    private fun uploadImage(imageUri: Uri) {
+        viewModelScope.launch {
+            uploadPhotoUseCase(imageUri).collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        _imageUploadStatus.update { currentState ->
+                            currentState.copy(isLoading = true)
+                        }
+                    }
+
+                    is Resource.Success -> {
+                        Log.d("RACXA VIEWMODEL", it.response)
+                        _imageUploadStatus.update { currentState ->
+                            currentState.copy(imageUri = it.response, isLoading = false)
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        Log.d("RACXA VIEWMODEL", "${it.error.errorCode}")
+
+                        _imageUploadStatus.update { currentState ->
+                            currentState.copy(errorMessage = getErrorMessage(it.error), isLoading = false)
+                        }
+                    }
+                }
+
+            }
         }
     }
 
@@ -55,15 +132,19 @@ class ProfileViewModel @Inject constructor(private val signOutUseCase: SignOutUs
         viewModelScope.launch {
             signOutUseCase().collect {
                 when (it) {
-                    is Resource.Loading -> _signOutState.update { currentState ->
-                        currentState.copy(isLoading = true)
+                    is Resource.Loading -> {
+                        _signOutState.update { currentState ->
+                            currentState.copy(isLoading = true)
+                        }
                     }
 
                     is Resource.Success -> {
                         _uiEvent.emit(ProfileNavigationUiEvents.NavigateToLogIn)
                     }
 
-                    is Resource.Error -> updateErrorMessage(getErrorMessage(it.error))
+                    is Resource.Error -> {
+                        updateErrorMessage(getErrorMessage(it.error))
+                    }
                 }
             }
             _uiEvent.emit(ProfileNavigationUiEvents.NavigateToLogIn)
@@ -80,5 +161,7 @@ class ProfileViewModel @Inject constructor(private val signOutUseCase: SignOutUs
 
     sealed class ProfileEvent {
         data object SignOutEvent: ProfileEvent()
+        data class UploadPhotoEvent(val imageUri: Uri): ProfileEvent()
+        data object GetPhotoEvent: ProfileEvent()
     }
 }

@@ -62,4 +62,8 @@
     <string name="select_location">აირჩიეთ ლოკაცია</string>
     <string name="english">ინგლისური</string>
     <string name="georgian">ქართული</string>
+    <string name="type_a_message">შეიყვანეთ მესიჯი</string>
+    <string name="favourites">ფავორიტები</string>
+    <string name="settings">პარამეტრები</string>
+    <string name="log_out">გასვლა</string>
 </resources>

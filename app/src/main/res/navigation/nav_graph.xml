@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/placeholderDestination">
 
     <fragment
         android:id="@+id/welcomeFragment"
@@ -131,7 +131,11 @@
         android:id="@+id/restaurantDetailsFragment"
         android:name="com.example.final_project.presentation.screen.restoraunt_details.fragment.RestaurantDetailsFragment"
         android:label="fragment_restoraunt_details"
-        tools:layout="@layout/fragment_restoraunt_details" />
+        tools:layout="@layout/fragment_restoraunt_details" >
+        <action
+            android:id="@+id/action_restaurantDetailsFragment_to_restaurantBottomSheet"
+            app:destination="@id/restaurantBottomSheet" />
+    </fragment>
 
     <fragment
         android:id="@+id/placeholderDestination"
@@ -165,4 +169,8 @@
             android:id="@+id/action_passwordFragment_to_placeholderDestination"
             app:destination="@id/placeholderDestination" />
     </fragment>
+    <dialog
+        android:id="@+id/restaurantBottomSheet"
+        android:name="com.example.final_project.presentation.screen.restoraunt_details.bottomsheet.RestaurantBottomSheet"
+        android:label="RestaurantBottomSheet" />
 </navigation>

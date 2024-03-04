@@ -23,8 +23,9 @@
         android:layout_height="74dp"
         android:layout_weight="85"
         android:background="@drawable/edit_text_background"
-        android:hint="Type a message"
+        android:hint="@string/type_a_message"
         android:paddingHorizontal="30dp"
+        android:textColor="?android:textColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

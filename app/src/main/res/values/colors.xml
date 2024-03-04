@@ -23,4 +23,5 @@
     <color name="edit_text_input">#262626</color>
     <color name="gradient_start_color_disabled">#B3E0B2</color>
     <color name="gradient_end_color_disabled">#8FD5A5</color>
+    <color name="dark_mode_background">#191919</color>
 </resources>

@@ -2,11 +2,15 @@ package com.example.final_project.presentation.screen.profile.fragment
 
 import android.util.Log.d
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.R
@@ -26,6 +30,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     override fun setUp() {
         setUpRecycler()
         binding.switchMaterial.isChecked = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+        setUpSpinner()
     }
 
     override fun setUpListeners() {
@@ -84,21 +89,42 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private fun handleSignOutState(state: SignOutState) = with(binding) {
-        if (state.isLoading) {
-            progressBar.visibility = View.VISIBLE
-        } else {
-            View.GONE
-        }
+        progressBar.isVisible = state.isLoading
 
         state.errorMessage?.let {
             progressBar.visibility = View.GONE
         }
     }
 
+    private fun setUpSpinner() {
+        val languages = listOf(getStringResource(R.string.english), getStringResource(R.string.georgian))
+        val adapter = ArrayAdapter(requireContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, languages)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerLanguages.adapter = adapter
+
+        binding.spinnerLanguages.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedLanguage = languages[position]
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+    }
+
+    private fun getStringResource(resourceId: Int): String {
+        return resources.getString(resourceId)
+    }
+
     private fun handleNavigationEvents(event: ProfileNavigationUiEvents) {
         when (event) {
             is ProfileNavigationUiEvents.NavigateToLogIn -> {
-                requireActivity().findNavController(R.id.nav_host_fragment).navigate(R.id.loginFragment)
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.placeholderDestination, true)
+                    .build()
+
+                requireActivity().findNavController(R.id.nav_host_fragment).navigate(R.id.loginFragment, null, navOptions)
             }
         }
     }

@@ -4,16 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.final_project.databinding.RestaurantDetailsBottomSheetDialogBinding
-import com.example.final_project.presentation.model.RestaurantMenu
 import com.example.final_project.presentation.screen.restoraunt_details.adapter.RestaurantMenuRecyclerViewAdapter
+import com.example.final_project.presentation.screen.restoraunt_details.viewmodel.RestaurantDetailsViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.launch
 
 class RestaurantBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: RestaurantDetailsBottomSheetDialogBinding
     private val restaurantMenuAdapter = RestaurantMenuRecyclerViewAdapter()
+    private val viewModel: RestaurantDetailsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +34,27 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpRecycler()
-        val bottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
+        setUpObservers()
+        setUpBottomSheetBehavior()
+    }
+
+    private fun setUpRecycler() = with(binding.recyclerViewMenu) {
+        layoutManager = GridLayoutManager(context, 2)
+        adapter = restaurantMenuAdapter
+    }
+
+    private fun setUpObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.restaurantMenuStateFlow.collect {
+                    restaurantMenuAdapter.submitList(it)
+                }
+            }
+        }
+    }
+
+    private fun setUpBottomSheetBehavior() {
+        val bottomSheetBehavior = BottomSheetBehavior.from(view?.parent as View)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
         bottomSheetBehavior.peekHeight = 800
         bottomSheetBehavior.isHideable = false
@@ -41,18 +67,5 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
         })
-    }
-
-    fun submitDataToRecycler(list: List<RestaurantMenu>) {
-        restaurantMenuAdapter.submitList(list)
-    }
-
-    private fun setUpRecycler() = with(binding.recyclerViewMenu) {
-        layoutManager = GridLayoutManager(context, 2)
-        adapter = restaurantMenuAdapter
-    }
-
-    companion object {
-        const val RESTAURANT_BOTTOM_SHEET = "RestaurantBottomSheet"
     }
 }

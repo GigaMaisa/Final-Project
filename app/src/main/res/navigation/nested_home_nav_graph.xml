@@ -18,7 +18,7 @@
         android:id="@+id/homePage"
         android:name="com.example.final_project.presentation.screen.home.fragment.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home"/>
     <fragment
         android:id="@+id/profilePage"
         android:name="com.example.final_project.presentation.screen.profile.fragment.ProfileFragment"

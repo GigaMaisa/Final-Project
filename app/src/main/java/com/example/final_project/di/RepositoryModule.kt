@@ -9,6 +9,7 @@ import com.example.final_project.data.repository.remote.chat.ChatContactsReposit
 import com.example.final_project.data.repository.remote.chat.ChatMessagesRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAuthStateRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseEmailLoginRepositoryImpl
+import com.example.final_project.data.repository.remote.firebase.FirebasePhotosRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseSignOutRepositoryImpl
 import com.example.final_project.data.repository.remote.home.BannerRepositoryImpl
 import com.example.final_project.di.DispatchersModule.IoDispatcher
@@ -19,9 +20,11 @@ import com.example.final_project.domain.repository.auth.FirebasePhoneAuthReposit
 import com.example.final_project.domain.repository.auth.FirebaseSignOutRepository
 import com.example.final_project.domain.repository.chat.ChatContactsRepository
 import com.example.final_project.domain.repository.chat.ChatMessagesRepository
+import com.example.final_project.domain.repository.firebase.FirebasePhotosRepository
 import com.example.final_project.domain.repository.home.BannerRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -60,6 +63,12 @@ object RepositoryModule {
     @Singleton
     fun provideFirebaseAuthStateRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebaseAuthStateRepository {
         return FirebaseAuthStateRepositoryImpl(auth = auth, ioDispatcher = ioDispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebasePhotosRepository(auth: FirebaseAuth, firebaseStorage: FirebaseStorage) : FirebasePhotosRepository {
+        return FirebasePhotosRepositoryImpl(auth = auth, firebaseStorage = firebaseStorage)
     }
 
     @Provides

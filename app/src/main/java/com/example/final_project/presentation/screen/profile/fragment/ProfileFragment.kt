@@ -1,9 +1,12 @@
 package com.example.final_project.presentation.screen.profile.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.util.Log.d
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -17,33 +20,51 @@ import com.example.final_project.R
 import com.example.final_project.databinding.FragmentProfileBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.ProfileNavigationUiEvents
+import com.example.final_project.presentation.extension.loadImage
 import com.example.final_project.presentation.screen.profile.adapter.ProfileFavouritesRecyclerViewAdapter
 import com.example.final_project.presentation.screen.profile.viewmodel.ProfileViewModel
+import com.example.final_project.presentation.state.PhotoState
 import com.example.final_project.presentation.state.SignOutState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
     private val viewModel: ProfileViewModel by viewModels()
     private val favouritesAdapter = ProfileFavouritesRecyclerViewAdapter()
+
+    private val pickImageResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val selectedImageUri = result.data?.data
+            selectedImageUri?.let {
+                viewModel.onEvent(ProfileViewModel.ProfileEvent.UploadPhotoEvent(it))
+            }
+        }
+    }
+
     override fun setUp() {
+        viewModel.onEvent(ProfileViewModel.ProfileEvent.GetPhotoEvent)
         setUpRecycler()
         binding.switchMaterial.isChecked = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
         setUpSpinner()
     }
 
-    override fun setUpListeners() {
-        binding.imageViewProfile.setOnClickListener {
+    override fun setUpListeners() = with(binding) {
+        imageViewProfile.setOnClickListener {
             d("itInteracts", "CLICKED")
         }
 
-        binding.switchMaterial.setOnCheckedChangeListener { _, isChecked ->
+        switchMaterial.setOnCheckedChangeListener { _, isChecked ->
             changeDarkMode(isChecked)
         }
 
-        binding.btnLogOut.setOnClickListener {
+        btnLogOut.setOnClickListener {
             viewModel.onEvent(ProfileViewModel.ProfileEvent.SignOutEvent)
+        }
+
+        imageViewProfile.setOnClickListener {
+            selectImage()
         }
     }
 
@@ -69,8 +90,38 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                         handleNavigationEvents(it)
                     }
                 }
+
+                launch {
+                    viewModel.imageUploadStatus.collect {
+                        handlePhotoState(it)
+                    }
+                }
+
+                launch {
+                    viewModel.userImageFlow.collect {
+                        handlePhotoState(it)
+                    }
+                }
             }
         }
+    }
+
+    private fun handlePhotoState(state: PhotoState) = with(binding) {
+        progressBar.isVisible = state.isLoading
+
+        state.errorMessage?.let {
+            progressBar.visibility = View.GONE
+        }
+
+        state.imageUri?.let {
+            imageViewProfile.loadImage(it)
+        }
+    }
+
+    private fun selectImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        pickImageResultLauncher.launch(intent)
     }
 
     private fun setUpRecycler() {

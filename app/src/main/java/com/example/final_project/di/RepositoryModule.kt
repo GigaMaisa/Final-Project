@@ -11,6 +11,7 @@ import com.example.final_project.data.repository.remote.firebase.FirebaseAuthSta
 import com.example.final_project.data.repository.remote.firebase.FirebaseEmailLoginRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebasePhotosRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseSignOutRepositoryImpl
+import com.example.final_project.data.repository.remote.firebase.FirebaseUserDataRepositoryImpl
 import com.example.final_project.data.repository.remote.home.BannerRepositoryImpl
 import com.example.final_project.di.DispatchersModule.IoDispatcher
 import com.example.final_project.domain.repository.auth.FirebaseAdditionalUserDataRepository
@@ -21,6 +22,7 @@ import com.example.final_project.domain.repository.auth.FirebaseSignOutRepositor
 import com.example.final_project.domain.repository.chat.ChatContactsRepository
 import com.example.final_project.domain.repository.chat.ChatMessagesRepository
 import com.example.final_project.domain.repository.firebase.FirebasePhotosRepository
+import com.example.final_project.domain.repository.firebase.FirebaseUserDataRepository
 import com.example.final_project.domain.repository.home.BannerRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -63,6 +65,12 @@ object RepositoryModule {
     @Singleton
     fun provideFirebaseAuthStateRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebaseAuthStateRepository {
         return FirebaseAuthStateRepositoryImpl(auth = auth, ioDispatcher = ioDispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseUserDataRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebaseUserDataRepository {
+        return FirebaseUserDataRepositoryImpl(auth = auth, ioDispatcher = ioDispatcher)
     }
 
     @Provides

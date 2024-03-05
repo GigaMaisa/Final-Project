@@ -1,8 +1,10 @@
 package com.example.final_project.di
 
+import com.example.final_project.data.local.dao.DeliveryLocationDao
 import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
+import com.example.final_project.data.repository.local.delivery_location.DeliveryLocationRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAdditionalUserDataRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebasePhonePhoneAuthRepositoryImpl
 import com.example.final_project.data.repository.remote.chat.ChatContactsRepositoryImpl
@@ -19,6 +21,7 @@ import com.example.final_project.domain.repository.auth.FirebasePhoneAuthReposit
 import com.example.final_project.domain.repository.auth.FirebaseSignOutRepository
 import com.example.final_project.domain.repository.chat.ChatContactsRepository
 import com.example.final_project.domain.repository.chat.ChatMessagesRepository
+import com.example.final_project.domain.repository.delivery_location.DeliveryLocationRepository
 import com.example.final_project.domain.repository.home.BannerRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -32,6 +35,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
+
+    @Provides
+    @Singleton
+    fun provideDeliveryLocationRepository(dao: DeliveryLocationDao): DeliveryLocationRepository = DeliveryLocationRepositoryImpl(deliveryLocationDao = dao)
+
+
     @Provides
     @Singleton
     fun provideFirebaseAuthRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebasePhoneAuthRepository {

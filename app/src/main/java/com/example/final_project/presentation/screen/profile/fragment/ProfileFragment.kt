@@ -25,8 +25,8 @@ import com.example.final_project.presentation.screen.profile.adapter.ProfileFavo
 import com.example.final_project.presentation.screen.profile.viewmodel.ProfileViewModel
 import com.example.final_project.presentation.state.PhotoState
 import com.example.final_project.presentation.state.SignOutState
+import com.example.final_project.presentation.state.UserDataState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -45,6 +45,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     override fun setUp() {
         viewModel.onEvent(ProfileViewModel.ProfileEvent.GetPhotoEvent)
+        viewModel.onEvent(ProfileViewModel.ProfileEvent.GetUserDataEvent)
         setUpRecycler()
         binding.switchMaterial.isChecked = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
         setUpSpinner()
@@ -102,7 +103,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                         handlePhotoState(it)
                     }
                 }
+
+                launch {
+                    viewModel.userDataFlow.collect {
+                        handleUserDataState(it)
+                    }
+                }
             }
+        }
+    }
+
+    private fun handleUserDataState(state: UserDataState) = with(binding) {
+        progressBar.isVisible = state.isLoading
+
+        state.userData?.let {
+            tvTitle.text = it.fullName
+            tvDescription.text = it.email
+            tvPhoneNumber.text = it.phoneNumber
         }
     }
 

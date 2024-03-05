@@ -5,14 +5,17 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
+import com.example.final_project.domain.usecase.firebase.GetUserDataUseCase
 import com.example.final_project.domain.usecase.firebase.RetrievePhotoUseCase
 import com.example.final_project.domain.usecase.firebase.SignOutUseCase
 import com.example.final_project.domain.usecase.firebase.UploadPhotoUseCase
 import com.example.final_project.presentation.event.ProfileNavigationUiEvents
+import com.example.final_project.presentation.mapper.toPresentation
 import com.example.final_project.presentation.model.cart.CartItem
 import com.example.final_project.presentation.state.PhotoState
 import com.example.final_project.presentation.state.ProfileState
 import com.example.final_project.presentation.state.SignOutState
+import com.example.final_project.presentation.state.UserDataState
 import com.example.final_project.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,6 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,6 +31,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val signOutUseCase: SignOutUseCase,
+    private val getUserDataUseCase: GetUserDataUseCase,
     private val uploadPhotoUseCase: UploadPhotoUseCase,
     private val retrievePhotoUseCase: RetrievePhotoUseCase
 ): ViewModel() {
@@ -56,6 +61,9 @@ class ProfileViewModel @Inject constructor(
     private val _userImage = MutableStateFlow(PhotoState())
     val userImageFlow: StateFlow<PhotoState> = _userImage
 
+    private val _userDataFlow = MutableStateFlow(UserDataState())
+    val userDataFlow = _userDataFlow.asStateFlow()
+
     init {
         _profileStateFlow.update { currentState -> currentState.copy(favourites = cartItems) }
     }
@@ -64,7 +72,30 @@ class ProfileViewModel @Inject constructor(
         when (event) {
             is ProfileEvent.SignOutEvent -> logOut()
             is ProfileEvent.GetPhotoEvent -> getImage()
+            is ProfileEvent.GetUserDataEvent -> getUserData()
             is ProfileEvent.UploadPhotoEvent -> uploadImage(imageUri = event.imageUri)
+        }
+    }
+
+    private fun getUserData() {
+        viewModelScope.launch {
+            getUserDataUseCase().collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        _userDataFlow.update { currentState ->
+                            currentState.copy(isLoading = true)
+                        }
+                    }
+
+                    is Resource.Success -> {
+                        _userDataFlow.update { currentState ->
+                            currentState.copy(userData = it.response.toPresentation(), isLoading = false)
+                        }
+                    }
+
+                    is Resource.Error -> {}
+                }
+            }
         }
     }
 
@@ -161,6 +192,7 @@ class ProfileViewModel @Inject constructor(
 
     sealed class ProfileEvent {
         data object SignOutEvent: ProfileEvent()
+        data object GetUserDataEvent: ProfileEvent()
         data class UploadPhotoEvent(val imageUri: Uri): ProfileEvent()
         data object GetPhotoEvent: ProfileEvent()
     }

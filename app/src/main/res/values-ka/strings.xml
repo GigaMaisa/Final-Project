@@ -66,4 +66,26 @@
     <string name="favourites">ფავორიტები</string>
     <string name="settings">პარამეტრები</string>
     <string name="log_out">გასვლა</string>
+    <string name="home_home">სახლი</string>
+    <string name="work">სამუშაო</string>
+    <string name="other">სხვა</string>
+    <string name="select_address">აირჩიე მისამართი</string>
+    <string name="address">მისამართი</string>
+    <string name="location_type">ლოკაციის ტიპი</string>
+    <string name="the_location_type_helps_us_find_you_better">ლოკაციის ტიპი გვეხმარება თქვენს პოვნაში</string>
+    <string name="apartment">ბინა</string>
+    <string name="house">სახლი</string>
+    <string name="office">ოფისი</string>
+    <string name="address_details">მისამართი დეტალები</string>
+    <string name="building_name">შენობის სახელი</string>
+    <string name="entrance">სადარბაზო</string>
+    <string name="floor">სართული</string>
+    <string name="description">აღწერა</string>
+    <string name="other_instruction_for_courier">სხვა ინსტრუქციები კურიერისთვის</string>
+    <string name="address_type">მისამართი ტიპი</string>
+    <string name="add_or_create_address_labels_to_easily_choose_between_delivery_addresses">დაამატეთ ანდ შექმენით მისამართი ტიპები რათა მარტივად შეძლოთ მისამართების გარჩევა</string>
+    <string name="add_address_details">დაამატეთ მისამართი დეტალები</string>
+    <string name="optional">ნებაყოფლობითი</string>
+    <string name="fill_all_fields">შეავსეთ ყველა სავალდებულო ველი</string>
+    <string name="fill_number_fields">შეიყვანეთ რიცხვები სწორად</string>
 </resources>

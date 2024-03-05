@@ -23,4 +23,14 @@
         <item name="android:color">@color/light_green</item>
         <item name="android:popupBackground">@drawable/circle_background</item>
     </style>
+
+    <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:dropDownSelector">@style/CustomArrowStyle</item>
+    </style>
+
+    <style name="CustomArrowStyle" parent="Widget.AppCompat.Spinner.DropDown">
+        <item name="android:tint">@color/green</item>
+        <item name="android:dropDownSelector">@drawable/ic_dropdown_arrow</item>
+    </style>
 </resources>

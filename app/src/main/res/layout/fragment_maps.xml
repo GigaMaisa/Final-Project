@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/map"
-        tools:context=".presentation.map.MapsFragment"
+        tools:context=".presentation.screen.map.MapsFragment"
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -29,5 +30,14 @@
         android:text="@string/select_location"
         android:textAllCaps="false"
         android:textColor="@color/white"/>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/autocomplete_fragment"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:background="@drawable/edit_text_background"
+        android:layout_gravity="top|center"
+        android:layout_height="wrap_content" />
 
 </FrameLayout>

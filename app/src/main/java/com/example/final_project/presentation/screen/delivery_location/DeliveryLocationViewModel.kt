@@ -25,7 +25,7 @@ import javax.inject.Inject
 class DeliveryLocationViewModel @Inject constructor(
     private val emptyNumberFieldsValidationUseCase: EmptyNumberFieldsValidationUseCase,
     private val emptyFieldsValidationUseCase: EmptyFieldsValidationUseCase,
-    private getDeliveryLocationsUseCase: GetDeliveryLocationsUseCase,
+    getDeliveryLocationsUseCase: GetDeliveryLocationsUseCase,
     private val addDeliveryLocationUseCase: AddDeliveryLocationUseCase
 ) : ViewModel() {
     private val _deliveryLocationStateFlow = MutableStateFlow(DeliveryLocationState())

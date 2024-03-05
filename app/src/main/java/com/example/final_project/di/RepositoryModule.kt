@@ -1,17 +1,20 @@
 package com.example.final_project.di
 
-import com.example.final_project.data.local.dao.DeliveryLocationDao
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
-import com.example.final_project.data.repository.local.delivery_location.DeliveryLocationRepositoryImpl
+import com.example.final_project.data.repository.local.datastore.DataStoreRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAdditionalUserDataRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebasePhonePhoneAuthRepositoryImpl
 import com.example.final_project.data.repository.remote.chat.ChatContactsRepositoryImpl
 import com.example.final_project.data.repository.remote.chat.ChatMessagesRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAuthStateRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseEmailLoginRepositoryImpl
+import com.example.final_project.data.repository.remote.firebase.FirebasePhotosRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseSignOutRepositoryImpl
+import com.example.final_project.data.repository.remote.firebase.FirebaseUserDataRepositoryImpl
 import com.example.final_project.data.repository.remote.home.BannerRepositoryImpl
 import com.example.final_project.di.DispatchersModule.IoDispatcher
 import com.example.final_project.domain.repository.auth.FirebaseAdditionalUserDataRepository
@@ -21,10 +24,13 @@ import com.example.final_project.domain.repository.auth.FirebasePhoneAuthReposit
 import com.example.final_project.domain.repository.auth.FirebaseSignOutRepository
 import com.example.final_project.domain.repository.chat.ChatContactsRepository
 import com.example.final_project.domain.repository.chat.ChatMessagesRepository
-import com.example.final_project.domain.repository.delivery_location.DeliveryLocationRepository
+import com.example.final_project.domain.repository.datastore.DataStoreRepository
+import com.example.final_project.domain.repository.firebase.FirebasePhotosRepository
+import com.example.final_project.domain.repository.firebase.FirebaseUserDataRepository
 import com.example.final_project.domain.repository.home.BannerRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,11 +41,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
-
     @Provides
     @Singleton
-    fun provideDeliveryLocationRepository(dao: DeliveryLocationDao): DeliveryLocationRepository = DeliveryLocationRepositoryImpl(deliveryLocationDao = dao)
-
+    fun provideDataStoreRepository(dataStore: DataStore<Preferences>) : DataStoreRepository {
+        return DataStoreRepositoryImpl(dataStore = dataStore)
+    }
 
     @Provides
     @Singleton
@@ -69,6 +75,18 @@ object RepositoryModule {
     @Singleton
     fun provideFirebaseAuthStateRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebaseAuthStateRepository {
         return FirebaseAuthStateRepositoryImpl(auth = auth, ioDispatcher = ioDispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseUserDataRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebaseUserDataRepository {
+        return FirebaseUserDataRepositoryImpl(auth = auth, ioDispatcher = ioDispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebasePhotosRepository(auth: FirebaseAuth, firebaseStorage: FirebaseStorage) : FirebasePhotosRepository {
+        return FirebasePhotosRepositoryImpl(auth = auth, firebaseStorage = firebaseStorage)
     }
 
     @Provides

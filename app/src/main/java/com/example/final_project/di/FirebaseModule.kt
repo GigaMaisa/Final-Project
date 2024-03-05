@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.database.database
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.storage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +23,10 @@ object FirebaseModule {
     @Provides
     @Singleton
     fun provideDatabaseReference() = Firebase.database.reference
+
+    @Provides
+    @Singleton
+    fun provideFirebaseStorage() = Firebase.storage
 
     @Provides
     @Singleton

@@ -1,10 +1,19 @@
 package com.example.final_project.presentation.screen.profile.fragment
 
+import android.app.Activity
+import android.app.UiModeManager
+import android.content.Context
+import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build
 import android.util.Log.d
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -17,33 +26,58 @@ import com.example.final_project.R
 import com.example.final_project.databinding.FragmentProfileBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.ProfileNavigationUiEvents
+import com.example.final_project.presentation.extension.loadImage
 import com.example.final_project.presentation.screen.profile.adapter.ProfileFavouritesRecyclerViewAdapter
 import com.example.final_project.presentation.screen.profile.viewmodel.ProfileViewModel
+import com.example.final_project.presentation.screen.profile.viewmodel.SettingsEvents
+import com.example.final_project.presentation.screen.profile.viewmodel.SettingsViewModel
+import com.example.final_project.presentation.state.PhotoState
 import com.example.final_project.presentation.state.SignOutState
+import com.example.final_project.presentation.state.UserDataState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
     private val viewModel: ProfileViewModel by viewModels()
+    private val settingsViewModel: SettingsViewModel by viewModels()
     private val favouritesAdapter = ProfileFavouritesRecyclerViewAdapter()
+
+    private val pickImageResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val selectedImageUri = result.data?.data
+            selectedImageUri?.let {
+                viewModel.onEvent(ProfileViewModel.ProfileEvent.UploadPhotoEvent(it))
+            }
+        }
+    }
+
     override fun setUp() {
+        viewModel.onEvent(ProfileViewModel.ProfileEvent.GetPhotoEvent)
+        viewModel.onEvent(ProfileViewModel.ProfileEvent.GetUserDataEvent)
+        settingsViewModel.onEvent(SettingsEvents.GetLanguageEvent)
         setUpRecycler()
-        binding.switchMaterial.isChecked = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+        binding.switchMaterial.isChecked = isSystemDarkModeOn()
         setUpSpinner()
     }
 
-    override fun setUpListeners() {
-        binding.imageViewProfile.setOnClickListener {
+    override fun setUpListeners() = with(binding) {
+        imageViewProfile.setOnClickListener {
             d("itInteracts", "CLICKED")
         }
 
-        binding.switchMaterial.setOnCheckedChangeListener { _, isChecked ->
-            changeDarkMode(isChecked)
+        btnLogOut.setOnClickListener {
+            viewModel.onEvent(ProfileViewModel.ProfileEvent.SignOutEvent)
         }
 
-        binding.btnLogOut.setOnClickListener {
-            viewModel.onEvent(ProfileViewModel.ProfileEvent.SignOutEvent)
+        imageViewProfile.setOnClickListener {
+            selectImage()
+        }
+
+        switchMaterial.setOnCheckedChangeListener { _, isChecked ->
+            changeDarkMode(isChecked)
         }
     }
 
@@ -69,8 +103,81 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                         handleNavigationEvents(it)
                     }
                 }
+
+                launch {
+                    viewModel.imageUploadStatus.collect {
+                        handlePhotoState(it)
+                    }
+                }
+
+                launch {
+                    viewModel.userImageFlow.collect {
+                        handlePhotoState(it)
+                    }
+                }
+
+                launch {
+                    viewModel.userDataFlow.collect {
+                        handleUserDataState(it)
+                    }
+                }
+
+                var currentLanguage: String? = null
+
+                launch {
+                    settingsViewModel.languageFlow.collect {language ->
+                        if (language != currentLanguage) {
+                            currentLanguage = language
+                            applyLanguageSetting(language)
+                        }
+                    }
+                }
             }
         }
+    }
+
+    private fun applyLanguageSetting(language: String) {
+        val lang = if (language == "English" ||  language == "ინგლისური") "en" else "ka"
+        val locale = Locale(lang)
+
+        val resources = requireContext().resources
+        val configuration = resources.configuration
+        configuration.setLocale(locale)
+
+        val displayMetrics = resources.displayMetrics
+        resources.updateConfiguration(configuration, displayMetrics)
+
+        if (configuration.locale != Locale.getDefault()) {
+            requireActivity()
+        }
+    }
+
+    private fun handleUserDataState(state: UserDataState) = with(binding) {
+        progressBar.isVisible = state.isLoading
+
+        state.userData?.let {
+            tvTitle.text = it.fullName
+            tvDescription.text = it.email
+            tvPhoneNumber.text = it.phoneNumber
+        }
+    }
+
+    private fun handlePhotoState(state: PhotoState) = with(binding) {
+        progressBar.isVisible = state.isLoading
+
+        state.errorMessage?.let {
+            progressBar.visibility = View.GONE
+        }
+
+        state.imageUri?.let {
+            imageViewProfile.loadImage(it)
+        }
+    }
+
+    private fun selectImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        pickImageResultLauncher.launch(intent)
     }
 
     private fun setUpRecycler() {
@@ -97,15 +204,24 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private fun setUpSpinner() {
+        var isSpinnerSelectionProgrammatic = false
         val languages = listOf(getStringResource(R.string.english), getStringResource(R.string.georgian))
         val adapter = ArrayAdapter(requireContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, languages)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerLanguages.adapter = adapter
 
-        binding.spinnerLanguages.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedLanguage = languages[position]
+        // Set the selection without triggering onItemSelected callback
+        isSpinnerSelectionProgrammatic = true
+        binding.spinnerLanguages.setSelection(languages.indexOf(settingsViewModel.languageFlow.value))
+        isSpinnerSelectionProgrammatic = false
 
+        binding.spinnerLanguages.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (!isSpinnerSelectionProgrammatic) {
+                    val selectedLanguage = languages[position]
+                    settingsViewModel.onEvent(SettingsEvents.ChangeLanguageEvent(selectedLanguage))
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -127,5 +243,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 requireActivity().findNavController(R.id.nav_host_fragment).navigate(R.id.loginFragment, null, navOptions)
             }
         }
+    }
+
+    private fun isSystemDarkModeOn(): Boolean {
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES
     }
 }

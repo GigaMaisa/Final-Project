@@ -1,5 +1,6 @@
 package com.example.final_project.data.remote.common
 
+import android.util.Log.d
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -12,6 +13,8 @@ import javax.inject.Inject
 class ResponseHandler @Inject constructor() {
     suspend fun <T : Any> safeApiCall(call: suspend () -> Response<T>): Flow<Resource<T>> = flow {
         emit(Resource.Loading(true))
+        d("responseBody", call().toString())
+
 
         val response = call()
         val responseBody = response.body()

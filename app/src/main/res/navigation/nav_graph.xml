@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mapsFragment">
+    app:startDestination="@id/courierDeliveryMapFragment">
 
     <fragment
         android:id="@+id/welcomeFragment"
@@ -193,4 +193,9 @@
             android:name="location"
             app:argType="com.google.android.gms.maps.model.LatLng" />
     </fragment>
+    <fragment
+        android:id="@+id/courierDeliveryMapFragment"
+        android:name="com.example.final_project.presentation.screen.delivery_map.CourierDeliveryMapFragment"
+        android:label="fragment_courier_delivery_map"
+        tools:layout="@layout/fragment_courier_delivery_map" />
 </navigation>

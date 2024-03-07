@@ -31,12 +31,14 @@ android {
 
     buildTypes {
         debug {
+            buildConfigField("String", "FIREBASE_API_SERVICE", "\"https://finalproject-4ba60-default-rtdb.europe-west1.firebasedatabase.app/\"")
             buildConfigField("String", "GOOGLE_BASE_URL", "\"https://maps.googleapis.com/\"")
             buildConfigField("String", "MAP_API_KEY", gradleLocalProperties(rootDir).getProperty("MAP_API_KEY"))
             buildConfigField("String", "MOCKY_BASE_URL", "\"https://run.mocky.io/v3/\"")
         }
 
         release {
+            buildConfigField("String", "FIREBASE_API_SERVICE", "\"https://finalproject-4ba60-default-rtdb.europe-west1.firebasedatabase.app/\"")
             buildConfigField("String", "GOOGLE_BASE_URL", "\"https://maps.googleapis.com/\"")
             buildConfigField("String", "MAP_API_KEY", gradleLocalProperties(rootDir).getProperty("MAP_API_KEY"))
             buildConfigField("String", "MOCKY_BASE_URL", "\"https://run.mocky.io/v3/\"")
@@ -67,7 +69,7 @@ dependencies {
 
     implementation("com.google.android.libraries.places:places:3.3.0")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation("com.google.android.gms:play-services-location:21.1.0")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
     implementation("com.google.maps.android:android-maps-utils:3.8.0")
 
     implementation("com.hbb20:ccp:2.5.0")

@@ -7,6 +7,7 @@ import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
 import com.example.final_project.data.remote.service.DirectionsApiService
+import com.example.final_project.data.remote.service.RestaurantsApiService
 import com.example.final_project.data.repository.local.datastore.DataStoreRepositoryImpl
 import com.example.final_project.data.repository.local.delivery_location.DeliveryLocationRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAdditionalUserDataRepositoryImpl
@@ -19,6 +20,7 @@ import com.example.final_project.data.repository.remote.firebase.FirebasePhotosR
 import com.example.final_project.data.repository.remote.firebase.FirebaseSignOutRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseUserDataRepositoryImpl
 import com.example.final_project.data.repository.remote.home.BannerRepositoryImpl
+import com.example.final_project.data.repository.remote.home.RestaurantsRepositoryImpl
 import com.example.final_project.data.repository.remote.route.DirectionsRepositoryImpl
 import com.example.final_project.di.DispatchersModule.IoDispatcher
 import com.example.final_project.domain.repository.auth.FirebaseAdditionalUserDataRepository
@@ -33,6 +35,7 @@ import com.example.final_project.domain.repository.delivery_location.DeliveryLoc
 import com.example.final_project.domain.repository.firebase.FirebasePhotosRepository
 import com.example.final_project.domain.repository.firebase.FirebaseUserDataRepository
 import com.example.final_project.domain.repository.home.BannerRepository
+import com.example.final_project.domain.repository.home.RestaurantsRepository
 import com.example.final_project.domain.repository.route.DirectionsRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -110,6 +113,10 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideChatContactsRepository(databaseReference: DatabaseReference): ChatContactsRepository = ChatContactsRepositoryImpl(databaseReference)
+
+    @Provides
+    @Singleton
+    fun provideRestaurantsRepository(restaurantsApiService: RestaurantsApiService, responseHandler: ResponseHandler): RestaurantsRepository = RestaurantsRepositoryImpl(restaurantsApiService, responseHandler)
 
     @Provides
     @Singleton

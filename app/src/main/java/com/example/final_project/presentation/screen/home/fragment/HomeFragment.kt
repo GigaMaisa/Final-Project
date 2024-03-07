@@ -23,6 +23,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun setUp() {
         setUpViewPager()
         viewModel.onEvent(HomeEvent.GetBannersEvent)
+        viewModel.onEvent(HomeEvent.GetRestaurantsEvent)
     }
 
     override fun setUpListeners() {

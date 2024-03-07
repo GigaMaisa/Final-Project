@@ -5,6 +5,7 @@ import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
 import com.example.final_project.data.remote.service.DirectionsApiService
+import com.example.final_project.data.remote.service.RestaurantsApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -30,6 +31,10 @@ object AppModule {
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class GoogleMapRetrofit
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class FirebaseRetrofit
 
     @Provides
     @Singleton
@@ -66,7 +71,7 @@ object AppModule {
     @Provides
     @Singleton
     @MockyRetrofit
-    fun provideClothesRetrofitClient(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit {
+    fun provideMockyRetrofitClient(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.MOCKY_BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -87,7 +92,30 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideBannersApiService(@MockyRetrofit retrofit: Retrofit): BannersApiService {
+    @FirebaseRetrofit
+    fun provideFirebaseRetrofitClient(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.FIREBASE_API_SERVICE)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(okHttpClient)
+            .build()
+    }
+
+//    @Provides
+//    @Singleton
+//    fun provideBannersApiService(@MockyRetrofit retrofit: Retrofit): BannersApiService {
+//        return retrofit.create(BannersApiService::class.java)
+//    }
+
+    @Provides
+    @Singleton
+    fun provideRestaurantsApiService(@FirebaseRetrofit retrofit: Retrofit): RestaurantsApiService {
+        return retrofit.create(RestaurantsApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBannersApiService(@FirebaseRetrofit retrofit: Retrofit): BannersApiService {
         return retrofit.create(BannersApiService::class.java)
     }
 

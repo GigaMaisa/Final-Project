@@ -12,6 +12,6 @@ interface DeliveryLocationDao {
     fun getAll(): Flow<List<DeliveryLocationEntity>>
 
     @Insert
-    fun addDeliveryLocation(deliveryLocation: DeliveryLocationEntity)
+    suspend fun addDeliveryLocation(deliveryLocation: DeliveryLocationEntity)
 
 }

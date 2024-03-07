@@ -23,13 +23,13 @@ import javax.inject.Inject
 class ChatContactsRepositoryImpl @Inject constructor(private val databaseReference: DatabaseReference) :
     ChatContactsRepository {
 
-    private val senderUid = FirebaseAuth.getInstance().currentUser?.uid
+    private val senderUid = FirebaseAuth.getInstance().currentUser
 
     override suspend fun getContacts(): Flow<Resource<List<GetContact>>> =
         callbackFlow {
             trySend(Resource.Loading(loading = true))
             senderUid?.let {
-                databaseReference.child("contacts").child(it)
+                databaseReference.child("contacts").child(it.uid)
                     .addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val listOfContacts = mutableListOf<ContactDto>()
@@ -52,14 +52,15 @@ class ChatContactsRepositoryImpl @Inject constructor(private val databaseReferen
         }.flowOn(IO)
 
     override suspend fun addContact(contact: GetContact) {
-        senderUid?.let {uid ->
-            val contactId = databaseReference.child("contacts").child(uid).push().key
+        senderUid?.let {user ->
+            val contactId = databaseReference.child("contacts").child(user.uid).push().key
             contactId?.let {
-                val contactRef = databaseReference.child("contacts").child(uid).child(it)
+                val contactRef = databaseReference.child("contacts").child(user.uid).child(it)
+                val receiverRef = databaseReference.child("contacts").child(contact.receiverId!!).child(it)
 
                 contactRef.setValue(contact.toData())
                     .addOnSuccessListener {
-
+                        receiverRef.setValue(ContactDto(null, null, user.uid, user.displayName))
                     }
                     .addOnFailureListener { _ ->
 

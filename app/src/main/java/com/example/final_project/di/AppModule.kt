@@ -4,6 +4,7 @@ import com.example.final_project.BuildConfig
 import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
+import com.example.final_project.data.remote.service.DirectionsApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -15,11 +16,21 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class MockyRetrofit
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class GoogleMapRetrofit
+
     @Provides
     @Singleton
     fun provideEmailSignInResponseHandler(@DispatchersModule.IoDispatcher ioDispatcher: CoroutineDispatcher): EmailSignInResponseHandler {
@@ -54,6 +65,7 @@ object AppModule {
 
     @Provides
     @Singleton
+    @MockyRetrofit
     fun provideClothesRetrofitClient(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.MOCKY_BASE_URL)
@@ -64,7 +76,24 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideBannersApiService(retrofit: Retrofit): BannersApiService {
+    @GoogleMapRetrofit
+    fun provideGoogleMapRetrofitClient(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.GOOGLE_BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(okHttpClient)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideBannersApiService(@MockyRetrofit retrofit: Retrofit): BannersApiService {
         return retrofit.create(BannersApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDirectionsApiService(@GoogleMapRetrofit retrofit: Retrofit): DirectionsApiService {
+        return retrofit.create(DirectionsApiService::class.java)
     }
 }

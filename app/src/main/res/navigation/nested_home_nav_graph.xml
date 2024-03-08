@@ -31,7 +31,11 @@
         android:id="@+id/profilePage"
         android:name="com.example.final_project.presentation.screen.profile.fragment.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profilePage_to_cardFragment"
+            app:destination="@id/cardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/cartPage"
         android:name="com.example.final_project.presentation.screen.cart.fragment.CartFragment"
@@ -46,4 +50,18 @@
             android:id="@+id/action_chatPage_to_chatFragment"
             app:destination="@id/chatFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/cardFragment"
+        android:name="com.example.final_project.presentation.screen.card.fragment.CardFragment"
+        android:label="fragment_card"
+        tools:layout="@layout/fragment_card" >
+        <action
+            android:id="@+id/action_cardFragment_to_addCardFragment"
+            app:destination="@id/addCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCardFragment"
+        android:name="com.example.final_project.presentation.screen.card_add.fragment.AddCardFragment"
+        android:label="fragment_add_card"
+        tools:layout="@layout/fragment_add_card" />
 </navigation>

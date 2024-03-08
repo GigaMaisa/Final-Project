@@ -6,6 +6,7 @@ import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
 import com.example.final_project.data.remote.service.DirectionsApiService
 import com.example.final_project.data.remote.service.RestaurantsApiService
+import com.example.final_project.presentation.util.EncryptionHelper
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -51,6 +52,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideHandleResponse(): ResponseHandler = ResponseHandler()
+
+    @Provides
+    @Singleton
+    fun provideEncryptionHelper(): EncryptionHelper = EncryptionHelper()
 
     @Provides
     @Singleton

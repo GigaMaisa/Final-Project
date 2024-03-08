@@ -12,6 +12,7 @@ import com.example.final_project.domain.usecase.firebase.UploadPhotoUseCase
 import com.example.final_project.presentation.event.ProfileNavigationUiEvents
 import com.example.final_project.presentation.mapper.toPresentation
 import com.example.final_project.presentation.model.cart.CartItem
+import com.example.final_project.presentation.screen.signup.credentials.viewmodel.SignUpCredentialsNavigationEvents
 import com.example.final_project.presentation.state.PhotoState
 import com.example.final_project.presentation.state.ProfileState
 import com.example.final_project.presentation.state.SignOutState
@@ -74,6 +75,18 @@ class ProfileViewModel @Inject constructor(
             is ProfileEvent.GetPhotoEvent -> getImage()
             is ProfileEvent.GetUserDataEvent -> getUserData()
             is ProfileEvent.UploadPhotoEvent -> uploadImage(imageUri = event.imageUri)
+        }
+    }
+
+    fun onUiEvent(event: ProfileNavigationUiEvents) {
+        when (event) {
+            is ProfileNavigationUiEvents.NavigateToPayment -> {
+                viewModelScope.launch {
+                    _uiEvent.emit(ProfileNavigationUiEvents.NavigateToPayment)
+                }
+            }
+
+            else -> {}
         }
     }
 
@@ -178,7 +191,6 @@ class ProfileViewModel @Inject constructor(
                     }
                 }
             }
-            _uiEvent.emit(ProfileNavigationUiEvents.NavigateToLogIn)
         }
     }
 
@@ -187,8 +199,6 @@ class ProfileViewModel @Inject constructor(
             currentState.copy(errorMessage = errorMessage, isLoading = false)
         }
     }
-
-
 
     sealed class ProfileEvent {
         data object SignOutEvent: ProfileEvent()

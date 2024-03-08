@@ -27,7 +27,11 @@ class ChatContactsFragment : BaseFragment<FragmentChatContactsBinding>(FragmentC
 
     override fun setUpListeners() {
         contactsAdapter.onContactClick = {
-            findNavController().navigate(ChatContactsFragmentDirections.actionChatPageToChatFragment(it.receiverId!!, it.fullName!!, it.imageUrl))
+            findNavController().navigate(ChatContactsFragmentDirections.actionChatPageToChatFragment(
+                uuid = it.receiverId!! ,
+                fullName = it.fullName!!,
+                imageUrl = it.imageUrl
+            ))
         }
     }
 

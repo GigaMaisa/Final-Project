@@ -150,14 +150,6 @@
             app:destination="@id/loginFragment" />
     </fragment>
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.final_project.presentation.screen.profile.fragment.ProfileFragment"
-        android:label="ProfileFragment" >
-        <action
-            android:id="@+id/action_profileFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/passwordFragment"
         android:name="com.example.final_project.presentation.screen.password.fragment.PasswordFragment"
         android:label="fragment_password"

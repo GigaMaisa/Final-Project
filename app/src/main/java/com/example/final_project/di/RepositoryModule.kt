@@ -57,7 +57,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideDeliveryLocationRepository(dao: DeliveryLocationDao): DeliveryLocationRepository = DeliveryLocationRepositoryImpl(deliveryLocationDao = dao)
+    fun provideDeliveryLocationRepository(dao: DeliveryLocationDao, @IoDispatcher ioDispatcher: CoroutineDispatcher): DeliveryLocationRepository = DeliveryLocationRepositoryImpl(deliveryLocationDao = dao, ioDispatcher = ioDispatcher)
     @Provides
     @Singleton
     fun provideDataStoreRepository(dataStore: DataStore<Preferences>) : DataStoreRepository {
@@ -108,11 +108,11 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideChatRepository(databaseReference: DatabaseReference): ChatMessagesRepository = ChatMessagesRepositoryImpl(databaseReference)
+    fun provideChatRepository(auth: FirebaseAuth, databaseReference: DatabaseReference): ChatMessagesRepository = ChatMessagesRepositoryImpl(auth = auth, databaseReference = databaseReference)
 
     @Provides
     @Singleton
-    fun provideChatContactsRepository(databaseReference: DatabaseReference): ChatContactsRepository = ChatContactsRepositoryImpl(databaseReference)
+    fun provideChatContactsRepository(auth: FirebaseAuth ,databaseReference: DatabaseReference): ChatContactsRepository = ChatContactsRepositoryImpl(auth = auth, databaseReference = databaseReference)
 
     @Provides
     @Singleton

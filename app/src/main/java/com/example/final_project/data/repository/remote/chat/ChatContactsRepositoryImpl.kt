@@ -20,16 +20,16 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class ChatContactsRepositoryImpl @Inject constructor(private val databaseReference: DatabaseReference) :
+class ChatContactsRepositoryImpl @Inject constructor(private val auth: FirebaseAuth, private val databaseReference: DatabaseReference) :
     ChatContactsRepository {
 
-    private val senderUid = FirebaseAuth.getInstance().currentUser
+    override val currentUser = auth.currentUser
 
     override suspend fun getContacts(): Flow<Resource<List<GetContact>>> =
         callbackFlow {
             trySend(Resource.Loading(loading = true))
-            senderUid?.let {
-                databaseReference.child("contacts").child(it.uid)
+            currentUser?.let {user ->
+                databaseReference.child("contacts").child(user.uid)
                     .addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val listOfContacts = mutableListOf<ContactDto>()
@@ -44,15 +44,14 @@ class ChatContactsRepositoryImpl @Inject constructor(private val databaseReferen
                     })
             }
             trySend(Resource.Loading(loading = false))
-            awaitClose {
-
-            }
+            awaitClose {}
         }.catch {
             emit(Resource.Error(HandleErrorStates.handleException(it as Exception), throwable = it))
         }.flowOn(IO)
 
+
     override suspend fun addContact(contact: GetContact) {
-        senderUid?.let {user ->
+        currentUser?.let {user ->
             val contactId = databaseReference.child("contacts").child(user.uid).push().key
             contactId?.let {
                 val contactRef = databaseReference.child("contacts").child(user.uid).child(it)
@@ -61,9 +60,6 @@ class ChatContactsRepositoryImpl @Inject constructor(private val databaseReferen
                 contactRef.setValue(contact.toData())
                     .addOnSuccessListener {
                         receiverRef.setValue(ContactDto(null, null, user.uid, user.displayName))
-                    }
-                    .addOnFailureListener { _ ->
-
                     }
             }
         }

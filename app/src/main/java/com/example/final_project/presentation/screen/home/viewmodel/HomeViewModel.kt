@@ -1,6 +1,5 @@
 package com.example.final_project.presentation.screen.home.viewmodel
 
-import android.util.Log.d
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
@@ -46,7 +45,6 @@ class HomeViewModel @Inject constructor(private val getBannersUseCase: GetBanner
     private fun getRestaurants() {
         viewModelScope.launch {
             getRestaurantsUseCase().collect {resource ->
-                d("resourceRestaurnats", resource.toString())
                 when(resource) {
                     is Resource.Loading -> _homeStateFlow.update { currentState -> currentState.copy(isLoading = resource.loading) }
                     is Resource.Success -> _homeStateFlow.update { currentState -> currentState.copy(restaurants = resource.response.map { it.toPresentation() }) }

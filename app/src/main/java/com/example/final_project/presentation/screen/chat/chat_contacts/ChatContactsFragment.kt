@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.databinding.FragmentChatContactsBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.chat.ChatContactEvent
-import com.example.final_project.presentation.model.chat.Contact
 import com.example.final_project.presentation.screen.chat.adapter.ContactsRecyclerViewAdapter
 import com.example.final_project.presentation.state.ContactsState
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,12 +22,12 @@ class ChatContactsFragment : BaseFragment<FragmentChatContactsBinding>(FragmentC
     override fun setUp() {
         setUpRecycler()
         viewModel.onEvent(ChatContactEvent.GetContactsEvent)
-        viewModel.onEvent(ChatContactEvent.AddContactEvent(Contact(null, "", "YeMuykw1zFgHOQrBSVP3Vd5XkPq2", "Goga Gradienti")))
+//        viewModel.onEvent(ChatContactEvent.AddContactEvent(Contact(null, "", "YeMuykw1zFgHOQrBSVP3Vd5XkPq2", "Goga Gradienti")))
     }
 
     override fun setUpListeners() {
         contactsAdapter.onContactClick = {
-            findNavController().navigate(ChatContactsFragmentDirections.actionChatPageToChatFragment(it.receiverId!!))
+            findNavController().navigate(ChatContactsFragmentDirections.actionChatPageToChatFragment(it.receiverId!!, it.fullName!!, it.imageUrl))
         }
     }
 

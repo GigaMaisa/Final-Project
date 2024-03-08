@@ -1,9 +1,9 @@
 package com.example.final_project.presentation.mapper.delivery_location
 
 import com.example.final_project.R
-import com.example.final_project.domain.model.GetAddressType
 import com.example.final_project.domain.model.GetDeliveryLocation
-import com.example.final_project.domain.model.GetLocationType
+import com.example.final_project.domain.model.GetDeliveryLocation.GetLocationType
+import com.example.final_project.domain.model.GetDeliveryLocation.GetAddressType
 import com.example.final_project.presentation.model.delivery_location.AddressType
 import com.example.final_project.presentation.model.delivery_location.DeliveryLocation
 import com.example.final_project.presentation.model.delivery_location.LocationType

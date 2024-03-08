@@ -1,5 +1,6 @@
 package com.example.final_project.presentation.screen.chat.chat_contacts
 
+import android.util.Log.d
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
@@ -33,6 +34,7 @@ class ChatContactsViewModel @Inject constructor(private val getContactsUseCase: 
     private fun getContacts() {
         viewModelScope.launch {
             getContactsUseCase().collect {resource ->
+                d("resourceContacts", resource.toString())
                 when(resource) {
                     is Resource.Loading -> _contactsStateFlow.update { currentState -> currentState.copy(isLoading = resource.loading) }
                     is Resource.Success -> _contactsStateFlow.update { currentState -> currentState.copy(contacts = resource.response.map { it.toPresentation() }) }

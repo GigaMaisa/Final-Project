@@ -15,17 +15,19 @@ data class DeliveryLocationEntity(
     val floor: Int,
     val apartmentNumber: Int,
     val extraDescription: String? = null
-)
+) {
+    enum class AddressTypeEntity {
+        HOME,
+        WORK,
+        OTHER
+    }
 
-enum class AddressTypeEntity {
-    HOME,
-    WORK,
-    OTHER
+    enum class LocationTypeEntity {
+        APARTMENT,
+        HOUSE,
+        OFFICE,
+        OTHER
+    }
 }
 
-enum class LocationTypeEntity {
-    APARTMENT,
-    HOUSE,
-    OFFICE,
-    OTHER
-}
+

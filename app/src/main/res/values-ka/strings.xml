@@ -95,4 +95,6 @@
     <string name="expiry_date">მოქმედების ვადა</string>
     <string name="cvv">CVV</string>
     <string name="add_card">ბარათის დამატება</string>
+    <string name="locations">ლოკაციები</string>
+
 </resources>

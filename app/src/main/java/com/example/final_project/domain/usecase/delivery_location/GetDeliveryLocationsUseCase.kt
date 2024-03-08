@@ -1,12 +1,18 @@
 package com.example.final_project.domain.usecase.delivery_location
 
+import com.example.final_project.di.DispatchersModule
+import com.example.final_project.domain.model.GetDeliveryLocation
 import com.example.final_project.domain.repository.delivery_location.DeliveryLocationRepository
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class GetDeliveryLocationsUseCase @Inject constructor(private val deliveryLocationRepository: DeliveryLocationRepository) {
-    suspend operator fun invoke() = withContext(IO) {
-        deliveryLocationRepository.getLocations()
+class GetDeliveryLocationsUseCase @Inject constructor(
+    private val deliveryLocationRepository: DeliveryLocationRepository,
+    @DispatchersModule.IoDispatcher private val ioDispatcher: CoroutineDispatcher
+) {
+    operator fun invoke(): Flow<List<GetDeliveryLocation>> {
+        return deliveryLocationRepository.getLocations().flowOn(ioDispatcher)
     }
 }

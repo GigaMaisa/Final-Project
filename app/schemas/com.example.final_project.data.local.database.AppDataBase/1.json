@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "087a0d0fdb94d1b9fc46ce020bd7919b",
+    "identityHash": "941aafbea83348a7956f2becfffa7b5a",
     "entities": [
       {
         "tableName": "delivery_location",
@@ -77,56 +77,12 @@
         },
         "indices": [],
         "foreignKeys": []
-      },
-      {
-        "tableName": "user_cards",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `cardNumber` TEXT NOT NULL, `expirationDate` TEXT NOT NULL, `cvv` TEXT NOT NULL, `cardName` TEXT NOT NULL)",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "cardNumber",
-            "columnName": "cardNumber",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "expirationDate",
-            "columnName": "expirationDate",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "cvv",
-            "columnName": "cvv",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "cardName",
-            "columnName": "cardName",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "id"
-          ]
-        },
-        "indices": [],
-        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '087a0d0fdb94d1b9fc46ce020bd7919b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '941aafbea83348a7956f2becfffa7b5a')"
     ]
   }
 }

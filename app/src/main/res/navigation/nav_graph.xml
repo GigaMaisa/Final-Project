@@ -166,26 +166,6 @@
         android:name="com.example.final_project.presentation.screen.restoraunt_details.bottomsheet.RestaurantBottomSheet"
         android:label="RestaurantBottomSheet" />
     <fragment
-        android:id="@+id/mapsFragment"
-        android:name="com.example.final_project.presentation.screen.map.MapsFragment"
-        android:label="MapsFragment" >
-        <action
-            android:id="@+id/action_mapsFragment_to_deliveryLocationFragment"
-            app:destination="@id/deliveryLocationFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/deliveryLocationFragment"
-        android:name="com.example.final_project.presentation.screen.delivery_location.DeliveryLocationFragment"
-        android:label="fragment_delivery_location"
-        tools:layout="@layout/fragment_delivery_location" >
-        <argument
-            android:name="locationName"
-            app:argType="string" />
-        <argument
-            android:name="location"
-            app:argType="com.google.android.gms.maps.model.LatLng" />
-    </fragment>
-    <fragment
         android:id="@+id/courierDeliveryMapFragment"
         android:name="com.example.final_project.presentation.screen.delivery_map.CourierDeliveryMapFragment"
         android:label="fragment_courier_delivery_map"

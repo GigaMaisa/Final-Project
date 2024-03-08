@@ -88,4 +88,11 @@
     <string name="optional">ნებაყოფლობითი</string>
     <string name="fill_all_fields">შეავსეთ ყველა სავალდებულო ველი</string>
     <string name="fill_number_fields">შეიყვანეთ რიცხვები სწორად</string>
+    <string name="payment">გადახდები</string>
+    <string name="location">ლოკაცია</string>
+    <string name="you_don_t_have_any_cards_added">თქვენ არ გაქვთ დამატებული ბარათი</string>
+    <string name="card_number">ბარათის ნომერი</string>
+    <string name="expiry_date">მოქმედების ვადა</string>
+    <string name="cvv">CVV</string>
+    <string name="add_card">ბარათის დამატება</string>
 </resources>

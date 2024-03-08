@@ -87,4 +87,11 @@
     <string name="optional">optional</string>
     <string name="fill_all_fields">Fill all needed fields</string>
     <string name="fill_number_fields">Fill Number fields correctly</string>
+    <string name="payment">Payment</string>
+    <string name="location">Location</string>
+    <string name="you_don_t_have_any_cards_added">You don\'t have any cards added.</string>
+    <string name="card_number">Card Number</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="cvv">CVV</string>
+    <string name="add_card">Add Card</string>
 </resources>

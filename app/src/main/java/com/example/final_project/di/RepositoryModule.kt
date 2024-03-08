@@ -2,12 +2,14 @@ package com.example.final_project.di
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.example.final_project.data.local.dao.CardDao
 import com.example.final_project.data.local.dao.DeliveryLocationDao
 import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
 import com.example.final_project.data.remote.service.DirectionsApiService
 import com.example.final_project.data.remote.service.RestaurantsApiService
+import com.example.final_project.data.repository.local.card.CardRepositoryImpl
 import com.example.final_project.data.repository.local.datastore.DataStoreRepositoryImpl
 import com.example.final_project.data.repository.local.delivery_location.DeliveryLocationRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAdditionalUserDataRepositoryImpl
@@ -28,6 +30,7 @@ import com.example.final_project.domain.repository.auth.FirebaseAuthStateReposit
 import com.example.final_project.domain.repository.auth.FirebaseEmailLoginRepository
 import com.example.final_project.domain.repository.auth.FirebasePhoneAuthRepository
 import com.example.final_project.domain.repository.auth.FirebaseSignOutRepository
+import com.example.final_project.domain.repository.card.CardRepository
 import com.example.final_project.domain.repository.chat.ChatContactsRepository
 import com.example.final_project.domain.repository.chat.ChatMessagesRepository
 import com.example.final_project.domain.repository.datastore.DataStoreRepository
@@ -104,6 +107,12 @@ object RepositoryModule {
     @Singleton
     fun provideFirebasePhotosRepository(auth: FirebaseAuth, firebaseStorage: FirebaseStorage) : FirebasePhotosRepository {
         return FirebasePhotosRepositoryImpl(auth = auth, firebaseStorage = firebaseStorage)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCardRepository(dao: CardDao, @IoDispatcher ioDispatcher: CoroutineDispatcher): CardRepository {
+        return CardRepositoryImpl(cardDao = dao, ioDispatcher = ioDispatcher)
     }
 
     @Provides

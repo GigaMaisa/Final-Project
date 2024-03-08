@@ -94,4 +94,5 @@
     <string name="expiry_date">Expiry Date</string>
     <string name="cvv">CVV</string>
     <string name="add_card">Add Card</string>
+    <string name="locations">Locations</string>
 </resources>

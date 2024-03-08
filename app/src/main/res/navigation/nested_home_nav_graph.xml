@@ -36,8 +36,8 @@
             android:id="@+id/action_profilePage_to_cardFragment"
             app:destination="@id/cardFragment" />
         <action
-            android:id="@+id/action_profilePage_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
+            android:id="@+id/action_profilePage_to_deliveryLocationFragment"
+            app:destination="@id/deliveryLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartPage"
@@ -74,18 +74,32 @@
         android:label="MapsFragment" >
         <action
             android:id="@+id/action_mapsFragment_to_deliveryLocationFragment"
-            app:destination="@id/deliveryLocationFragment" />
+            app:destination="@id/deliveryLocationAddFragment" />
     </fragment>
     <fragment
-        android:id="@+id/deliveryLocationFragment"
-        android:name="com.example.final_project.presentation.screen.delivery_location.DeliveryLocationFragment"
-        android:label="fragment_delivery_location"
-        tools:layout="@layout/fragment_delivery_location" >
+        android:id="@+id/deliveryLocationAddFragment"
+        android:name="com.example.final_project.presentation.screen.delivery_location_add.DeliveryLocationAddFragment"
+        android:label="fragment_delivery_location_add"
+        tools:layout="@layout/fragment_delivery_location_add" >
         <argument
             android:name="locationName"
             app:argType="string" />
         <argument
             android:name="location"
             app:argType="com.google.android.gms.maps.model.LatLng" />
+        <action
+            android:id="@+id/action_deliveryLocationAddFragment_to_deliveryLocationFragment"
+            app:destination="@id/deliveryLocationFragment"
+            app:popUpTo="@id/deliveryLocationAddFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/deliveryLocationFragment"
+        android:name="com.example.final_project.presentation.screen.delivery_location.DeliveryLocationFragment"
+        android:label="fragment_delivery_location"
+        tools:layout="@layout/fragment_delivery_location" >
+        <action
+            android:id="@+id/action_deliveryLocationFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
 </navigation>

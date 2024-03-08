@@ -206,7 +206,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             }
 
             is ProfileNavigationUiEvents.NavigateToLocation -> {
-                findNavController().navigate(ProfileFragmentDirections.actionProfilePageToMapsFragment())
+                findNavController().navigate(ProfileFragmentDirections.actionProfilePageToDeliveryLocationFragment())
             }
 
             ProfileNavigationUiEvents.NavigateToPayment -> {

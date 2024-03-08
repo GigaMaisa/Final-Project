@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.screen.delivery_location.adapter
+package com.example.final_project.presentation.screen.delivery_location_add.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -62,6 +62,4 @@ class AddressTypeRecyclerAdapter :
             }
         }
     }
-
-
 }

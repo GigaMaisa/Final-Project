@@ -22,14 +22,14 @@ import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
 
-class ChatMessagesRepositoryImpl @Inject constructor(private val databaseReference: DatabaseReference) :
+class ChatMessagesRepositoryImpl @Inject constructor(private val auth: FirebaseAuth, private val databaseReference: DatabaseReference) :
     ChatMessagesRepository {
 
-    private val senderUid = FirebaseAuth.getInstance().currentUser?.uid
+    override val currentUser = auth.currentUser
 
     override suspend fun getMessages(receiverUuid: String): Flow<Resource<List<GetMessage>>> = callbackFlow {
         trySend(Resource.Loading(loading = true))
-        val senderRoom = receiverUuid.plus(senderUid)
+        val senderRoom = receiverUuid.plus(currentUser?.uid)
         databaseReference.child("chats").child(senderRoom).child("messages")
             .addValueEventListener(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -52,7 +52,7 @@ class ChatMessagesRepositoryImpl @Inject constructor(private val databaseReferen
     }.flowOn(IO)
 
     override suspend fun addMessage(message: GetMessage, receiverUuid: String): Unit = withContext(IO) {
-        senderUid?.let {uid ->
+        currentUser?.uid?.let {uid ->
             val senderRoom = "$receiverUuid$uid"
             val receiverRoom = "$uid$receiverUuid"
 

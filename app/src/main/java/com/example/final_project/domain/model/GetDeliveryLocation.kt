@@ -11,17 +11,18 @@ data class GetDeliveryLocation(
     val floor: Int,
     val apartmentNumber: Int,
     val extraDescription: String? = null
-)
+) {
+    enum class GetLocationType{
+        APARTMENT,
+        HOUSE,
+        OFFICE,
+        OTHER
+    }
 
-enum class GetLocationType{
-    APARTMENT,
-    HOUSE,
-    OFFICE,
-    OTHER
+    enum class GetAddressType {
+        HOME,
+        WORK,
+        OTHER
+    }
 }
 
-enum class GetAddressType {
-    HOME,
-    WORK,
-    OTHER
-}

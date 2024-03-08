@@ -7,6 +7,37 @@
     android:orientation="vertical"
     tools:context=".presentation.screen.chat.chat_messaging.fragment.ChatFragment">
 
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvProfileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:text="Goga Gradient"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
+        android:layout_marginStart="20dp"
+        android:textSize="18sp"
+        android:textColor="?android:textColor"
+        app:layout_constraintTop_toTopOf="@+id/view2" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/charRecyclerView"
         android:layout_width="match_parent"
@@ -14,7 +45,7 @@
         app:layout_constraintBottom_toTopOf="@+id/messageBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
 
 
     <androidx.appcompat.widget.AppCompatEditText

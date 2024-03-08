@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:paddingHorizontal="20dp"
     android:paddingVertical="13dp"
+    android:layout_marginStart="15dp"
     android:background="@drawable/grey_background"
     android:text="This is receive message"
     android:fontFamily="@font/bentonsansbook"

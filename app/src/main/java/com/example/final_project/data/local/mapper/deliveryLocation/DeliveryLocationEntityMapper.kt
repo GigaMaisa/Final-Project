@@ -1,11 +1,11 @@
 package com.example.final_project.data.local.mapper.deliveryLocation
 
-import com.example.final_project.data.local.model.AddressTypeEntity
 import com.example.final_project.data.local.model.DeliveryLocationEntity
-import com.example.final_project.data.local.model.LocationTypeEntity
-import com.example.final_project.domain.model.GetAddressType
+import com.example.final_project.data.local.model.DeliveryLocationEntity.LocationTypeEntity
+import com.example.final_project.data.local.model.DeliveryLocationEntity.AddressTypeEntity
+import com.example.final_project.domain.model.GetDeliveryLocation.GetAddressType
 import com.example.final_project.domain.model.GetDeliveryLocation
-import com.example.final_project.domain.model.GetLocationType
+import com.example.final_project.domain.model.GetDeliveryLocation.GetLocationType
 import com.google.android.gms.maps.model.LatLng
 
 fun DeliveryLocationEntity.toDomain() = GetDeliveryLocation(

@@ -4,7 +4,7 @@ import com.example.final_project.domain.model.GetDeliveryLocation
 import kotlinx.coroutines.flow.Flow
 
 interface DeliveryLocationRepository {
-    suspend fun getLocations(): Flow<List<GetDeliveryLocation>>
+    fun getLocations(): Flow<List<GetDeliveryLocation>>
 
     suspend fun addLocation(location: GetDeliveryLocation)
 }

@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_profilePage_to_cardFragment"
             app:destination="@id/cardFragment" />
+        <action
+            android:id="@+id/action_profilePage_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartPage"
@@ -64,4 +67,25 @@
         android:name="com.example.final_project.presentation.screen.card_add.fragment.AddCardFragment"
         android:label="fragment_add_card"
         tools:layout="@layout/fragment_add_card" />
+
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.final_project.presentation.screen.map.MapsFragment"
+        android:label="MapsFragment" >
+        <action
+            android:id="@+id/action_mapsFragment_to_deliveryLocationFragment"
+            app:destination="@id/deliveryLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deliveryLocationFragment"
+        android:name="com.example.final_project.presentation.screen.delivery_location.DeliveryLocationFragment"
+        android:label="fragment_delivery_location"
+        tools:layout="@layout/fragment_delivery_location" >
+        <argument
+            android:name="locationName"
+            app:argType="string" />
+        <argument
+            android:name="location"
+            app:argType="com.google.android.gms.maps.model.LatLng" />
+    </fragment>
 </navigation>

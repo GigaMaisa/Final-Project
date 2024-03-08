@@ -5,8 +5,6 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.util.Log.d
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
@@ -17,7 +15,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.R
 import com.example.final_project.databinding.FragmentProfileBinding
 import com.example.final_project.presentation.base.BaseFragment
@@ -70,6 +67,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
         tvPayment.setOnClickListener {
             viewModel.onUiEvent(ProfileNavigationUiEvents.NavigateToPayment)
+        }
+
+        tvLocation.setOnClickListener {
+            viewModel.onUiEvent(ProfileNavigationUiEvents.NavigateToLocation)
         }
     }
 
@@ -202,6 +203,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                     .build()
 
                 requireActivity().findNavController(R.id.nav_host_fragment).navigate(R.id.loginFragment, null, navOptions)
+            }
+
+            is ProfileNavigationUiEvents.NavigateToLocation -> {
+                findNavController().navigate(ProfileFragmentDirections.actionProfilePageToMapsFragment())
             }
 
             ProfileNavigationUiEvents.NavigateToPayment -> {

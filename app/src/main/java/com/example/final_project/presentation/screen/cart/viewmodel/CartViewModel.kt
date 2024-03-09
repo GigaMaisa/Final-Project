@@ -1,6 +1,7 @@
 package com.example.final_project.presentation.screen.cart.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.final_project.presentation.event.CartEvent
 import com.example.final_project.presentation.model.cart.CartItem
 import com.example.final_project.presentation.model.cart.Checkout
 import com.example.final_project.presentation.state.CartState
@@ -22,6 +23,15 @@ class CartViewModel : ViewModel() {
     private val _cartStateFlow = MutableStateFlow(CartState())
     val cartStateFlow = _cartStateFlow.asStateFlow()
 
+    fun onEvent(event: CartEvent) {
+        when(event) {
+            is CartEvent.AddCartItemQuantityEvent -> addItem(cartItem = event.cartItem)
+            is CartEvent.CalculateCheckoutEvent -> calculateCheckout()
+            is CartEvent.DeleteItemEvent -> onSwipeDelete(id = event.id)
+            is CartEvent.RemoveCartItemQuantityEvent -> removeItem(cartItem = event.cartItem)
+        }
+    }
+
     init {
         _cartStateFlow.update { currentState -> currentState.copy(cartItems = cartItems) }
         calculateCheckout()
@@ -39,8 +49,32 @@ class CartViewModel : ViewModel() {
         _cartStateFlow.update { currentState -> currentState.copy(checkout = Checkout(0, subPrice, deliveryFee)) }
     }
 
-    fun onSwipeDelete(id: Int) {
+    private fun onSwipeDelete(id: Int) {
         _cartStateFlow.update { currentState -> currentState.copy(cartItems = currentState.cartItems?.filter { it.id != id })}
+        calculateCheckout()
+    }
+
+    private fun addItem(cartItem: CartItem) {
+        val updatedCartItems = _cartStateFlow.value.cartItems?.map {
+            if (it == cartItem) {
+                it.copy(quantity = it.quantity + 1)
+            } else {
+                it
+            }
+        }
+        _cartStateFlow.update { currentState -> currentState.copy(cartItems = updatedCartItems) }
+        calculateCheckout()
+    }
+
+    private fun removeItem(cartItem: CartItem) {
+        val updatedCartItems = _cartStateFlow.value.cartItems?.map {
+            if (it == cartItem) {
+                it.copy(quantity = it.quantity - 1)
+            } else {
+                it
+            }
+        }
+        _cartStateFlow.update { currentState -> currentState.copy(cartItems = updatedCartItems) }
         calculateCheckout()
     }
 }

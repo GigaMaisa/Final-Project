@@ -9,8 +9,12 @@ import com.example.final_project.databinding.RecyclerCartItemBinding
 import com.example.final_project.databinding.RecyclerCheckoutCartItemBinding
 import com.example.final_project.presentation.extension.loadImage
 import com.example.final_project.presentation.model.cart.CartCheckout
+import com.example.final_project.presentation.model.cart.CartItem
 
 class CartRecyclerViewAdapter : ListAdapter<CartCheckout, ViewHolder>(CartItemDiffCallback) {
+
+    var onPLusClick: ((CartItem) -> Unit)? = null
+    var onMinusClick: ((CartItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when(viewType) {
@@ -43,6 +47,14 @@ class CartRecyclerViewAdapter : ListAdapter<CartCheckout, ViewHolder>(CartItemDi
                 tvCategory.text = category
                 tvQuantity.text = quantity.toString()
                 tvPrice.text = price.toString().plus(" ₾")
+
+                btnAddItem.setOnClickListener {
+                    onPLusClick?.invoke(cartItem)
+                }
+
+                btnRemoveItem.setOnClickListener {
+                    onMinusClick?.invoke(cartItem)
+                }
             }
         }
     }
@@ -50,9 +62,9 @@ class CartRecyclerViewAdapter : ListAdapter<CartCheckout, ViewHolder>(CartItemDi
     inner class CheckoutCartItemViewHolder(private val binding: RecyclerCheckoutCartItemBinding) : ViewHolder(binding.root) {
         fun bind() = with(binding) {
             val checkout = currentList[adapterPosition].checkout!!
-            tvSubTotalPrice.text = checkout.subTotal.toString().plus(" ₾")
-            tvDeliveryChargePrice.text = checkout.chargeTotal.toString().plus(" ₾")
-            tvTotalPrice.text = (checkout.subTotal.plus(checkout.chargeTotal)).toString().plus(" ₾")
+            tvSubTotalPrice.text = String.format("%.2f ₾", checkout.subTotal)
+            tvDeliveryChargePrice.text = String.format("%.2f ₾", checkout.chargeTotal)
+            tvTotalPrice.text = String.format("%.2f ₾", checkout.subTotal + checkout.chargeTotal)
         }
     }
 

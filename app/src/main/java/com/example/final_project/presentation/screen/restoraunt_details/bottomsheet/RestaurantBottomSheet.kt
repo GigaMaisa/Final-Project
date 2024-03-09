@@ -9,17 +9,24 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.final_project.R
 import com.example.final_project.databinding.RestaurantDetailsBottomSheetDialogBinding
+import com.example.final_project.presentation.event.RestaurantDetailsEvent
 import com.example.final_project.presentation.screen.restoraunt_details.adapter.RestaurantMenuRecyclerViewAdapter
 import com.example.final_project.presentation.screen.restoraunt_details.viewmodel.RestaurantDetailsViewModel
+import com.example.final_project.presentation.state.RestaurantMenuState
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import kotlin.properties.Delegates
 
+@AndroidEntryPoint
 class RestaurantBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: RestaurantDetailsBottomSheetDialogBinding
     private val restaurantMenuAdapter = RestaurantMenuRecyclerViewAdapter()
     private val viewModel: RestaurantDetailsViewModel by viewModels()
+    private var favourite by Delegates.notNull<Boolean>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +43,7 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         setUpRecycler()
         setUpObservers()
         setUpBottomSheetBehavior()
+        viewModel.onEvent(RestaurantDetailsEvent.GetIfFavouriteEvent(restaurantId = 0))
     }
 
     private fun setUpRecycler() = with(binding.recyclerViewMenu) {
@@ -47,8 +55,22 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.restaurantMenuStateFlow.collect {
-                    restaurantMenuAdapter.submitList(it)
+                    handleState(it)
                 }
+            }
+        }
+    }
+
+    private fun handleState(state: RestaurantMenuState){
+        with(state) {
+            menu?.let {
+                restaurantMenuAdapter.submitList(it)
+            }
+            favourite = isFavourite
+            if (isFavourite) {
+                binding.imageBtnHeart.setImageResource(R.drawable.ic_heart)
+            }else {
+                binding.imageBtnHeart.setImageResource(R.drawable.ic_heart_ourline)
             }
         }
     }

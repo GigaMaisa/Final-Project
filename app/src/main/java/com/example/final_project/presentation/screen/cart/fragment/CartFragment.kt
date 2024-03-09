@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.databinding.FragmentCartBinding
 import com.example.final_project.presentation.base.BaseFragment
+import com.example.final_project.presentation.event.CartEvent
 import com.example.final_project.presentation.model.cart.CartCheckout
 import com.example.final_project.presentation.screen.cart.viewmodel.CartViewModel
 import com.example.final_project.presentation.screen.cart.adapter.CartRecyclerViewAdapter
@@ -30,6 +31,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
     }
 
     override fun setUpListeners() {
+        setUpCartAddRemoveListener()
     }
 
     override fun setUpObservers() {
@@ -57,7 +59,19 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
-        viewModel.onSwipeDelete(cartAdapter.currentList[position].id)
+        viewModel.onEvent(CartEvent.DeleteItemEvent(cartAdapter.currentList[position].id))
+    }
+
+    private fun setUpCartAddRemoveListener() {
+        with(cartAdapter) {
+            onMinusClick = {
+                viewModel.onEvent(CartEvent.RemoveCartItemQuantityEvent(it))
+            }
+
+            onPLusClick = {
+                viewModel.onEvent(CartEvent.AddCartItemQuantityEvent(it))
+            }
+        }
     }
 
 }

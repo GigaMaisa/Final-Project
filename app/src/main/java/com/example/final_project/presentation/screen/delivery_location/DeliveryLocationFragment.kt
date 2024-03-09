@@ -1,5 +1,6 @@
 package com.example.final_project.presentation.screen.delivery_location
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +27,10 @@ class DeliveryLocationFragment : BaseFragment<FragmentDeliveryLocationBinding>(F
         binding.floatingBtnAddLocations.setOnClickListener {
             viewModel.onEvent(DeliveryLocationEvent.NavigateToMapEvent)
         }
+
+        binding.btnGoBack.setOnClickListener {
+            viewModel.onEvent(DeliveryLocationEvent.NavigateBackEvent)
+        }
     }
 
     override fun setUpObservers() {
@@ -33,6 +38,9 @@ class DeliveryLocationFragment : BaseFragment<FragmentDeliveryLocationBinding>(F
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.locations.collect {
+                        if (it.isEmpty()) {
+                            binding.tvNoItemsAlert.visibility = View.VISIBLE
+                        }
                         deliveryLocationAdapter.submitList(it)
                     }
                 }
@@ -48,6 +56,7 @@ class DeliveryLocationFragment : BaseFragment<FragmentDeliveryLocationBinding>(F
 
     private fun handleUiEvent(event: DeliveryLocationViewModel.DeliveryLocationUiEvent) {
         when(event) {
+            is DeliveryLocationViewModel.DeliveryLocationUiEvent.NavigateBack -> findNavController().navigateUp()
             is DeliveryLocationViewModel.DeliveryLocationUiEvent.NavigateToMap -> findNavController().navigate(DeliveryLocationFragmentDirections.actionDeliveryLocationFragmentToMapsFragment())
         }
     }

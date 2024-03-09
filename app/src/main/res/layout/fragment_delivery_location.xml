@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/you_don_t_have_any_cards_added"
+        android:text="@string/you_don_t_have_any_location_added"
         android:visibility="gone"
         android:textSize="20sp"
         android:layout_width="wrap_content"

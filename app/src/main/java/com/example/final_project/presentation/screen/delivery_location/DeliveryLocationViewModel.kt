@@ -23,6 +23,7 @@ class DeliveryLocationViewModel @Inject constructor(getDeliveryLocationsUseCase:
     fun onEvent(event: DeliveryLocationEvent) {
         when(event) {
             is DeliveryLocationEvent.NavigateToMapEvent -> navigateToMap()
+            is DeliveryLocationEvent.NavigateBackEvent -> navigateBack()
         }
     }
 
@@ -32,8 +33,15 @@ class DeliveryLocationViewModel @Inject constructor(getDeliveryLocationsUseCase:
         }
     }
 
+    private fun navigateBack() {
+        viewModelScope.launch {
+            _uiState.emit(DeliveryLocationUiEvent.NavigateBack)
+        }
+    }
+
 
     sealed interface DeliveryLocationUiEvent {
         object NavigateToMap : DeliveryLocationUiEvent
+        object NavigateBack: DeliveryLocationUiEvent
     }
 }

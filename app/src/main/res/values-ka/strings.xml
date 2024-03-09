@@ -97,5 +97,5 @@
     <string name="add_card">ბარათის დამატება</string>
     <string name="locations">ლოკაციები</string>
     <string name="you_don_t_have_any_location_added">თქვენ არ გავქთ დამატებული ლოკაცია</string>
-
+    <string name="is_it_your_default_card_for_payment">გამოვიყენოთ ეს ბარათი ნაგულისხმევად?</string>
 </resources>

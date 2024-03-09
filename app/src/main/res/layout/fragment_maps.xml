@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/map"
-        tools:context=".presentation.screen.map.MapsFragment"
-        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+        tools:context=".presentation.screen.map.MapsFragment" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivMarker"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="10dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_marker"/>
-    
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_marker" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSelectLocation"
         android:layout_width="322dp"
         android:layout_height="57dp"
         android:layout_gravity="bottom|center"
-        android:background="@drawable/button_background"
         android:layout_marginBottom="25dp"
+        android:background="@drawable/button_background"
+        android:clickable="false"
         android:text="@string/select_location"
         android:textAllCaps="false"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/autocomplete_fragment"
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:background="@drawable/edit_text_background"
+        android:layout_height="wrap_content"
         android:layout_gravity="top|center"
-        android:layout_height="wrap_content" />
+        android:layout_margin="10dp"
+        android:background="@drawable/edit_text_background" />
 
 </FrameLayout>

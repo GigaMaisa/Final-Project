@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Build
 import android.util.Log
-import android.util.Log.d
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
@@ -27,27 +26,27 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 class MapsFragment : BaseFragment<FragmentMapsBinding>(FragmentMapsBinding::inflate) {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var map: GoogleMap
+    private var map: GoogleMap? = null
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {}
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
         updateLocationUi(LatLng(41.7934135, 44.8025545))
+        binding.btnSelectLocation.isClickable = true
     }
 
     override fun setUp() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
-
+        setUpMap()
         updateCurrentLocationUI()
         setUpAutocompleteFragment()
     }
 
     override fun setUpListeners() {
         binding.btnSelectLocation.setOnClickListener {
-            getLocationName(map.projection.visibleRegion.latLngBounds.center.latitude, map.projection.visibleRegion.latLngBounds.center.longitude)
+            map?.let {
+                getLocationName(it.projection.visibleRegion.latLngBounds.center.latitude, it.projection.visibleRegion.latLngBounds.center.longitude)
+            }
         }
     }
 
@@ -64,34 +63,34 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(FragmentMapsBinding::infl
                         updateLocationUi(LatLng(task.result.latitude, task.result.longitude))
                     }
                 } else {
-                    map.uiSettings.isMyLocationButtonEnabled = false
+                    map?.let {
+                        it.uiSettings.isMyLocationButtonEnabled = false
+                    }
                     requestPermission.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
                 }
             }
         }
     }
 
-    private fun updateLocationUi(latLng: LatLng) = with(map) {
-        moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.0f))
-    }
+    private fun updateLocationUi(latLng: LatLng) =
+        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.0f))
 
     private fun setUpAutocompleteFragment() {
-        val autocompleteFragment = childFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
-        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG))
-        autocompleteFragment.setCountries("GE")
-
-        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
-            override fun onPlaceSelected(place: Place) {
-                place.latLng?.let {
-                    updateLocationUi(it)
+        with(binding.autocompleteFragment.getFragment<AutocompleteSupportFragment>()) {
+            setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)).
+            setCountries("GE").
+            setOnPlaceSelectedListener(object : PlaceSelectionListener {
+                override fun onPlaceSelected(place: Place) {
+                    place.latLng?.let {
+                        updateLocationUi(it)
+                    }
                 }
-                d("placeSelected", "${place.latLng}")
-            }
 
-            override fun onError(status: Status) {
-                Log.i("error occured", "An error occurred: $status ${status.statusMessage}")
-            }
-        })
+                override fun onError(status: Status) {
+                    Log.i("error occured", "An error occurred: $status ${status.statusMessage}")
+                }
+            })
+        }
     }
 
     private fun getLocationName(latitude: Double, longitude: Double) {
@@ -117,5 +116,11 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(FragmentMapsBinding::infl
         } catch (e: Exception) {
             Log.e("LocationName", "Error getting location name: ${e.message}")
         }
+    }
+
+    private fun setUpMap() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
     }
 }

@@ -12,6 +12,10 @@ plugins {
 }
 
 android {
+    packaging {
+        resources.excludes.add("META-INF/*")
+    }
+
     namespace = "com.example.final_project"
     compileSdk = 34
 
@@ -35,6 +39,7 @@ android {
             buildConfigField("String", "GOOGLE_BASE_URL", "\"https://maps.googleapis.com/\"")
             buildConfigField("String", "MAP_API_KEY", gradleLocalProperties(rootDir).getProperty("MAP_API_KEY"))
             buildConfigField("String", "MOCKY_BASE_URL", "\"https://run.mocky.io/v3/\"")
+            buildConfigField("String", "CHATBOT_BASE_URL", "\"https://dialogflow.googleapis.com\"")
         }
 
         release {
@@ -42,6 +47,8 @@ android {
             buildConfigField("String", "GOOGLE_BASE_URL", "\"https://maps.googleapis.com/\"")
             buildConfigField("String", "MAP_API_KEY", gradleLocalProperties(rootDir).getProperty("MAP_API_KEY"))
             buildConfigField("String", "MOCKY_BASE_URL", "\"https://run.mocky.io/v3/\"")
+            buildConfigField("String", "CHATBOT_BASE_URL", "\"https://dialogflow.googleapis.com\"")
+
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -66,6 +73,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.auth:google-auth-library-oauth2-http:0.25.1")
 
     implementation("com.google.android.libraries.places:places:3.3.0")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
@@ -84,6 +92,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx:24.10.3")
 
     implementation("androidx.room:room-runtime:2.6.1")
+    implementation("com.google.firebase:firebase-sessions:1.2.2")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")

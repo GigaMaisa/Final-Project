@@ -4,6 +4,7 @@ import com.example.final_project.BuildConfig
 import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
+import com.example.final_project.data.remote.service.ChatBotApiService
 import com.example.final_project.data.remote.service.DirectionsApiService
 import com.example.final_project.data.remote.service.RestaurantsApiService
 import com.example.final_project.presentation.util.EncryptionHelper
@@ -36,6 +37,10 @@ object AppModule {
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class FirebaseRetrofit
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class ChatBotRetrofit
 
     @Provides
     @Singleton
@@ -106,6 +111,17 @@ object AppModule {
             .build()
     }
 
+    @Provides
+    @Singleton
+    @ChatBotRetrofit
+    fun provideChatBotRetrofitClient(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.CHATBOT_BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(okHttpClient)
+            .build()
+    }
+
 //    @Provides
 //    @Singleton
 //    fun provideBannersApiService(@MockyRetrofit retrofit: Retrofit): BannersApiService {
@@ -116,6 +132,12 @@ object AppModule {
     @Singleton
     fun provideRestaurantsApiService(@FirebaseRetrofit retrofit: Retrofit): RestaurantsApiService {
         return retrofit.create(RestaurantsApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatBotApiService(@ChatBotRetrofit retrofit: Retrofit): ChatBotApiService {
+        return retrofit.create(ChatBotApiService::class.java)
     }
 
     @Provides

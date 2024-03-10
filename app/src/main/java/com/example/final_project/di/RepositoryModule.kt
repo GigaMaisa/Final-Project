@@ -8,6 +8,7 @@ import com.example.final_project.data.local.dao.FavouriteRestaurantDao
 import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
+import com.example.final_project.data.remote.service.ChatBotApiService
 import com.example.final_project.data.remote.service.DirectionsApiService
 import com.example.final_project.data.remote.service.RestaurantsApiService
 import com.example.final_project.data.repository.local.card.CardRepositoryImpl
@@ -18,6 +19,7 @@ import com.example.final_project.data.repository.remote.firebase.FirebaseAdditio
 import com.example.final_project.data.repository.remote.firebase.FirebasePhonePhoneAuthRepositoryImpl
 import com.example.final_project.data.repository.remote.chat.ChatContactsRepositoryImpl
 import com.example.final_project.data.repository.remote.chat.ChatMessagesRepositoryImpl
+import com.example.final_project.data.repository.remote.chatbot.ChatBotRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAuthStateRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseEmailLoginRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebasePhotosRepositoryImpl
@@ -32,6 +34,7 @@ import com.example.final_project.domain.repository.auth.FirebaseAuthStateReposit
 import com.example.final_project.domain.repository.auth.FirebaseEmailLoginRepository
 import com.example.final_project.domain.repository.auth.FirebasePhoneAuthRepository
 import com.example.final_project.domain.repository.auth.FirebaseSignOutRepository
+import com.example.final_project.domain.repository.bot.ChatBotRepository
 import com.example.final_project.domain.repository.card.CardRepository
 import com.example.final_project.domain.repository.chat.ChatContactsRepository
 import com.example.final_project.domain.repository.chat.ChatMessagesRepository
@@ -78,6 +81,12 @@ object RepositoryModule {
     @Singleton
     fun provideFirebaseAuthRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebasePhoneAuthRepository {
         return FirebasePhonePhoneAuthRepositoryImpl(auth = auth, ioDispatcher = ioDispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatBotRepository(responseHandler: ResponseHandler, chatBotApiService: ChatBotApiService) : ChatBotRepository {
+        return ChatBotRepositoryImpl(handler = responseHandler, chatBotApiService = chatBotApiService)
     }
 
     @Provides

@@ -1,0 +1,5 @@
+package com.example.final_project.presentation.event.bot
+
+sealed class ChatBotEvents {
+    data class SendTextToChatBotEvent(val text: String) : ChatBotEvents()
+}

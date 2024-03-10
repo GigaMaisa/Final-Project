@@ -21,7 +21,6 @@ class SignUpCredentialsFragment : BaseFragment<FragmentSignUpCredentialsBinding>
     private val viewModel: SignUpCredentialsViewModel by viewModels()
 
     override fun setUp() {
-
     }
 
     override fun setUpListeners() = with(binding) {
@@ -48,7 +47,6 @@ class SignUpCredentialsFragment : BaseFragment<FragmentSignUpCredentialsBinding>
                         handleAdditionalDataState(state = it)
                     }
                 }
-
             }
         }
     }

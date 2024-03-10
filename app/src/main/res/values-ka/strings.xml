@@ -98,4 +98,9 @@
     <string name="locations">ლოკაციები</string>
     <string name="you_don_t_have_any_location_added">თქვენ არ გავქთ დამატებული ლოკაცია</string>
     <string name="is_it_your_default_card_for_payment">გამოვიყენოთ ეს ბარათი ნაგულისხმევად?</string>
+    <string name="emoji">U+1F642</string>
+    <string name="delivery_fee">%1$d ₾</string>
+    <string name="delivery_time">%1$s წთ</string>
+    <string name="restaurants">რესტორნები</string>
+    <string name="see_all">ყველა</string>
 </resources>

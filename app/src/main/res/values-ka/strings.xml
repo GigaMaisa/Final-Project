@@ -107,5 +107,6 @@
     <string name="email_validation_error">შეიყვანეთ ვალიდური მეილი</string>
     <string name="password_validation_error">პაროლი უნდა შეიცავდეს მინიმუმ 8 სიმბოლოს, დიდ და პატარა ასოს, სიმბოლოს და რიცხვს</string>
     <string name="phone_validation_error">შეიყვანეთ სწორი ნომერი 9 ციფრით</string>
-    <string name="Invalid_credentials_error">არასწორი კოდი. სცადეთ თავიდან</string>
-</resources>
+    <string name="invalid_credentials_error">არასწორი იმეილი ან პაროლი</string>
+    <string name="invalid_passcode_error">არასწორი კოდი, სცადეთ ხელახლა</string>
+    <string name="phone_email_validation_error">არავალიდური იმეილი და პაროლი</string></resources>

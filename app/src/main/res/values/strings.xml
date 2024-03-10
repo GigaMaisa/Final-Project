@@ -106,5 +106,7 @@
     <string name="email_validation_error">enter valid email</string>
     <string name="password_validation_error">password must contain 8 symbols, minimum 1 upper and lower case and 1 symbol</string>
     <string name="phone_validation_error">enter appropriate number with 9 digits</string>
-    <string name="Invalid_credentials_error">Invalid Passcode Try Again</string>
+    <string name="invalid_credentials_error">Invalid email or password</string>
+    <string name="invalid_passcode_error">Invalid passcode try again</string>
+    <string name="phone_email_validation_error">Invalid number and email.</string>
 </resources>

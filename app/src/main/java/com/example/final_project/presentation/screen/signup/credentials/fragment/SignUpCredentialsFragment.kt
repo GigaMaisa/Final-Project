@@ -51,7 +51,6 @@ class SignUpCredentialsFragment : BaseFragment<FragmentSignUpCredentialsBinding>
                         handleAdditionalDataState(state = it)
                     }
                 }
-
             }
         }
     }

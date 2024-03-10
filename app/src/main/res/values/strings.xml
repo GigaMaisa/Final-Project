@@ -97,6 +97,11 @@
     <string name="locations">Locations</string>
     <string name="you_don_t_have_any_location_added">you don\'t have any location added</string>
     <string name="is_it_your_default_card_for_payment">Is it your default card for payment?</string>
+    <string name="emoji">U+1F642</string>
+    <string name="delivery_fee">%1$d ₾</string>
+    <string name="delivery_time">%1$s min</string>
+    <string name="restaurants">Restaurants</string>
+    <string name="see_all">See All</string>
     <string name="fullname_validation_error">enter your full name with space between</string>
     <string name="email_validation_error">enter valid email</string>
     <string name="password_validation_error">password must contain 8 symbols, minimum 1 upper and lower case and 1 symbol</string>

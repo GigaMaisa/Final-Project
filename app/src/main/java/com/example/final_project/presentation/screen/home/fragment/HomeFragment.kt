@@ -55,7 +55,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
 
         restaurants?.let {
-            Log.d("RESTORNEBI SMN", it.joinToString())
             restaurantsRecyclerAdapter.submitList(it)
         }
 

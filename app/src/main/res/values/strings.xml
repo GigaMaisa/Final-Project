@@ -102,4 +102,9 @@
     <string name="delivery_time">%1$s min</string>
     <string name="restaurants">Restaurants</string>
     <string name="see_all">See All</string>
+    <string name="fullname_validation_error">enter your full name with space between</string>
+    <string name="email_validation_error">enter valid email</string>
+    <string name="password_validation_error">password must contain 8 symbols, minimum 1 upper and lower case and 1 symbol</string>
+    <string name="phone_validation_error">enter appropriate number with 9 digits</string>
+    <string name="Invalid_credentials_error">Invalid Passcode Try Again</string>
 </resources>

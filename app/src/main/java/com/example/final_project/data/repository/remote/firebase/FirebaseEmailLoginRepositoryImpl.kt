@@ -5,6 +5,7 @@ import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.domain.repository.auth.FirebaseEmailLoginRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class FirebaseEmailLoginRepositoryImpl @Inject constructor(
@@ -13,7 +14,7 @@ class FirebaseEmailLoginRepositoryImpl @Inject constructor(
 ) : FirebaseEmailLoginRepository {
     override suspend fun firebaseSignInWithEmailAndPassword(email: String, password: String): Flow<Resource<Boolean>> {
         return emailSignInResponseHandler.safeAuthCall {
-            auth.signInWithEmailAndPassword(email, password)
+            auth.signInWithEmailAndPassword(email, password).await()
         }
     }
 }

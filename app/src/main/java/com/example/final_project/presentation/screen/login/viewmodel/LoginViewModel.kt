@@ -2,6 +2,7 @@ package com.example.final_project.presentation.screen.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.final_project.R
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.domain.usecase.signup.SendVerificationCodeUseCase
 import com.example.final_project.domain.usecase.validators.EmailValidationUseCase
@@ -82,10 +83,8 @@ class LoginViewModel @Inject constructor(
 
                         is Resource.Success -> {
                             _verificationState.update { currentState ->
-
                                 currentState.copy(data = resource.response)
                             }
-
                             _navigationEvent.emit(LoginFragmentUiEvents.NavigateToSmsAuthPage(resource.response))
                         }
 
@@ -97,6 +96,7 @@ class LoginViewModel @Inject constructor(
             if (emailValidationUseCase(credential)) {
                 _navigationEvent.emit(LoginFragmentUiEvents.NavigateToEmailPasswordPage(email = credential))
             }
+            validateErrorMessage(credential)
         }
     }
 
@@ -104,6 +104,20 @@ class LoginViewModel @Inject constructor(
         _verificationState.update { currentState ->
             currentState.copy(errorMessage = errorMessage, isLoading = false)
         }
+    }
+
+    private fun validatePhoneNumber(phoneNumber: String): Boolean {
+        return phoneNumberValidatorUseCase(phoneNumber = phoneNumber)
+    }
+
+    private fun validateEmail(email: String): Boolean {
+        return emailValidationUseCase(email)
+    }
+
+    private fun validateErrorMessage(credential: String) {
+        if (!validateEmail(credential))
+            if(!validatePhoneNumber(credential))
+                updateErrorMessage(errorMessage = R.string.phone_email_validation_error)
     }
 }
 

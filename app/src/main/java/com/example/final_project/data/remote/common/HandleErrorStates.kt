@@ -1,6 +1,7 @@
 package com.example.final_project.data.remote.common
 
 import android.util.Log
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import retrofit2.HttpException
 import java.io.IOException
@@ -35,6 +36,7 @@ sealed class HandleErrorStates(val errorCode: ErrorCode) {
                 }
                 is TimeoutException -> TimeoutError
                 is FirebaseAuthInvalidCredentialsException -> FirebaseCredentialError
+                is FirebaseNetworkException -> NetworkError
                 else -> UnknownError
             }
         }

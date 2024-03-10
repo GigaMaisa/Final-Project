@@ -1,6 +1,7 @@
 package com.example.final_project.presentation.screen.password.fragment
 
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -53,14 +54,11 @@ class PasswordFragment : BaseFragment<FragmentPasswordBinding>(FragmentPasswordB
     }
 
     private fun handleLoginState(state: LoginState) = with(binding) {
-        if (state.isLoading) {
-            progressBar.visibility = View.VISIBLE
-        } else {
-            View.GONE
-        }
+        progressBar.isVisible = state.isLoading
 
         state.errorMessage?.let {
             progressBar.visibility = View.GONE
+            passwordContainer.error = resources.getString(it)
         }
     }
 

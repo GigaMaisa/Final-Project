@@ -11,16 +11,12 @@ import com.example.final_project.domain.usecase.firebase.SignOutUseCase
 import com.example.final_project.domain.usecase.firebase.UploadPhotoUseCase
 import com.example.final_project.presentation.event.ProfileNavigationUiEvents
 import com.example.final_project.presentation.mapper.toPresentation
-import com.example.final_project.presentation.state.PhotoState
 import com.example.final_project.presentation.state.ProfileState
-import com.example.final_project.presentation.state.SignOutState
-import com.example.final_project.presentation.state.UserDataState
 import com.example.final_project.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -39,22 +35,6 @@ class ProfileViewModel @Inject constructor(
 
     private val _uiEvent = MutableSharedFlow<ProfileNavigationUiEvents>()
     val uiEvent: SharedFlow<ProfileNavigationUiEvents> get() = _uiEvent
-
-    private val _signOutState = MutableStateFlow(SignOutState())
-    val signOutState: StateFlow<SignOutState> get() = _signOutState
-
-    private val _imageUploadStatus = MutableStateFlow(PhotoState())
-    val imageUploadStatus: StateFlow<PhotoState> = _imageUploadStatus
-
-    private val _userImage = MutableStateFlow(PhotoState())
-    val userImageFlow: StateFlow<PhotoState> = _userImage
-
-    private val _userDataFlow = MutableStateFlow(UserDataState())
-    val userDataFlow = _userDataFlow.asStateFlow()
-
-    init {
-//        _profileStateFlow.update { currentState -> currentState.copy(favourites = cartItems) }
-    }
 
     fun onEvent(event: ProfileEvent) {
         when (event) {
@@ -84,13 +64,13 @@ class ProfileViewModel @Inject constructor(
             getUserDataUseCase().collect {
                 when (it) {
                     is Resource.Loading -> {
-                        _userDataFlow.update { currentState ->
+                        _profileStateFlow.update { currentState ->
                             currentState.copy(isLoading = true)
                         }
                     }
 
                     is Resource.Success -> {
-                        _userDataFlow.update { currentState ->
+                        _profileStateFlow.update { currentState ->
                             currentState.copy(userData = it.response.toPresentation(), isLoading = false)
                         }
                     }
@@ -106,22 +86,22 @@ class ProfileViewModel @Inject constructor(
             retrievePhotoUseCase().collect {
                 when (it) {
                     is Resource.Loading -> {
-                        _userImage.update { currentState ->
+                        _profileStateFlow.update { currentState ->
                             currentState.copy(isLoading = true)
                         }
                     }
 
                     is Resource.Success -> {
                         Log.d("RACXA VIEWMODEL", it.response)
-                        _userImage.update { currentState ->
-                            currentState.copy(imageUri = it.response, isLoading = false)
+                        _profileStateFlow.update { currentState ->
+                            currentState.copy(imageRetrieve = it.response, isLoading = false)
                         }
                     }
 
                     is Resource.Error -> {
                         Log.d("RACXA VIEWMODEL", "${it.error.errorCode}")
 
-                        _userImage.update { currentState ->
+                        _profileStateFlow.update { currentState ->
                             currentState.copy(errorMessage = getErrorMessage(it.error), isLoading = false)
                         }
                     }
@@ -136,22 +116,22 @@ class ProfileViewModel @Inject constructor(
             uploadPhotoUseCase(imageUri).collect {
                 when (it) {
                     is Resource.Loading -> {
-                        _imageUploadStatus.update { currentState ->
+                        _profileStateFlow.update { currentState ->
                             currentState.copy(isLoading = true)
                         }
                     }
 
                     is Resource.Success -> {
                         Log.d("RACXA VIEWMODEL", it.response)
-                        _imageUploadStatus.update { currentState ->
-                            currentState.copy(imageUri = it.response, isLoading = false)
+                        _profileStateFlow.update { currentState ->
+                            currentState.copy(imageUpload = it.response, isLoading = false)
                         }
                     }
 
                     is Resource.Error -> {
                         Log.d("RACXA VIEWMODEL", "${it.error.errorCode}")
 
-                        _imageUploadStatus.update { currentState ->
+                        _profileStateFlow.update { currentState ->
                             currentState.copy(errorMessage = getErrorMessage(it.error), isLoading = false)
                         }
                     }
@@ -166,7 +146,7 @@ class ProfileViewModel @Inject constructor(
             signOutUseCase().collect {
                 when (it) {
                     is Resource.Loading -> {
-                        _signOutState.update { currentState ->
+                        _profileStateFlow.update { currentState ->
                             currentState.copy(isLoading = true)
                         }
                     }
@@ -184,7 +164,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun updateErrorMessage(errorMessage: Int?) {
-        _signOutState.update { currentState ->
+        _profileStateFlow.update { currentState ->
             currentState.copy(errorMessage = errorMessage, isLoading = false)
         }
     }

@@ -93,6 +93,7 @@
             android:id="@+id/ccp"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
             android:background="@drawable/edit_text_background"
             android:padding="9dp"
             app:ccpDialog_textColor="?android:textColor"
@@ -102,23 +103,38 @@
             app:ccp_showPhoneCode="true"
             app:ccp_textSize="16sp" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etPhoneNumber"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberContainerLayout"
             android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/edit_text_background"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
             android:hint="@string/type_your_phone_number"
-            android:inputType="phone"
-            android:paddingHorizontal="15dp"
-            android:textColorHighlight="?android:textColor"
-            android:textColorLink="?android:textColor"
-            android:textColor="?android:textColor"
-            android:textColorHint="?android:textColor"
-            android:textSize="14sp"
+            android:textColorHint="@color/hint_color"
+            app:errorIconDrawable="@null"
+            android:layout_marginEnd="15dp"
+            app:boxStrokeErrorColor="@color/red"
+            app:helperTextTextColor="@color/red"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLoginText" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDesc"
+            app:passwordToggleEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:layout_gravity="center"
+                android:background="@drawable/edit_text_background"
+                android:gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:inputType="phone"
+                android:paddingHorizontal="15dp"
+                android:textColor="?android:textColor"
+                android:textColorHint="@color/hint_color"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatButton

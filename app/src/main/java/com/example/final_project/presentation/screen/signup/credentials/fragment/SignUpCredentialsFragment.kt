@@ -1,6 +1,9 @@
 package com.example.final_project.presentation.screen.signup.credentials.fragment
 
+import android.util.Log.d
 import android.view.View
+import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -9,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.final_project.databinding.FragmentSignUpCredentialsBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.signup.SendUserDataEvent
+import com.example.final_project.presentation.extension.showSnackBar
 import com.example.final_project.presentation.screen.signup.credentials.viewmodel.SignUpCredentialsNavigationEvents
 import com.example.final_project.presentation.screen.signup.credentials.viewmodel.SignUpCredentialsViewModel
 import com.example.final_project.presentation.state.AdditionalDataState
@@ -21,7 +25,6 @@ class SignUpCredentialsFragment : BaseFragment<FragmentSignUpCredentialsBinding>
     private val viewModel: SignUpCredentialsViewModel by viewModels()
 
     override fun setUp() {
-
     }
 
     override fun setUpListeners() = with(binding) {
@@ -53,18 +56,29 @@ class SignUpCredentialsFragment : BaseFragment<FragmentSignUpCredentialsBinding>
         }
     }
 
-    private fun handleAdditionalDataState(state: AdditionalDataState) {
+    private fun handleAdditionalDataState(state: AdditionalDataState) = with(state) {
         with(binding) {
-            if (state.isLoading) {
-                progressBar.visibility = View.VISIBLE
-            } else {
-                View.GONE
+            d("errorState", state.toString())
+            progressBar.isVisible = isLoading
+
+            errorMessage?.let {
+                progressBar.visibility = View.GONE
+                requireView().showSnackBar(getStringResource(it)!!)
             }
 
-            state.errorMessage?.let {
-                progressBar.visibility = View.GONE
-            }
+            etEmailContainer.error = getStringResource(emailErrorMessage)
+
+            fullNameContainer.error = getStringResource(fullNameErrorMessage)
+
+            passwordContainer.error = getStringResource(passwordErrorMessage)
         }
+    }
+
+    private fun getStringResource(@StringRes stringRes: Int?): String? {
+        stringRes?.let {
+            return resources.getString(it)
+        }
+        return null
     }
 
     private fun handleNavigationEvents(events: SignUpCredentialsNavigationEvents) {

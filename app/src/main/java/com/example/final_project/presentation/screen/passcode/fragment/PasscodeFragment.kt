@@ -104,14 +104,12 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
             state.errorMessage?.let {
                 text = handleStringResource(it)
                 setTextColor(Color.RED)
-                passcodeAdapter.notifyItemChanged(5)
                 viewModel.onEvent(PasscodeEvent.ResetPasscode)
             }
 
             state.successMessage?.let {
                 binding.btnNext.isClickable = true
                 binding.btnNext.setBackgroundResource(R.drawable.button_background)
-                setTextColor(Color.GREEN)
             }
         }
     }

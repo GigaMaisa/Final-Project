@@ -1,5 +1,6 @@
 package com.example.final_project.presentation.screen.passcode.viewmodel
 
+import android.util.Log.d
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
@@ -75,30 +76,32 @@ class PasscodeViewModel @Inject constructor(
                 .mapNotNull { it.currentNumber?.toString() }
                 .reduceOrNull { acc, s -> acc + s }
 
-            val credential = PhoneAuthProvider.getCredential(verificationId, smsCode!!)
+            smsCode?.let {
+                val credential = PhoneAuthProvider.getCredential(verificationId, it)
+                signInWithAuthCredentialUseCase(credential).collect {resource ->
+                    d("resourceSignuper", resource.toString())
 
-
-            signInWithAuthCredentialUseCase(credential).collect {resource ->
-                when (resource) {
-                    is Resource.Loading -> _authStateFlow.update { currentState ->
-                        currentState.copy(isLoading = true)
-                    }
-
-                    is Resource.Success -> {
-                        _authStateFlow.update { currentState ->
-                            currentState.copy(data = resource.response)
+                    when (resource) {
+                        is Resource.Loading -> _authStateFlow.update { currentState ->
+                            currentState.copy(isLoading = true)
                         }
 
-                        _navigationEvent.emit(
-                            PasscodeNavigationEvents.NavigateToSignUpCredentialsPage(
-                                phoneNumber = resource.response.user?.phoneNumber
-                            )
-                        )
-                    }
+                        is Resource.Success -> {
+                            _authStateFlow.update { currentState ->
+                                currentState.copy(data = resource.response)
+                            }
 
-                    is Resource.Error -> {
-                        updateErrorMessage(getErrorMessage(resource.error))
-                        _passcodeStateFlow.update { currentState -> currentState.copy(errorMessage = getErrorMessage(resource.error)) }
+                            _navigationEvent.emit(
+                                PasscodeNavigationEvents.NavigateToSignUpCredentialsPage(
+                                    phoneNumber = resource.response.user?.phoneNumber
+                                )
+                            )
+                        }
+
+                        is Resource.Error -> {
+                            updateErrorMessage(getErrorMessage(resource.error))
+                            _passcodeStateFlow.update { currentState -> currentState.copy(errorMessage = getErrorMessage(resource.error)) }
+                        }
                     }
                 }
             }

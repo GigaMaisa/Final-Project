@@ -10,6 +10,7 @@ import com.example.final_project.databinding.FragmentChatBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.chat.ChatEvent
 import com.example.final_project.presentation.extension.loadImage
+import com.example.final_project.presentation.model.ContactType
 import com.example.final_project.presentation.model.chat.Message
 import com.example.final_project.presentation.screen.chat.adapter.MessageRecyclerViewAdapter
 import com.example.final_project.presentation.screen.chat.chat_messaging.viewmodel.ChatViewModel
@@ -33,11 +34,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
     }
 
     override fun setUpListeners() {
-        binding.sentButton.setOnClickListener {
-            val message = Message(Random.nextLong(1, Long.MAX_VALUE), binding.messageBox.text.toString(), FirebaseAuth.getInstance().currentUser?.uid)
-            viewModel.onEvent(ChatEvent.AddMessageEvent(message, receiverId))
-            binding.messageBox.text?.clear()
-        }
+        setUpMessageSentListener()
     }
 
     override fun setUpObservers() {
@@ -61,7 +58,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
 
     private fun setUpContact() {
         receiverId = safeArgs.uuid
-        viewModel.getReceiverId(receiverId)
+        if (safeArgs.type == ContactType.HUMAN)
+            viewModel.getReceiverId(receiverId)
 
         with(binding) {
             safeArgs.imageUrl?.let {
@@ -78,5 +76,14 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
         }
 
         viewModel.onEvent(ChatEvent.GetMessagesEvent(receiverId))
+    }
+
+    private fun setUpMessageSentListener() {
+        binding.sentButton.setOnClickListener {
+            val message = Message(Random.nextLong(1, Long.MAX_VALUE), binding.messageBox.text.toString(), FirebaseAuth.getInstance().currentUser?.uid)
+            if (safeArgs.type == ContactType.HUMAN)
+                viewModel.onEvent(ChatEvent.AddMessageEvent(message, receiverId))
+            binding.messageBox.text?.clear()
+        }
     }
 }

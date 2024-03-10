@@ -11,6 +11,6 @@ fun getErrorMessage(error: HandleErrorStates): Int {
         HandleErrorStates.ErrorCode.NETWORK_ERROR -> R.string.no_internet
         HandleErrorStates.ErrorCode.TIMEOUT_ERROR -> R.string.error_timeout
         HandleErrorStates.ErrorCode.UNKNOWN_ERROR -> R.string.unexpected_error
-        HandleErrorStates.ErrorCode.INVALID_CREDENTIALS -> R.string.Invalid_credentials_error
+        HandleErrorStates.ErrorCode.INVALID_CREDENTIALS -> R.string.invalid_credentials_error
     }
 }

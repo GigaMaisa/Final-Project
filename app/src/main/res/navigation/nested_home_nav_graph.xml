@@ -21,6 +21,10 @@
         <argument
             android:name="fullName"
             app:argType="string" />
+        <argument
+            android:name="type"
+            app:argType="com.example.final_project.presentation.model.ContactType"
+            android:defaultValue="HUMAN" />
     </fragment>
     <fragment
         android:id="@+id/homePage"

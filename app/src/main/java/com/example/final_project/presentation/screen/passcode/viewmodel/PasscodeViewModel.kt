@@ -3,6 +3,8 @@ package com.example.final_project.presentation.screen.passcode.viewmodel
 import android.util.Log.d
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.final_project.R
+import com.example.final_project.data.remote.common.HandleErrorStates
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.domain.usecase.signup.SignInWithAuthCredentialUseCase
 import com.example.final_project.presentation.event.PasscodeEvent
@@ -134,8 +136,10 @@ class PasscodeViewModel @Inject constructor(
                     }
 
                     is Resource.Error -> {
-                        updateErrorMessage(getErrorMessage(resource.error))
-                        _passcodeStateFlow.update { currentState -> currentState.copy(errorMessage = getErrorMessage(resource.error)) }
+                        if (resource.error.errorCode == HandleErrorStates.ErrorCode.INVALID_CREDENTIALS)
+                            updateErrorMessage(R.string.invalid_passcode_error)
+                        else
+                            updateErrorMessage(getErrorMessage(resource.error))
                     }
                 }
             }

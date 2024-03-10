@@ -17,10 +17,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class ChatContactsViewModel @Inject constructor(private val getContactsUseCase: GetContactsUseCase, private val addContactUseCase: AddContactUseCase): ViewModel() {
+    private val chatBotContact = Contact(
+        imageUrl = "https://image.shutterstock.com/image-vector/robot-icon-chatbot-cute-smiling-260nw-715418284.jpg",
+        lastMessage = null,
+        receiverId =  UUID.randomUUID().toString(),
+        fullName = "Chat Bot"
+    )
+
     private val _contactsStateFlow = MutableStateFlow(ContactsState())
     val contactsStateFlow = _contactsStateFlow.asStateFlow()
 
@@ -37,7 +45,12 @@ class ChatContactsViewModel @Inject constructor(private val getContactsUseCase: 
                 d("resourceContacts", resource.toString())
                 when(resource) {
                     is Resource.Loading -> _contactsStateFlow.update { currentState -> currentState.copy(isLoading = resource.loading) }
-                    is Resource.Success -> _contactsStateFlow.update { currentState -> currentState.copy(contacts = resource.response.map { it.toPresentation() }) }
+                    is Resource.Success -> {
+                        val currentList = mutableListOf(chatBotContact)
+                        currentList.addAll(resource.response.map { it.toPresentation() })
+                        _contactsStateFlow.update {currentState -> currentState.copy(contacts = currentList)
+                        }
+                    }
                     is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
                 }
             }

@@ -1,6 +1,6 @@
 package com.example.final_project.presentation.screen.login.fragment
 
-import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -65,14 +65,10 @@ class  LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::
     }
 
     private fun handleVerificationState(verificationState: VerificationState) = with(binding) {
-        if (verificationState.isLoading) {
-            progressBar.visibility = View.VISIBLE
-        } else {
-            View.GONE
-        }
+        progressBar.isVisible = verificationState.isLoading
 
         verificationState.errorMessage?.let {
-            progressBar.visibility = View.GONE
+            credentialsContainer.error = resources.getString(it)
         }
     }
 

@@ -11,7 +11,8 @@ import com.example.final_project.presentation.model.chat.Contact
 
 class ContactsRecyclerViewAdapter: ListAdapter<Contact, ContactsRecyclerViewAdapter.ContactViewHolder>(ContactItemDiffCallback) {
 
-    var onContactClick: ((Contact) -> Unit)? = null
+    var onHumanContactClick: ((Contact) -> Unit)? = null
+    var onChatbotContactClick: ((Contact) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         return ContactViewHolder(ContactRecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
@@ -29,9 +30,16 @@ class ContactsRecyclerViewAdapter: ListAdapter<Contact, ContactsRecyclerViewAdap
                 }
                 tvFullName.text = contact.fullName
 
-                root.setOnClickListener {
-                    onContactClick?.invoke(contact)
+                if (adapterPosition == 0) {
+                    root.setOnClickListener {
+                        onChatbotContactClick?.invoke(contact)
+                    }
+                }else {
+                    root.setOnClickListener {
+                        onHumanContactClick?.invoke(contact)
+                    }
                 }
+
             }
         }
     }

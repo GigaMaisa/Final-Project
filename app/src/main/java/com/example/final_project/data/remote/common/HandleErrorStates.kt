@@ -1,6 +1,7 @@
 package com.example.final_project.data.remote.common
 
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import retrofit2.HttpException
 import java.io.IOException
 import java.lang.Exception
@@ -15,9 +16,10 @@ sealed class HandleErrorStates(val errorCode: ErrorCode) {
     object NetworkError : HandleErrorStates(ErrorCode.NETWORK_ERROR)
     object TimeoutError : HandleErrorStates(ErrorCode.TIMEOUT_ERROR)
     object UnknownError : HandleErrorStates(ErrorCode.UNKNOWN_ERROR)
+    object FirebaseCredentialError: HandleErrorStates(ErrorCode.INVALID_CREDENTIALS)
 
     enum class ErrorCode {
-        CLIENT_ERROR, SERVER_ERROR, HTTP_ERROR, NETWORK_ERROR, TIMEOUT_ERROR, UNKNOWN_ERROR
+        CLIENT_ERROR, SERVER_ERROR, HTTP_ERROR, NETWORK_ERROR, TIMEOUT_ERROR, UNKNOWN_ERROR, INVALID_CREDENTIALS
     }
 
     companion object {
@@ -32,6 +34,7 @@ sealed class HandleErrorStates(val errorCode: ErrorCode) {
                     else -> HttpError(throwable.code(), throwable.response()?.errorBody()?.string() ?: "")
                 }
                 is TimeoutException -> TimeoutError
+                is FirebaseAuthInvalidCredentialsException -> FirebaseCredentialError
                 else -> UnknownError
             }
         }

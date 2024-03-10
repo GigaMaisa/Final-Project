@@ -1,12 +1,13 @@
 package com.example.final_project.presentation.screen.signup.start.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.final_project.R
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.domain.usecase.signup.SendVerificationCodeUseCase
 import com.example.final_project.domain.usecase.validators.PhoneNumberValidatorUseCase
 import com.example.final_project.presentation.event.signup.SendSmsEvent
+import com.example.final_project.presentation.model.ErrorType
 import com.example.final_project.presentation.state.VerificationState
 import com.example.final_project.presentation.util.getErrorMessage
 import com.google.firebase.auth.PhoneAuthOptions
@@ -55,7 +56,7 @@ class SignUpViewModel @Inject constructor(
 
     private fun sendVerificationCodeToPhoneNumber(phoneNumber: String, options: PhoneAuthOptions.Builder) {
         viewModelScope.launch {
-            if (phoneNumberValidatorUseCase(phoneNumber)) {
+            if (validatePhoneNumber(phoneNumber)) {
                  sendVerificationCodeUseCase(phoneNumber, options).collect { resource ->
                     when (resource) {
                         is Resource.Loading -> _verificationState.update { currentState ->
@@ -76,16 +77,28 @@ class SignUpViewModel @Inject constructor(
                             )
                         }
 
-                        is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
+                        is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error), ErrorType.GENERAL)
                     }
                 }
             }
         }
     }
 
-    private fun updateErrorMessage(errorMessage: Int?) {
-        _verificationState.update { currentState ->
-            currentState.copy(errorMessage = errorMessage, isLoading = false)
+    private fun validatePhoneNumber(phoneNumber: String): Boolean {
+        return if (!phoneNumberValidatorUseCase(phoneNumber)) {
+            updateErrorMessage(R.string.phone_validation_error, ErrorType.PHONE)
+            false
+        }else
+            true
+    }
+
+    private fun updateErrorMessage(errorMessage: Int?, errorType: ErrorType) {
+        when(errorType) {
+            ErrorType.All -> _verificationState.update { currentState -> currentState.copy(phoneErrorMessage = errorMessage, errorMessage = errorMessage, isLoading = false) }
+            ErrorType.PHONE -> _verificationState.update { currentState -> currentState.copy(phoneErrorMessage = errorMessage, isLoading = false) }
+            else -> _verificationState.update { currentState ->
+                currentState.copy(errorMessage = errorMessage, isLoading = false)
+            }
         }
     }
 }

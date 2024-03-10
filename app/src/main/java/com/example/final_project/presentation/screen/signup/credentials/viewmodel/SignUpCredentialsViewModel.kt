@@ -2,6 +2,7 @@ package com.example.final_project.presentation.screen.signup.credentials.viewmod
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.final_project.R
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.domain.usecase.signup.UserAdditionalDataUseCase
 import com.example.final_project.domain.usecase.validators.EmailValidationUseCase
@@ -10,6 +11,7 @@ import com.example.final_project.domain.usecase.validators.PasswordValidatorUseC
 import com.example.final_project.presentation.event.signup.SendUserDataEvent
 import com.example.final_project.presentation.mapper.toDomain
 import com.example.final_project.presentation.model.AdditionalData
+import com.example.final_project.presentation.model.ErrorType
 import com.example.final_project.presentation.state.AdditionalDataState
 import com.example.final_project.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,6 +51,7 @@ class SignUpCredentialsViewModel @Inject constructor(
             is SendUserDataEvent.SendUserData -> sendUserAdditionalData(
                 AdditionalData(fullName = event.fullName, email = event.email, password = event.password)
             )
+            is SendUserDataEvent.UpdateErrorMessage -> updateErrorMessage(errorMessage = event.message, errorType = event.errorType)
         }
     }
 
@@ -70,7 +73,7 @@ class SignUpCredentialsViewModel @Inject constructor(
                                                 currentState.copy(isLoading = true)
                                             }
 
-                                            is Resource.Error -> updateErrorMessage(getErrorMessage(it.error))
+                                            is Resource.Error -> updateErrorMessage(getErrorMessage(it.error), ErrorType.GENERAL)
 
                                             is Resource.Success -> {
                                                 addUserPasswordUseCase(additionalData.toDomain()).collect {
@@ -87,7 +90,7 @@ class SignUpCredentialsViewModel @Inject constructor(
                                                             _navigationEvent.emit(SignUpCredentialsNavigationEvents.NavigateToSuccessPage)
                                                         }
 
-                                                        is Resource.Error -> updateErrorMessage(getErrorMessage(it.error))
+                                                        is Resource.Error -> updateErrorMessage(getErrorMessage(it.error), ErrorType.GENERAL)
                                                     }
                                                 }
                                             }
@@ -95,7 +98,7 @@ class SignUpCredentialsViewModel @Inject constructor(
                                     }
                                 }
 
-                                is Resource.Error -> updateErrorMessage(getErrorMessage(it.error))
+                                is Resource.Error -> updateErrorMessage(getErrorMessage(it.error), ErrorType.GENERAL)
                             }
                         }
                     }
@@ -104,21 +107,42 @@ class SignUpCredentialsViewModel @Inject constructor(
         }
     }
 
-    private fun updateErrorMessage(errorMessage: Int?) {
-        _dataState.update { currentState ->
+    private fun updateErrorMessage(errorMessage: Int?, errorType: ErrorType) {
+        when(errorType) {
+            ErrorType.EMAIL -> _dataState.update { currentState ->
+                currentState.copy(emailErrorMessage = errorMessage, isLoading = false)
+            }
+            ErrorType.FULL_NAME -> _dataState.update { currentState ->
+                currentState.copy(fullNameErrorMessage = errorMessage, isLoading = false)
+            }
+            ErrorType.PASSWORD -> _dataState.update { currentState ->
+                currentState.copy(passwordErrorMessage = errorMessage, isLoading = false)
+            }
+            ErrorType.All -> _dataState.update { currentState ->
+                currentState.copy(errorMessage = errorMessage, emailErrorMessage = errorMessage, fullNameErrorMessage = errorMessage, passwordErrorMessage = errorMessage, isLoading = false)
+            }
+            else -> _dataState.update { currentState ->
             currentState.copy(errorMessage = errorMessage, isLoading = false)
         }
+        }
+
     }
 
     private fun validateFields(fullName: String, email: String, password: String) : Boolean {
-        return if (fullNameValidatorUseCase(fullName)) {
-            if (emailValidationUseCase(email)) {
-                passwordValidatorUseCase(password)
-            } else {
-                false
-            }
-        } else {
+        return if (!fullNameValidatorUseCase(fullName)) {
+            updateErrorMessage(null, ErrorType.All)
+            updateErrorMessage(R.string.fullname_validation_error, ErrorType.FULL_NAME)
             false
+        }else if(!emailValidationUseCase(email)) {
+            updateErrorMessage(null, ErrorType.All)
+            updateErrorMessage(R.string.email_validation_error, ErrorType.EMAIL)
+            false
+        }else if(!passwordValidatorUseCase(password)) {
+            updateErrorMessage(null, ErrorType.All)
+            updateErrorMessage(R.string.password_validation_error, ErrorType.PASSWORD)
+            false
+        }else {
+            true
         }
     }
 }

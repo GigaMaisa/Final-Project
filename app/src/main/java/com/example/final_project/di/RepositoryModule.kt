@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.example.final_project.data.local.dao.CardDao
 import com.example.final_project.data.local.dao.DeliveryLocationDao
+import com.example.final_project.data.local.dao.FavouriteRestaurantDao
 import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
@@ -12,6 +13,7 @@ import com.example.final_project.data.remote.service.RestaurantsApiService
 import com.example.final_project.data.repository.local.card.CardRepositoryImpl
 import com.example.final_project.data.repository.local.datastore.DataStoreRepositoryImpl
 import com.example.final_project.data.repository.local.delivery_location.DeliveryLocationRepositoryImpl
+import com.example.final_project.data.repository.local.favourites.FavouriteRestaurantsRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAdditionalUserDataRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebasePhonePhoneAuthRepositoryImpl
 import com.example.final_project.data.repository.remote.chat.ChatContactsRepositoryImpl
@@ -35,6 +37,7 @@ import com.example.final_project.domain.repository.chat.ChatContactsRepository
 import com.example.final_project.domain.repository.chat.ChatMessagesRepository
 import com.example.final_project.domain.repository.datastore.DataStoreRepository
 import com.example.final_project.domain.repository.delivery_location.DeliveryLocationRepository
+import com.example.final_project.domain.repository.favourites.FavouriteRestaurantsRepository
 import com.example.final_project.domain.repository.firebase.FirebasePhotosRepository
 import com.example.final_project.domain.repository.firebase.FirebaseUserDataRepository
 import com.example.final_project.domain.repository.home.BannerRepository
@@ -53,6 +56,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
+
+    @Provides
+    @Singleton
+    fun provideFavouriteRestaurantsRepository(dao: FavouriteRestaurantDao, @IoDispatcher ioDispatcher: CoroutineDispatcher): FavouriteRestaurantsRepository = FavouriteRestaurantsRepositoryImpl(dao, ioDispatcher)
 
     @Provides
     @Singleton

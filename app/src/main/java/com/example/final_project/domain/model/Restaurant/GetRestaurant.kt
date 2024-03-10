@@ -7,5 +7,6 @@ data class GetRestaurant(
     val type: String,
     val deliveryTime: String,
     val rating: Double,
-    val deliveryFee: Int
+    val deliveryFee: Int,
+    val isFavourite: Boolean = false
 )

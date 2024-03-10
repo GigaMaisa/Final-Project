@@ -1,6 +1,8 @@
 package com.example.final_project.presentation.screen.signup.start.fragment
 
 import android.view.View
+import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -9,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.final_project.databinding.FragmentSignUpBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.signup.SendSmsEvent
+import com.example.final_project.presentation.extension.showSnackBar
 import com.example.final_project.presentation.screen.signup.start.viewmodel.SignUpNavigationEvents
 import com.example.final_project.presentation.screen.signup.start.viewmodel.SignUpViewModel
 import com.example.final_project.presentation.state.VerificationState
@@ -60,15 +63,21 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     }
 
     private fun handleVerificationState(verificationState: VerificationState) = with(binding) {
-        if (verificationState.isLoading) {
-            progressBar.visibility = View.VISIBLE
-        } else {
-            View.GONE
-        }
+        progressBar.isVisible = verificationState.isLoading
 
         verificationState.errorMessage?.let {
             progressBar.visibility = View.GONE
+            requireView().showSnackBar(getStringResource(it)!!)
         }
+
+        phoneNumberContainerLayout.error = getStringResource(verificationState.phoneErrorMessage)
+    }
+
+    private fun getStringResource(@StringRes stringRes: Int?): String? {
+        stringRes?.let {
+            return resources.getString(it)
+        }
+        return null
     }
 
     private fun handleNavigationEvents(events: SignUpNavigationEvents) {

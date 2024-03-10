@@ -20,13 +20,12 @@ import com.example.final_project.databinding.FragmentProfileBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.ProfileNavigationUiEvents
 import com.example.final_project.presentation.extension.loadImage
+import com.example.final_project.presentation.extension.showSnackBar
 import com.example.final_project.presentation.screen.profile.adapter.ProfileFavouritesRecyclerViewAdapter
 import com.example.final_project.presentation.screen.profile.viewmodel.ProfileViewModel
 import com.example.final_project.presentation.screen.profile.viewmodel.SettingsEvents
 import com.example.final_project.presentation.screen.profile.viewmodel.SettingsViewModel
-import com.example.final_project.presentation.state.PhotoState
-import com.example.final_project.presentation.state.SignOutState
-import com.example.final_project.presentation.state.UserDataState
+import com.example.final_project.presentation.state.ProfileState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -79,39 +78,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.profileStateFlow.collect {
-                        it.favourites?.let { favourites ->
-                            favouritesAdapter.submitList(favourites)
-                        }
-                    }
-                }
-
-                launch {
-                    viewModel.signOutState.collect {
-                        handleSignOutState(it)
+                        handleState(it)
                     }
                 }
 
                 launch {
                     viewModel.uiEvent.collect {
                         handleNavigationEvents(it)
-                    }
-                }
-
-                launch {
-                    viewModel.imageUploadStatus.collect {
-                        handlePhotoState(it)
-                    }
-                }
-
-                launch {
-                    viewModel.userImageFlow.collect {
-                        handlePhotoState(it)
-                    }
-                }
-
-                launch {
-                    viewModel.userDataFlow.collect {
-                        handleUserDataState(it)
                     }
                 }
 
@@ -124,6 +97,33 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                             applyLanguageSetting(language)
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private fun handleState(state: ProfileState) = with(state) {
+        with(binding) {
+            progressBar.isVisible = isLoading
+
+            favourites?.let { favourites ->
+                favouritesAdapter.submitList(favourites)
+            }
+
+            errorMessage?.let {
+                progressBar.visibility = View.GONE
+                requireView().showSnackBar(getStringResource(it))
+            }
+
+            userData?.let {
+                tvTitle.text = it.fullName
+                tvDescription.text = it.email
+                tvPhoneNumber.text = it.phoneNumber
+            }
+
+            state.imageRetrieve?.let {
+                if (it != "") {
+                    ivPhoto.loadImage(it)
                 }
             }
         }
@@ -145,30 +145,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
-    private fun handleUserDataState(state: UserDataState) = with(binding) {
-        progressBar.isVisible = state.isLoading
-
-        state.userData?.let {
-            tvTitle.text = it.fullName
-            tvDescription.text = it.email
-            tvPhoneNumber.text = it.phoneNumber
-        }
-    }
-
-    private fun handlePhotoState(state: PhotoState) = with(binding) {
-        progressBar.isVisible = state.isLoading
-
-        state.errorMessage?.let {
-            progressBar.visibility = View.GONE
-        }
-
-        state.imageUri?.let {
-            if (it != "") {
-                ivPhoto.loadImage(it)
-            }
-        }
-    }
-
     private fun selectImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -180,14 +156,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
-    }
-
-    private fun handleSignOutState(state: SignOutState) = with(binding) {
-        progressBar.isVisible = state.isLoading
-
-        state.errorMessage?.let {
-            progressBar.visibility = View.GONE
         }
     }
 

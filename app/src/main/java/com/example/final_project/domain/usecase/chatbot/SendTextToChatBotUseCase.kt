@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SendTextToChatBotUseCase @Inject constructor(private val chatBotRepository: ChatBotRepository) {
-    suspend operator fun invoke(request: PostChatBotModel) : Flow<Resource<ChatBotResponse>> {
-        return chatBotRepository.sendRequest(request = request)
+    suspend operator fun invoke(request: PostChatBotModel, sessionId: String) : Flow<Resource<ChatBotResponse>> {
+        return chatBotRepository.sendRequest(request = request, sessionId = sessionId)
     }
 }

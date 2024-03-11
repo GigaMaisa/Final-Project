@@ -7,7 +7,7 @@ import com.example.final_project.domain.model.bot.PostChatBotModel
 
 fun PostChatBotModel.toData(): ChatBotRequestDto {
     val textDto = TextDto(
-        text = this.text,
+        text = text,
         languageCode = "en-US"
     )
     val queryInputDto = QueryInputDto(

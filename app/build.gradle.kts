@@ -73,7 +73,7 @@ android {
 }
 
 dependencies {
-    implementation("com.google.auth:google-auth-library-oauth2-http:0.25.1")
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.23.0")
 
     implementation("com.google.android.libraries.places:places:3.3.0")
     implementation("com.google.android.gms:play-services-maps:18.2.0")

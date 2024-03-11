@@ -109,4 +109,6 @@
     <string name="phone_validation_error">შეიყვანეთ სწორი ნომერი 9 ციფრით</string>
     <string name="invalid_credentials_error">არასწორი იმეილი ან პაროლი</string>
     <string name="invalid_passcode_error">არასწორი კოდი, სცადეთ ხელახლა</string>
-    <string name="phone_email_validation_error">არავალიდური იმეილი და პაროლი</string></resources>
+    <string name="phone_email_validation_error">არავალიდური იმეილი და პაროლი</string>
+    <string name="chat_bot">ჩატ ბოტი</string>
+</resources>

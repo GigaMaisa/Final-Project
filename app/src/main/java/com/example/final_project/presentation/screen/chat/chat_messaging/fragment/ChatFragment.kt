@@ -10,7 +10,6 @@ import com.example.final_project.databinding.FragmentChatBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.chat.ChatEvent
 import com.example.final_project.presentation.extension.loadImage
-import com.example.final_project.presentation.model.ContactType
 import com.example.final_project.presentation.model.chat.Message
 import com.example.final_project.presentation.screen.chat.adapter.MessageRecyclerViewAdapter
 import com.example.final_project.presentation.screen.chat.chat_messaging.viewmodel.ChatViewModel
@@ -58,9 +57,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
 
     private fun setUpContact() {
         receiverId = safeArgs.uuid
-        if (safeArgs.type == ContactType.HUMAN)
-            viewModel.getReceiverId(receiverId)
-
+        viewModel.getReceiverId(receiverId)
         with(binding) {
             safeArgs.imageUrl?.let {
                 imageViewProfile.loadImage(it)
@@ -81,8 +78,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
     private fun setUpMessageSentListener() {
         binding.sentButton.setOnClickListener {
             val message = Message(Random.nextLong(1, Long.MAX_VALUE), binding.messageBox.text.toString(), FirebaseAuth.getInstance().currentUser?.uid)
-            if (safeArgs.type == ContactType.HUMAN)
-                viewModel.onEvent(ChatEvent.AddMessageEvent(message, receiverId))
+            viewModel.onEvent(ChatEvent.AddMessageEvent(message, receiverId))
             binding.messageBox.text?.clear()
         }
     }

@@ -21,10 +21,6 @@
         <argument
             android:name="fullName"
             app:argType="string" />
-        <argument
-            android:name="type"
-            app:argType="com.example.final_project.presentation.model.ContactType"
-            android:defaultValue="HUMAN" />
     </fragment>
     <fragment
         android:id="@+id/homePage"
@@ -56,6 +52,9 @@
         <action
             android:id="@+id/action_chatPage_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_chatPage_to_chatBotFragment"
+            app:destination="@id/chatBotFragment" />
     </fragment>
     <fragment
         android:id="@+id/cardFragment"
@@ -106,4 +105,10 @@
             android:id="@+id/action_deliveryLocationFragment_to_mapsFragment"
             app:destination="@id/mapsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/chatBotFragment"
+        android:name="com.example.final_project.presentation.screen.chat.chat_chatbot.ChatBotFragment"
+        android:label="fragment_chat_bot"
+        tools:layout="@layout/fragment_chat_bot" />
+
 </navigation>

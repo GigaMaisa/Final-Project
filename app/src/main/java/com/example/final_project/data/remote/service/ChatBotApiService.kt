@@ -1,10 +1,7 @@
 package com.example.final_project.data.remote.service
 
-import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.data.remote.model.ChatBotRequestDto
 import com.example.final_project.data.remote.model.ChatBotResponseDto
-import com.example.final_project.domain.model.home.GetBanner
-import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
@@ -13,7 +10,7 @@ import retrofit2.http.Path
 
 interface ChatBotApiService {
     @Headers(
-        "Authorization: Bearer ya29.a0Ad52N39oPAbnxumMF2zNvp99CZ5USK9DOWGhaPuVKSbA0FDP9dlm1n_m8PnpZZiXzlLgufjSMNBhEqT99unRsfexmNhWOjUt5igZAwovit8dn7_P_1JI2qFAPnPuIkgT5WwLfAW9qmw8_gkP5KFBAuVSghwagOsunm6GaCgYKAY0SARMSFQHGX2MiuDa-x-NknV-9QSxMyILttg0171",
+        "Authorization: Bearer ya29.a0Ad52N38QU6ociNvWkY8gVWEALtUFbv6ixnC2Mt6UEZleUVZP-I3NoXR9Ta2yBXUx3ensBJy4KzBntMv-ZOAHDYfnf3sm6BBuug0mkchqhItBUtYWSOv2z8MSvZ6geS2QFZA2LAsGpAqaGLwLEjlgbPlxTCnT7KdG3FnGaCgYKAUMSARMSFQHGX2MiBv5jmzC5YiQ6v4fBHZEVvw0171",
         "x-goog-user-project: finalproject-4ba60"
     )
     @POST("/v2/projects/finalproject-4ba60/agent/sessions/{sessionId}:detectIntent")

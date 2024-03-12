@@ -2,11 +2,9 @@ package com.example.final_project.presentation.screen.profile.fragment
 
 import android.app.Activity
 import android.content.Intent
-import android.content.res.Configuration
 import android.util.Log.d
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -23,17 +21,13 @@ import com.example.final_project.presentation.extension.loadImage
 import com.example.final_project.presentation.extension.showSnackBar
 import com.example.final_project.presentation.screen.profile.adapter.ProfileFavouritesRecyclerViewAdapter
 import com.example.final_project.presentation.screen.profile.viewmodel.ProfileViewModel
-import com.example.final_project.presentation.screen.profile.viewmodel.SettingsEvents
-import com.example.final_project.presentation.screen.profile.viewmodel.SettingsViewModel
 import com.example.final_project.presentation.state.ProfileState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
     private val viewModel: ProfileViewModel by viewModels()
-    private val settingsViewModel: SettingsViewModel by viewModels()
     private val favouritesAdapter = ProfileFavouritesRecyclerViewAdapter()
 
     private val pickImageResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -48,7 +42,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     override fun setUp() {
         viewModel.onEvent(ProfileViewModel.ProfileEvent.GetPhotoEvent)
         viewModel.onEvent(ProfileViewModel.ProfileEvent.GetUserDataEvent)
-        settingsViewModel.onEvent(SettingsEvents.GetLanguageEvent)
     }
 
     override fun setUpListeners() = with(binding) {
@@ -71,6 +64,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         tvLocation.setOnClickListener {
             viewModel.onUiEvent(ProfileNavigationUiEvents.NavigateToLocation)
         }
+
+        tvSettings.setOnClickListener {
+            viewModel.onUiEvent(ProfileNavigationUiEvents.NavigateToSettings)
+        }
     }
 
     override fun setUpObservers() {
@@ -85,17 +82,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 launch {
                     viewModel.uiEvent.collect {
                         handleNavigationEvents(it)
-                    }
-                }
-
-                var currentLanguage: String? = null
-
-                launch {
-                    settingsViewModel.languageFlow.collect {language ->
-                        if (language != currentLanguage) {
-                            currentLanguage = language
-                            applyLanguageSetting(language)
-                        }
                     }
                 }
             }
@@ -129,34 +115,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
-    private fun applyLanguageSetting(language: String) {
-        val lang = if (language == "English" ||  language == "ინგლისური") "en" else "ka"
-        val locale = Locale(lang)
-
-        val resources = requireContext().resources
-        val configuration = resources.configuration
-        configuration.setLocale(locale)
-
-        val displayMetrics = resources.displayMetrics
-        resources.updateConfiguration(configuration, displayMetrics)
-
-        if (configuration.locale != Locale.getDefault()) {
-            requireActivity()
-        }
-    }
-
     private fun selectImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         pickImageResultLauncher.launch(intent)
-    }
-
-    private fun changeDarkMode(isChecked: Boolean) {
-        if (isChecked) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
     }
 
     private fun getStringResource(resourceId: Int): String {
@@ -177,14 +139,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 findNavController().navigate(ProfileFragmentDirections.actionProfilePageToDeliveryLocationFragment())
             }
 
-            ProfileNavigationUiEvents.NavigateToPayment -> {
+            is ProfileNavigationUiEvents.NavigateToPayment -> {
                 findNavController().navigate(ProfileFragmentDirections.actionProfilePageToCardFragment())
             }
-        }
-    }
 
-    private fun isSystemDarkModeOn(): Boolean {
-        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        return currentNightMode == Configuration.UI_MODE_NIGHT_YES
+            is ProfileNavigationUiEvents.NavigateToSettings -> findNavController().navigate(ProfileFragmentDirections.actionProfilePageToSettingsFragment())
+        }
     }
 }

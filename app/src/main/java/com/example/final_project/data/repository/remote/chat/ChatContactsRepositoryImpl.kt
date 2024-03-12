@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class ChatContactsRepositoryImpl @Inject constructor(private val auth: FirebaseAuth, private val databaseReference: DatabaseReference) :
+class ChatContactsRepositoryImpl @Inject constructor(auth: FirebaseAuth, private val databaseReference: DatabaseReference) :
     ChatContactsRepository {
 
     override val currentUser = auth.currentUser

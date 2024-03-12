@@ -1,6 +1,8 @@
 package com.example.final_project.di
 
+import android.content.Context
 import com.example.final_project.BuildConfig
+import com.example.final_project.data.local.datasource.ChatBotAuthTokenDataSource
 import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
@@ -13,6 +15,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.OkHttpClient
@@ -66,6 +69,12 @@ object AppModule {
     @Singleton
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatBotAuthTokenDataSource(@ApplicationContext context: Context): ChatBotAuthTokenDataSource {
+        return ChatBotAuthTokenDataSource(context)
     }
 
     @Provides

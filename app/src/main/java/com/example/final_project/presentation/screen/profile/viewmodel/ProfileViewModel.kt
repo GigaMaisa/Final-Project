@@ -54,8 +54,8 @@ class ProfileViewModel @Inject constructor(
             }
 
             is ProfileNavigationUiEvents.NavigateToLocation -> viewModelScope.launch { _uiEvent.emit(ProfileNavigationUiEvents.NavigateToLocation) }
-
-            else -> {}
+            is ProfileNavigationUiEvents.NavigateToLogIn -> viewModelScope.launch { _uiEvent.emit(ProfileNavigationUiEvents.NavigateToLogIn) }
+            is ProfileNavigationUiEvents.NavigateToSettings -> viewModelScope.launch { _uiEvent.emit(ProfileNavigationUiEvents.NavigateToSettings) }
         }
     }
 

@@ -1,5 +1,7 @@
 package com.example.final_project.data.repository.remote.chatbot
 
+import android.util.Log.d
+import com.example.final_project.data.local.datasource.ChatBotAuthTokenDataSource
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.mapper.base.asResource
@@ -14,11 +16,16 @@ import javax.inject.Inject
 
 class ChatBotRepositoryImpl @Inject constructor(
     private val handler: ResponseHandler,
-    private val chatBotApiService: ChatBotApiService
-): ChatBotRepository {
-    override suspend fun sendRequest(request: PostChatBotModel, sessionId: String): Flow<Resource<ChatBotResponse>> {
+    private val chatBotApiService: ChatBotApiService,
+    private val chatBotAuthTokenDataSource: ChatBotAuthTokenDataSource
+) : ChatBotRepository {
+    override suspend fun sendRequest(
+        request: PostChatBotModel,
+        sessionId: String
+    ): Flow<Resource<ChatBotResponse>> {
+        d("newTokenBro", chatBotAuthTokenDataSource.token)
         return handler.safeApiCall {
-            chatBotApiService.postRequest(sessionId = sessionId, body = request.toData())
+            chatBotApiService.postRequest(sessionId = sessionId, body = request.toData(), "Bearer ${chatBotAuthTokenDataSource.token}")
         }.asResource {
             it.toDomain()
         }

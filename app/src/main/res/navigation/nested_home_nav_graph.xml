@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_profilePage_to_deliveryLocationFragment"
             app:destination="@id/deliveryLocationFragment" />
+        <action
+            android:id="@+id/action_profilePage_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartPage"
@@ -110,5 +113,10 @@
         android:name="com.example.final_project.presentation.screen.chat.chat_chatbot.ChatBotFragment"
         android:label="fragment_chat_bot"
         tools:layout="@layout/fragment_chat_bot" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.final_project.presentation.screen.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 
 </navigation>

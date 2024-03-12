@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import com.example.final_project.data.local.dao.CardDao
 import com.example.final_project.data.local.dao.DeliveryLocationDao
 import com.example.final_project.data.local.dao.FavouriteRestaurantDao
+import com.example.final_project.data.local.datasource.ChatBotAuthTokenDataSource
 import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
@@ -85,8 +86,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideChatBotRepository(responseHandler: ResponseHandler, chatBotApiService: ChatBotApiService) : ChatBotRepository {
-        return ChatBotRepositoryImpl(handler = responseHandler, chatBotApiService = chatBotApiService)
+    fun provideChatBotRepository(responseHandler: ResponseHandler, chatBotApiService: ChatBotApiService, chatBotAuthTokenDataSource: ChatBotAuthTokenDataSource) : ChatBotRepository {
+        return ChatBotRepositoryImpl(handler = responseHandler, chatBotApiService = chatBotApiService, chatBotAuthTokenDataSource = chatBotAuthTokenDataSource)
     }
 
     @Provides

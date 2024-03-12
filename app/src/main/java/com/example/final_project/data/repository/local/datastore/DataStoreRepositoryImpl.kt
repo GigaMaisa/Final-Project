@@ -1,5 +1,6 @@
 package com.example.final_project.data.repository.local.datastore
 
+import android.util.Log.d
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -18,6 +19,7 @@ class DataStoreRepositoryImpl @Inject constructor(private val dataStore: DataSto
     override suspend fun readBoolean(key: Preferences.Key<Boolean>): Flow<Boolean> {
         return dataStore.data
             .map { preferences ->
+                d("showSettings", preferences[key].toString())
                 preferences[key] ?: false
             }
     }

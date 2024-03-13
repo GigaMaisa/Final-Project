@@ -1,7 +1,7 @@
-package com.example.final_project.presentation.mapper.favourites
+package com.example.final_project.presentation.mapper.restaurant
 
-import com.example.final_project.domain.model.Restaurant.GetRestaurant
-import com.example.final_project.presentation.model.Restaurant
+import com.example.final_project.domain.model.restaurant.GetRestaurant
+import com.example.final_project.presentation.model.restaurant.Restaurant
 
 fun GetRestaurant.toPresentation() = Restaurant(
     restaurantId = restaurantId,

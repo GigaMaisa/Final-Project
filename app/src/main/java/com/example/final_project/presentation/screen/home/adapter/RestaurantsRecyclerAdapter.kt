@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.R
 import com.example.final_project.databinding.RestaurantHomePageItemBinding
 import com.example.final_project.presentation.extension.loadImage
-import com.example.final_project.presentation.model.home.Restaurant
+import com.example.final_project.presentation.model.restaurant.Restaurant
 
 class RestaurantsRecyclerAdapter : ListAdapter<Restaurant, RestaurantsRecyclerAdapter.RestaurantItemViewHolder>(DIFF_CALLBACK) {
     var onClick: ((Int) -> Unit)? = null

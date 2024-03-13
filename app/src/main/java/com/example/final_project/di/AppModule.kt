@@ -8,6 +8,7 @@ import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
 import com.example.final_project.data.remote.service.ChatBotApiService
 import com.example.final_project.data.remote.service.DirectionsApiService
+import com.example.final_project.data.remote.service.RestaurantDetailsApiService
 import com.example.final_project.data.remote.service.RestaurantsApiService
 import com.example.final_project.presentation.util.EncryptionHelper
 import com.squareup.moshi.Moshi
@@ -159,5 +160,11 @@ object AppModule {
     @Singleton
     fun provideDirectionsApiService(@GoogleMapRetrofit retrofit: Retrofit): DirectionsApiService {
         return retrofit.create(DirectionsApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRestaurantDetailsApiService(@FirebaseRetrofit retrofit: Retrofit): RestaurantDetailsApiService {
+        return retrofit.create(RestaurantDetailsApiService::class.java)
     }
 }

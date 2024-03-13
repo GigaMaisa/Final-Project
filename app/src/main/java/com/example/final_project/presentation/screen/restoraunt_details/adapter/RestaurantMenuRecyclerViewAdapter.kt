@@ -3,15 +3,18 @@ package com.example.final_project.presentation.screen.restoraunt_details.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.databinding.RecyclerRestaurantMenuItemBinding
-import com.example.final_project.presentation.extension.loadImage
-import com.example.final_project.presentation.model.RestaurantMenu
+import com.example.final_project.presentation.model.restaurant.MenuItemDetails
+import com.example.final_project.presentation.model.restaurant.RestaurantMenu
 
 class RestaurantMenuRecyclerViewAdapter : ListAdapter<RestaurantMenu, RestaurantMenuRecyclerViewAdapter.RestaurantMenuViewHolder>(
     RestaurantMenuItemDiffCallback
 ) {
+
+    var onClick: ((MenuItemDetails) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantMenuViewHolder {
         return RestaurantMenuViewHolder(
@@ -31,13 +34,15 @@ class RestaurantMenuRecyclerViewAdapter : ListAdapter<RestaurantMenu, Restaurant
         RecyclerView.ViewHolder(binding.root) {
         fun bind() = with(binding) {
             val menuItem = currentList[adapterPosition]
-            with(menuItem) {
-                ivCover.loadImage(cover)
-                tvTitle.text = title
-                tvCategory.text = category
-                tvDeliveryPrice.text = deliveryPrice.plus(" ₾")
-                tvDeliveryTime.text = deliveryTime.plus(" minutes")
-                tvDeliveryRating.text = rating
+            tvMenuCategory.text = menuItem.menuCategory
+            recyclerRestaurantMenuItems.apply {
+                layoutManager = LinearLayoutManager(itemView.context)
+                adapter = RestaurantMenuItemRecyclerViewAdapter().apply {
+                    submitList(menuItem.items)
+                    onItemClick = {
+                        onClick?.invoke(it)
+                    }
+                }
             }
         }
     }
@@ -46,7 +51,7 @@ class RestaurantMenuRecyclerViewAdapter : ListAdapter<RestaurantMenu, Restaurant
         private val RestaurantMenuItemDiffCallback = object : DiffUtil.ItemCallback<RestaurantMenu>() {
 
             override fun areItemsTheSame(oldItem: RestaurantMenu, newItem: RestaurantMenu): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.menuCategory == newItem.menuCategory
             }
 
             override fun areContentsTheSame(oldItem: RestaurantMenu, newItem: RestaurantMenu): Boolean {

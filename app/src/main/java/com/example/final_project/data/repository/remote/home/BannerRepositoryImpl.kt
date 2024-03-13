@@ -21,5 +21,4 @@ class BannerRepositoryImpl @Inject constructor(
             it.map { it.toDomain() }
         }
     }
-
 }

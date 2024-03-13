@@ -11,6 +11,7 @@ import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
 import com.example.final_project.data.remote.service.ChatBotApiService
 import com.example.final_project.data.remote.service.DirectionsApiService
+import com.example.final_project.data.remote.service.RestaurantDetailsApiService
 import com.example.final_project.data.remote.service.RestaurantsApiService
 import com.example.final_project.data.repository.local.card.CardRepositoryImpl
 import com.example.final_project.data.repository.local.datastore.DataStoreRepositoryImpl
@@ -28,6 +29,7 @@ import com.example.final_project.data.repository.remote.firebase.FirebaseSignOut
 import com.example.final_project.data.repository.remote.firebase.FirebaseUserDataRepositoryImpl
 import com.example.final_project.data.repository.remote.home.BannerRepositoryImpl
 import com.example.final_project.data.repository.remote.home.RestaurantsRepositoryImpl
+import com.example.final_project.data.repository.remote.restaurant_details.RestaurantDetailsRepositoryImpl
 import com.example.final_project.data.repository.remote.route.DirectionsRepositoryImpl
 import com.example.final_project.di.DispatchersModule.IoDispatcher
 import com.example.final_project.domain.repository.auth.FirebaseAdditionalUserDataRepository
@@ -46,6 +48,7 @@ import com.example.final_project.domain.repository.firebase.FirebasePhotosReposi
 import com.example.final_project.domain.repository.firebase.FirebaseUserDataRepository
 import com.example.final_project.domain.repository.home.BannerRepository
 import com.example.final_project.domain.repository.home.RestaurantsRepository
+import com.example.final_project.domain.repository.restaurant_details.RestaurantDetailsRepository
 import com.example.final_project.domain.repository.route.DirectionsRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -60,6 +63,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
+
+    @Provides
+    @Singleton
+    fun provideRestaurantsDetailsRepository(restaurantDetailsApiService: RestaurantDetailsApiService, responseHandler: ResponseHandler): RestaurantDetailsRepository = RestaurantDetailsRepositoryImpl(restaurantDetailsApiService, responseHandler)
 
     @Provides
     @Singleton

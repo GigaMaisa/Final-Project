@@ -1,6 +1,6 @@
 package com.example.final_project.domain.repository.favourites
 
-import com.example.final_project.domain.model.Restaurant.GetRestaurant
+import com.example.final_project.domain.model.restaurant.GetRestaurant
 import kotlinx.coroutines.flow.Flow
 
 interface FavouriteRestaurantsRepository {

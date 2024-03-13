@@ -6,6 +6,7 @@ import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.domain.usecase.home.GetBannersUseCase
 import com.example.final_project.domain.usecase.restaurant.GetRestaurantsUseCase
 import com.example.final_project.presentation.event.home.HomeEvent
+import com.example.final_project.presentation.mapper.restaurant.toPresentation
 import com.example.final_project.presentation.mapper.home.toPresentation
 import com.example.final_project.presentation.state.HomeState
 import com.example.final_project.presentation.util.getErrorMessage

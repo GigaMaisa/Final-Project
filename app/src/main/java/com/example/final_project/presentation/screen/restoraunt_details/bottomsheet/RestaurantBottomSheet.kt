@@ -14,7 +14,7 @@ import com.example.final_project.databinding.RestaurantDetailsBottomSheetDialogB
 import com.example.final_project.presentation.event.RestaurantDetailsEvent
 import com.example.final_project.presentation.screen.restoraunt_details.adapter.RestaurantMenuRecyclerViewAdapter
 import com.example.final_project.presentation.screen.restoraunt_details.viewmodel.RestaurantDetailsViewModel
-import com.example.final_project.presentation.state.RestaurantMenuState
+import com.example.final_project.presentation.state.RestaurantDetailsState
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,11 +61,10 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    private fun handleState(state: RestaurantMenuState){
+    private fun handleState(state: RestaurantDetailsState){
         with(state) {
-            menu?.let {
-                restaurantMenuAdapter.submitList(it)
-            }
+
+
             favourite = isFavourite
             if (isFavourite) {
                 binding.imageBtnHeart.setImageResource(R.drawable.ic_heart)

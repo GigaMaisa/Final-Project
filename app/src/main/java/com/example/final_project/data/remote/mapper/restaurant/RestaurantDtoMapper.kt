@@ -1,7 +1,7 @@
-package com.example.final_project.data.remote.mapper.home
+package com.example.final_project.data.remote.mapper.restaurant
 
-import com.example.final_project.data.remote.model.RestaurantDto
-import com.example.final_project.domain.model.Restaurant.GetRestaurant
+import com.example.final_project.data.remote.model.restaurant.RestaurantDto
+import com.example.final_project.domain.model.restaurant.GetRestaurant
 
 fun RestaurantDto.toDomain() = GetRestaurant(
     restaurantId = restaurantId,

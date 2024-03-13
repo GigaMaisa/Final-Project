@@ -1,11 +1,12 @@
-package com.example.final_project.presentation.model.home
+package com.example.final_project.domain.model.restaurant
 
-data class Restaurant(
+data class GetRestaurant(
     val restaurantId: Int,
     val image: String,
     val title: String,
     val type: String,
     val deliveryTime: String,
     val rating: Double,
-    val deliveryFee: Int
+    val deliveryFee: Int,
+    val isFavourite: Boolean = false
 )

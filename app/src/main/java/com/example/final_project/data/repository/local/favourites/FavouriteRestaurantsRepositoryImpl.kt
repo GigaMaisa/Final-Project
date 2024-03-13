@@ -4,7 +4,7 @@ import com.example.final_project.data.local.dao.FavouriteRestaurantDao
 import com.example.final_project.data.local.mapper.restaurant.toData
 import com.example.final_project.data.local.mapper.restaurant.toDomain
 import com.example.final_project.di.DispatchersModule
-import com.example.final_project.domain.model.Restaurant.GetRestaurant
+import com.example.final_project.domain.model.restaurant.GetRestaurant
 import com.example.final_project.domain.repository.favourites.FavouriteRestaurantsRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

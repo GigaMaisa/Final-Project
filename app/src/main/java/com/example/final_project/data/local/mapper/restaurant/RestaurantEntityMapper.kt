@@ -1,7 +1,7 @@
 package com.example.final_project.data.local.mapper.restaurant
 
 import com.example.final_project.data.local.model.RestaurantEntity
-import com.example.final_project.domain.model.Restaurant.GetRestaurant
+import com.example.final_project.domain.model.restaurant.GetRestaurant
 
 fun RestaurantEntity.toDomain() = GetRestaurant(
     restaurantId = restaurantId,

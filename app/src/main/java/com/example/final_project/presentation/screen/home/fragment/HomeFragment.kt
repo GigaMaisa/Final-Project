@@ -1,10 +1,10 @@
 package com.example.final_project.presentation.screen.home.fragment
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.databinding.FragmentHomeBinding
 import com.example.final_project.presentation.base.BaseFragment
@@ -35,7 +35,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun setUpListeners()  {
         restaurantsRecyclerAdapter.onClick = {
-            // navigate to restaurant menu
+            findNavController().navigate(HomeFragmentDirections.actionHomePageToRestaurantDetailsFragment(restaurantId = it))
+        }
+
+        binding.btnSeeAllRestaurants.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomePageToAllRestaurantsFragment())
         }
     }
 

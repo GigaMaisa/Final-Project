@@ -9,7 +9,6 @@ import com.example.final_project.domain.usecase.firebase.GetAuthStateUseCase
 import com.example.final_project.presentation.event.splash.SplashNavigationEvents
 import com.example.final_project.presentation.state.SettingsState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -57,7 +56,6 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             updateAuthTokenUseCase()
             getAuthStateUseCase().collect {
-                delay(1000)
                 if (it)
                     _uiEvent.emit(SplashNavigationEvents.NavigateToHome)
                 else

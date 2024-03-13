@@ -1,7 +1,7 @@
 package com.example.final_project.domain.repository.home
 
 import com.example.final_project.data.remote.common.Resource
-import com.example.final_project.domain.model.Restaurant.GetRestaurant
+import com.example.final_project.domain.model.restaurant.GetRestaurant
 import kotlinx.coroutines.flow.Flow
 
 interface RestaurantsRepository {

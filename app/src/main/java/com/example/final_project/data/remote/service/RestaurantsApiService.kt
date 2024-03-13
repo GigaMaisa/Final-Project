@@ -1,6 +1,6 @@
 package com.example.final_project.data.remote.service
 
-import com.example.final_project.data.remote.model.RestaurantDto
+import com.example.final_project.data.remote.model.restaurant.RestaurantDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

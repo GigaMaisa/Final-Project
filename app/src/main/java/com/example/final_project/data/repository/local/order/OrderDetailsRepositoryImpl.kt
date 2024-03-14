@@ -28,4 +28,16 @@ class OrderDetailsRepositoryImpl @Inject constructor(
     override suspend fun deleteOrders() = withContext(ioDispatcher) {
         orderDao.deleteAllRows()
     }
+
+    override suspend fun deleteSpecificOrder(foodId: String) = withContext(ioDispatcher) {
+        orderDao.deleteOrderDetailById(foodId)
+    }
+
+    override suspend fun getLastAddedRestaurantId(): Int? = withContext(ioDispatcher) {
+        return@withContext orderDao.getLastAddedRestaurantId()
+    }
+
+    override suspend fun updateItemQuantity(order: GetOrder) = withContext(ioDispatcher) {
+        orderDao.updateOrderQuantity(order.toData())
+    }
 }

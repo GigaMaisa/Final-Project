@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.domain.usecase.order.AddOrderUseCase
 import com.example.final_project.domain.usecase.order.DeleteAllOrdersUseCase
+import com.example.final_project.domain.usecase.order.DeleteSpecificOrderUseCase
 import com.example.final_project.domain.usecase.order.GetOrderDetailsUseCase
+import com.example.final_project.domain.usecase.order.UpdateItemQuantityUseCase
 import com.example.final_project.presentation.event.CartEvent
 import com.example.final_project.presentation.mapper.order.toDomain
 import com.example.final_project.presentation.mapper.order.toPresentation
@@ -22,25 +24,23 @@ import javax.inject.Inject
 class CartViewModel @Inject constructor(
     private val getOrderDetailsUseCase: GetOrderDetailsUseCase,
     private val deleteAllOrdersUseCase: DeleteAllOrdersUseCase,
-    private val addOrderUseCase: AddOrderUseCase
+    private val addOrderUseCase: AddOrderUseCase,
+    private val deleteSpecificOrderUseCase: DeleteSpecificOrderUseCase,
+    private val updateItemQuantityUseCase: UpdateItemQuantityUseCase
 ): ViewModel() {
     private val _cartStateFlow = MutableStateFlow(CartState())
     val cartStateFlow = _cartStateFlow.asStateFlow()
 
     fun onEvent(event: CartEvent) {
         when(event) {
-            is CartEvent.AddCartItemQuantityEvent -> addItem(cartItem = event.cartItem)
+            is CartEvent.AddCartItemQuantityEvent -> increaseItemQuantity(cartItem = event.cartItem)
             is CartEvent.CalculateCheckoutEvent -> calculateCheckout()
             is CartEvent.DeleteItemEvent -> onSwipeDelete(id = event.id)
-            is CartEvent.RemoveCartItemQuantityEvent -> removeItem(cartItem = event.cartItem)
+            is CartEvent.RemoveCartItemQuantityEvent -> decreaseItemQuantity(cartItem = event.cartItem)
             is CartEvent.GetAllOrders -> getAllOrdersFromDb()
             is CartEvent.DeleteAllOrders -> deleteAllOrders()
             is CartEvent.AddOrder -> addOrder(event.order)
         }
-    }
-
-    init {
-        calculateCheckout()
     }
 
     private fun addOrder(order: Order) {
@@ -63,6 +63,8 @@ class CartViewModel @Inject constructor(
                         it.toPresentation()
                     })
                 }
+
+                calculateCheckout()
             }
         }
     }
@@ -80,31 +82,37 @@ class CartViewModel @Inject constructor(
     }
 
     private fun onSwipeDelete(id: String) {
-        _cartStateFlow.update { currentState -> currentState.copy(cartItems = currentState.cartItems?.filter { it.foodId != id })}
-        calculateCheckout()
+        viewModelScope.launch {
+            deleteSpecificOrderUseCase(foodId = id)
+            calculateCheckout()
+        }
     }
 
-    private fun addItem(cartItem: Order) {
-        val updatedCartItems = _cartStateFlow.value.cartItems?.map {
-            if (it == cartItem) {
-                it.copy(quantity = it.quantity + 1)
-            } else {
-                it
+    private fun increaseItemQuantity(cartItem: Order) {
+        viewModelScope.launch {
+            _cartStateFlow.value.cartItems?.map {
+                if (it == cartItem) {
+                    updateItemQuantityUseCase(cartItem.copy(quantity = it.quantity + 1).toDomain())
+                } else {
+                    it
+                }
             }
+
+            calculateCheckout()
         }
-        _cartStateFlow.update { currentState -> currentState.copy(cartItems = updatedCartItems) }
-        calculateCheckout()
     }
 
-    private fun removeItem(cartItem: Order) {
-        val updatedCartItems = _cartStateFlow.value.cartItems?.map {
-            if (it == cartItem) {
-                it.copy(quantity = it.quantity - 1)
-            } else {
-                it
+    private fun decreaseItemQuantity(cartItem: Order) {
+        viewModelScope.launch {
+            _cartStateFlow.value.cartItems?.map {
+                if (it == cartItem) {
+                    updateItemQuantityUseCase(cartItem.copy(quantity = it.quantity - 1).toDomain())
+                } else {
+                    it
+                }
             }
+
+            calculateCheckout()
         }
-        _cartStateFlow.update { currentState -> currentState.copy(cartItems = updatedCartItems) }
-        calculateCheckout()
     }
 }

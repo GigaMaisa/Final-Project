@@ -4,8 +4,11 @@ import com.example.final_project.domain.model.order.GetOrder
 import com.example.final_project.domain.repository.order.OrderDetailsRepository
 import javax.inject.Inject
 
-class AddOrderUseCase @Inject constructor(private val orderDetailsRepository: OrderDetailsRepository) {
+class AddOrderUseCase @Inject constructor(
+    private val orderDetailsRepository: OrderDetailsRepository,
+    private val getLastRestaurantIdUseCase: GetLastRestaurantIdUseCase
+) {
     suspend operator fun invoke(getOrder: GetOrder) {
-        orderDetailsRepository.addOrder(getOrder)
+        if (getOrder.restaurantId == getLastRestaurantIdUseCase()) orderDetailsRepository.addOrder(getOrder)
     }
 }

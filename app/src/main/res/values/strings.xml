@@ -110,5 +110,5 @@
     <string name="invalid_passcode_error">Invalid passcode try again</string>
     <string name="phone_email_validation_error">Invalid number and email.</string>
     <string name="chat_bot">Chat Bot</string>
-    <string name="add_to_order">Add to order</string>
+    <string name="your_order_is_empty_start_ordering_now">Your Order Is Empty. Start ordering Now!</string>
 </resources>

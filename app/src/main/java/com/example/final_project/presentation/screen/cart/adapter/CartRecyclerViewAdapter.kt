@@ -10,11 +10,12 @@ import com.example.final_project.databinding.RecyclerCheckoutCartItemBinding
 import com.example.final_project.presentation.extension.loadImage
 import com.example.final_project.presentation.model.cart.CartCheckout
 import com.example.final_project.presentation.model.cart.CartItem
+import com.example.final_project.presentation.model.order.Order
 
 class CartRecyclerViewAdapter : ListAdapter<CartCheckout, ViewHolder>(CartItemDiffCallback) {
 
-    var onPLusClick: ((CartItem) -> Unit)? = null
-    var onMinusClick: ((CartItem) -> Unit)? = null
+    var onPLusClick: ((Order) -> Unit)? = null
+    var onMinusClick: ((Order) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when(viewType) {
@@ -42,9 +43,9 @@ class CartRecyclerViewAdapter : ListAdapter<CartCheckout, ViewHolder>(CartItemDi
         fun bind() = with(binding) {
             val cartItem = currentList[adapterPosition].cartItem!!
             with(cartItem) {
-                imageViewCover.loadImage(cover)
-                tvTitle.text = title
-                tvCategory.text = category
+                imageViewCover.loadImage(image)
+                tvTitle.text = name
+                tvCategory.text = menuCategory
                 tvQuantity.text = quantity.toString()
                 tvPrice.text = price.toString().plus(" ₾")
 

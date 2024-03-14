@@ -6,7 +6,6 @@ import com.example.final_project.domain.usecase.card.GetCardsUseCase
 import com.example.final_project.presentation.event.CardNavigationEvents
 import com.example.final_project.presentation.extension.decryptCardNumbers
 import com.example.final_project.presentation.mapper.card.toPresentation
-import com.example.final_project.presentation.model.card.Card
 import com.example.final_project.presentation.state.CardsState
 import com.example.final_project.presentation.util.EncryptionHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,24 +24,6 @@ class CardViewModel @Inject constructor(private val getCardsUseCase: GetCardsUse
 
     private val _cardsStateFlow = MutableStateFlow(CardsState())
     val cardsStateFlow: StateFlow<CardsState> get() = _cardsStateFlow
-
-    val list = listOf(
-        Card(
-            id = 4769,
-            cardNumber = "5105 1051 0510 5100",
-            expirationDate = "06/28",
-            cvv = "233",
-            cardName = "Saxelfaso"
-        ),
-
-        Card(
-            id = 476,
-            cardNumber = "4917 3456 7890 1234",
-            expirationDate = "06/28",
-            cvv = "233",
-            cardName = "Sakredito"
-        )
-    )
 
     fun onUiEvent(events: CardNavigationEvents) {
         when (events) {

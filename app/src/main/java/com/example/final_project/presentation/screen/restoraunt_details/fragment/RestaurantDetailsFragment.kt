@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.R
 import com.example.final_project.databinding.FragmentRestorauntDetailsBinding
 import com.example.final_project.presentation.base.BaseFragment
-import com.example.final_project.presentation.event.RestaurantDetailsEvent
+import com.example.final_project.presentation.event.restaurant.RestaurantDetailsEvent
 import com.example.final_project.presentation.extension.showSnackBar
+import com.example.final_project.presentation.model.restaurant.MenuItemDetails
 import com.example.final_project.presentation.model.restaurant.RestaurantDetails
 import com.example.final_project.presentation.screen.restoraunt_details.adapter.RestaurantMenuRecyclerViewAdapter
+import com.example.final_project.presentation.screen.restoraunt_details.bottomsheet.RestaurantBottomSheet
 import com.example.final_project.presentation.screen.restoraunt_details.viewmodel.RestaurantDetailsViewModel
 import com.example.final_project.presentation.state.RestaurantDetailsState
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,16 +26,16 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>
     private val viewModel: RestaurantDetailsViewModel by viewModels()
     private val restaurantMenuRecyclerAdapter = RestaurantMenuRecyclerViewAdapter()
     private val args: RestaurantDetailsFragmentArgs by navArgs()
+    private val modalBottomSheet = RestaurantBottomSheet()
 
     override fun setUp() {
-        setUpBottomSheet()
         setUpRecycler()
         viewModel.onEvent(RestaurantDetailsEvent.GetRestaurantDetailsEvent(args.restaurantId))
     }
 
     override fun setUpListeners() {
         restaurantMenuRecyclerAdapter.onClick = {
-
+            setUpBottomSheet(it)
         }
     }
 
@@ -82,7 +84,9 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>
         restaurantMenuRecyclerAdapter.submitList(restaurantDetails.menu)
     }
 
-    private fun setUpBottomSheet() {
-//        findNavController().navigate(RestaurantDetailsFragmentDirections.actionRestaurantDetailsFragmentToRestaurantBottomSheet())
+    private fun setUpBottomSheet(menuItemDetails: MenuItemDetails) {
+        modalBottomSheet.show(childFragmentManager, RestaurantBottomSheet.RESTAURANT_MENU_BOTTOM_SHEET)
+        //TODO callbackbro
+        modalBottomSheet.menuItemDetails = menuItemDetails
     }
 }

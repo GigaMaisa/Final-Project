@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.databinding.FragmentAllRestaurantsBinding
 import com.example.final_project.presentation.base.BaseFragment
-import com.example.final_project.presentation.event.AllRestaurantsEvent
+import com.example.final_project.presentation.event.restaurant.AllRestaurantsEvent
 import com.example.final_project.presentation.extension.showSnackBar
 import com.example.final_project.presentation.screen.all_restaurants.adapter.AllRestaurantsRecyclerViewAdapter
 import com.example.final_project.presentation.state.AllRestaurantsState

@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import com.example.final_project.data.local.dao.CardDao
 import com.example.final_project.data.local.dao.DeliveryLocationDao
 import com.example.final_project.data.local.dao.FavouriteRestaurantDao
+import com.example.final_project.data.local.dao.OrderDao
 import com.example.final_project.data.local.datasource.ChatBotAuthTokenDataSource
 import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
@@ -17,6 +18,7 @@ import com.example.final_project.data.repository.local.card.CardRepositoryImpl
 import com.example.final_project.data.repository.local.datastore.DataStoreRepositoryImpl
 import com.example.final_project.data.repository.local.delivery_location.DeliveryLocationRepositoryImpl
 import com.example.final_project.data.repository.local.favourites.FavouriteRestaurantsRepositoryImpl
+import com.example.final_project.data.repository.local.order.OrderDetailsRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAdditionalUserDataRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebasePhonePhoneAuthRepositoryImpl
 import com.example.final_project.data.repository.remote.chat.ChatContactsRepositoryImpl
@@ -48,6 +50,7 @@ import com.example.final_project.domain.repository.firebase.FirebasePhotosReposi
 import com.example.final_project.domain.repository.firebase.FirebaseUserDataRepository
 import com.example.final_project.domain.repository.home.BannerRepository
 import com.example.final_project.domain.repository.home.RestaurantsRepository
+import com.example.final_project.domain.repository.order.OrderDetailsRepository
 import com.example.final_project.domain.repository.restaurant_details.RestaurantDetailsRepository
 import com.example.final_project.domain.repository.route.DirectionsRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -89,6 +92,12 @@ object RepositoryModule {
     @Singleton
     fun provideFirebaseAuthRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebasePhoneAuthRepository {
         return FirebasePhonePhoneAuthRepositoryImpl(auth = auth, ioDispatcher = ioDispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOrderRepository(orderDao: OrderDao, @IoDispatcher ioDispatcher: CoroutineDispatcher) : OrderDetailsRepository {
+        return OrderDetailsRepositoryImpl(orderDao = orderDao, ioDispatcher = ioDispatcher)
     }
 
     @Provides

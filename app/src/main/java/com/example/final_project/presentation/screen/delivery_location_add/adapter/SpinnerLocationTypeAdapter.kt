@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.final_project.R
 import com.example.final_project.databinding.RecyclerLocationTypeItemBinding
+import com.example.final_project.presentation.model.delivery_location.DeliveryLocation
 import com.example.final_project.presentation.model.delivery_location.LocationType
 
 class SpinnerLocationTypeAdapter: BaseAdapter() {
 
-    val items = listOf(
+    var items = listOf(
         LocationType(R.drawable.ic_apartment, R.string.apartment),
         LocationType(R.drawable.ic_house, R.string.house),
         LocationType(R.drawable.ic_office, R.string.office),

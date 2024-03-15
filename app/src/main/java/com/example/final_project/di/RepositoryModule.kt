@@ -12,6 +12,7 @@ import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
 import com.example.final_project.data.remote.service.ChatBotApiService
 import com.example.final_project.data.remote.service.DirectionsApiService
+import com.example.final_project.data.remote.service.GoogleDistanceMatrixApiService
 import com.example.final_project.data.remote.service.RestaurantDetailsApiService
 import com.example.final_project.data.remote.service.RestaurantsApiService
 import com.example.final_project.data.repository.local.card.CardRepositoryImpl
@@ -24,6 +25,7 @@ import com.example.final_project.data.repository.remote.firebase.FirebasePhonePh
 import com.example.final_project.data.repository.remote.chat.ChatContactsRepositoryImpl
 import com.example.final_project.data.repository.remote.chat.ChatMessagesRepositoryImpl
 import com.example.final_project.data.repository.remote.chatbot.ChatBotRepositoryImpl
+import com.example.final_project.data.repository.remote.distance.DistanceRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAuthStateRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseEmailLoginRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebasePhotosRepositoryImpl
@@ -45,6 +47,7 @@ import com.example.final_project.domain.repository.chat.ChatContactsRepository
 import com.example.final_project.domain.repository.chat.ChatMessagesRepository
 import com.example.final_project.domain.repository.datastore.DataStoreRepository
 import com.example.final_project.domain.repository.delivery_location.DeliveryLocationRepository
+import com.example.final_project.domain.repository.distance.DistanceRepository
 import com.example.final_project.domain.repository.favourites.FavouriteRestaurantsRepository
 import com.example.final_project.domain.repository.firebase.FirebasePhotosRepository
 import com.example.final_project.domain.repository.firebase.FirebaseUserDataRepository
@@ -69,19 +72,28 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideRestaurantsDetailsRepository(restaurantDetailsApiService: RestaurantDetailsApiService, responseHandler: ResponseHandler): RestaurantDetailsRepository = RestaurantDetailsRepositoryImpl(restaurantDetailsApiService, responseHandler)
+    fun provideRestaurantsDetailsRepository(restaurantDetailsApiService: RestaurantDetailsApiService, responseHandler: ResponseHandler): RestaurantDetailsRepository =
+        RestaurantDetailsRepositoryImpl(restaurantDetailsApiService, responseHandler)
 
     @Provides
     @Singleton
-    fun provideFavouriteRestaurantsRepository(dao: FavouriteRestaurantDao, @IoDispatcher ioDispatcher: CoroutineDispatcher): FavouriteRestaurantsRepository = FavouriteRestaurantsRepositoryImpl(dao, ioDispatcher)
+    fun provideFavouriteRestaurantsRepository(dao: FavouriteRestaurantDao, @IoDispatcher ioDispatcher: CoroutineDispatcher): FavouriteRestaurantsRepository =
+        FavouriteRestaurantsRepositoryImpl(dao, ioDispatcher)
 
     @Provides
     @Singleton
-    fun provideDirectionsRepository(directionsApiService: DirectionsApiService): DirectionsRepository = DirectionsRepositoryImpl(directionsApiService)
+    fun provideDirectionsRepository(directionsApiService: DirectionsApiService, @IoDispatcher ioDispatcher: CoroutineDispatcher): DirectionsRepository =
+        DirectionsRepositoryImpl(directionsApiService, ioDispatcher )
 
     @Provides
     @Singleton
-    fun provideDeliveryLocationRepository(dao: DeliveryLocationDao, @IoDispatcher ioDispatcher: CoroutineDispatcher): DeliveryLocationRepository = DeliveryLocationRepositoryImpl(deliveryLocationDao = dao, ioDispatcher = ioDispatcher)
+    fun provideDistanceRepository(distanceMatrixApiService: GoogleDistanceMatrixApiService, @IoDispatcher ioDispatcher: CoroutineDispatcher): DistanceRepository =
+        DistanceRepositoryImpl(distanceMatrixApiService, ioDispatcher)
+
+    @Provides
+    @Singleton
+    fun provideDeliveryLocationRepository(dao: DeliveryLocationDao, @IoDispatcher ioDispatcher: CoroutineDispatcher): DeliveryLocationRepository =
+        DeliveryLocationRepositoryImpl(deliveryLocationDao = dao, ioDispatcher = ioDispatcher)
     @Provides
     @Singleton
     fun provideDataStoreRepository(dataStore: DataStore<Preferences>) : DataStoreRepository {

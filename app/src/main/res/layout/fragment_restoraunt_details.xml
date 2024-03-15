@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_marginTop="45dp"
             android:background="@drawable/btn_light_green_background"
             android:fontFamily="@font/bentonsansregular"
-            android:text="Pizza"
+            tools:text="Pizza"
             android:textAllCaps="false"
             android:textColor="@color/green"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/bentonsansbold"
-            android:text="Wijie Bar and Resto"
+            tools:text="Wijie Bar and Resto"
             android:textColor="?android:textColor"
             android:textSize="27sp"
             app:layout_constraintTop_toBottomOf="@id/tvType" />
@@ -56,7 +56,7 @@
             android:drawablePadding="10dp"
             android:fontFamily="@font/bentonsansregular"
             android:gravity="center"
-            android:text="19 km"
+            android:text="@string/loading"
             android:textColor="@color/grey"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,13 +66,13 @@
             android:id="@+id/tvRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_half_star"
             android:drawablePadding="10dp"
             android:fontFamily="@font/bentonsansregular"
             android:gravity="center"
-            android:text="4,8 Rating"
+            tools:text="4,8 Rating"
             android:textColor="@color/grey"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@id/tvDistance"
@@ -82,16 +82,33 @@
             android:id="@+id/tvDeliveryFee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_cost"
             android:drawablePadding="10dp"
             android:fontFamily="@font/bentonsansregular"
             android:gravity="center"
-            android:text="4 ₾"
+            tools:text="4 ₾"
             android:textColor="@color/grey"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/tvRating"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDeliveryTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_time"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="5dp"
+            android:fontFamily="@font/bentonsansregular"
+            android:gravity="center"
+            android:text="@string/loading"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/tvDeliveryFee"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -104,7 +121,7 @@
             android:fontFamily="@font/bentonsansbook"
             android:lineSpacingExtra="5dp"
             android:maxLines="3"
-            android:text="Most whole Alaskan Red King Crabs get broken down into legs, claws, and lump meat. We offer all of these options as well in our online shop, but there is nothing like getting the whole . . . ."
+            tools:text="Most whole Alaskan Red King Crabs get broken down into legs, claws, and lump meat. We offer all of these options as well in our online shop, but there is nothing like getting the whole . . . ."
             android:textColor="?android:textColor"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"

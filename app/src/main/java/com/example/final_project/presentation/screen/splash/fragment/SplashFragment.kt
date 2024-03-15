@@ -80,7 +80,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     private fun handleNavEvents(events: SplashNavigationEvents) {
         when (events) {
             is SplashNavigationEvents.NavigateToLogIn -> {
-                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToWelcomeFragment())
+                findNavController().navigate(SplashFragmentDirections.actionGlobalToWelcomeFragment())
             }
 
             is SplashNavigationEvents.NavigateToHome -> {

@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.final_project.R
@@ -128,11 +127,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private fun handleNavigationEvents(event: ProfileNavigationUiEvents) {
         when (event) {
             is ProfileNavigationUiEvents.NavigateToLogIn -> {
-                val navOptions = NavOptions.Builder()
-                    .setPopUpTo(R.id.placeholderDestination, true)
-                    .build()
-
-                requireActivity().findNavController(R.id.nav_host_fragment).navigate(R.id.loginFragment, null, navOptions)
+                requireActivity().findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_to_welcomeFragment)
             }
 
             is ProfileNavigationUiEvents.NavigateToLocation -> {

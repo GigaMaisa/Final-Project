@@ -5,7 +5,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.example.final_project.NavGraphDirections
 import com.example.final_project.R
 import com.example.final_project.databinding.FragmentLoginBinding
 import com.example.final_project.presentation.base.BaseFragment
@@ -79,7 +81,7 @@ class  LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::
             }
 
             is LoginFragmentUiEvents.NavigateToHomePage -> {
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToPlaceholderDestination())
+                requireActivity().findNavController(R.id.nav_host_fragment).navigate(NavGraphDirections.actionGlobalToHomeFragment())
             }
 
             is LoginFragmentUiEvents.NavigateToSmsAuthPage -> {

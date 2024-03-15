@@ -6,10 +6,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.final_project.NavGraphDirections
 import com.example.final_project.R
 import com.example.final_project.databinding.FragmentPasscodeBinding
 import com.example.final_project.presentation.base.BaseFragment
@@ -92,7 +94,8 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
             }
 
             is PasscodeNavigationEvents.NavigateToHomePage -> {
-                findNavController().navigate(PasscodeFragmentDirections.actionPasscodeFragmentToPlaceholderDestination())
+                requireActivity().findNavController(R.id.nav_host_fragment).navigate(
+                    NavGraphDirections.actionGlobalToHomeFragment())
             }
         }
     }

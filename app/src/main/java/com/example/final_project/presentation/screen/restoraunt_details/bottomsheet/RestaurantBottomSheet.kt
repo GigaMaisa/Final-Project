@@ -1,50 +1,64 @@
 package com.example.final_project.presentation.screen.restoraunt_details.bottomsheet
 
-import android.os.Bundle
-import android.util.Log.d
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.databinding.RestaurantDetailsBottomSheetDialogBinding
+import com.example.final_project.presentation.base.BaseBottomSheetFragment
 import com.example.final_project.presentation.event.restaurant.RestaurantMenuItemEvent
 import com.example.final_project.presentation.extension.loadImage
-import com.example.final_project.presentation.model.restaurant.MenuItemDetails
+import com.example.final_project.presentation.model.restaurant.MenuOrderDetails
 import com.example.final_project.presentation.screen.restoraunt_details.adapter.RestaurantOptionRecyclerViewAdapter
 import com.example.final_project.presentation.state.RestaurantMenuItemState
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RestaurantBottomSheet : BottomSheetDialogFragment() {
-
-    private lateinit var binding: RestaurantDetailsBottomSheetDialogBinding
+class RestaurantBottomSheet : BaseBottomSheetFragment<RestaurantDetailsBottomSheetDialogBinding>(RestaurantDetailsBottomSheetDialogBinding::inflate) {
     private val restaurantMenuAdapter = RestaurantOptionRecyclerViewAdapter()
     private val viewModel: RestaurantMenuItemViewModel by viewModels()
-    var menuItemDetails: MenuItemDetails? = null
+    var menuOrderDetails: MenuOrderDetails? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = RestaurantDetailsBottomSheetDialogBinding.inflate(layoutInflater)
-        return binding.root
+    override fun setUp() {
+        setUpRecycler()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        submitMenuItemData(menuItemDetails!!)
-        setUpRecycler()
-        setUpObservers()
+    override fun setUpListeners() {
         setUpBottomSheetBehavior()
+        submitMenuItemData(menuOrderDetails!!)
+        setUpQuantityPlusMinus()
+        viewModel.onEvent(RestaurantMenuItemEvent.UpdateTotalPriceEvent)
+        binding.tvAddToOrder.setOnClickListener {
+            viewModel.onEvent(RestaurantMenuItemEvent.AddItemToCartEvent)
+        }
+    }
+
+    override fun setUpObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.restaurantMenuItemStateFlow.collect {
+                        handleState(it)
+                    }
+                }
+
+                launch {
+                    viewModel.uiEvent.collect {
+                        handleUiEvent(it)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun handleUiEvent(event: RestaurantMenuItemViewModel.RestaurantMenuItemUiEvent) {
+        when(event) {
+            is RestaurantMenuItemViewModel.RestaurantMenuItemUiEvent.DismissBottomSheetEvent -> dismiss()
+        }
     }
 
     private fun setUpRecycler() = with(binding.recyclerOptions) {
@@ -52,16 +66,6 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         adapter = restaurantMenuAdapter
         restaurantMenuAdapter.onOptionClick = {
             viewModel.onEvent(RestaurantMenuItemEvent.UpdateRestaurantDetailsEvent(it))
-        }
-    }
-
-    private fun setUpObservers() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.restaurantMenuItemStateFlow.collect {
-                    handleState(it)
-                }
-            }
         }
     }
 
@@ -75,6 +79,12 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
                     tvPrice.text = it.price.toString().plus(" ₾")
                 }
                 restaurantMenuAdapter.submitList(it.menuItemAdditions)
+            }
+
+            binding.tvQuantity.text = quantity.toString()
+
+            totalPrice?.let {
+                binding.tvTotalPrice.text = String.format("%.2f ₾", it)
             }
         }
     }
@@ -92,9 +102,18 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         })
     }
 
-    private fun submitMenuItemData(menuItemDetails: MenuItemDetails) {
-        d("menuItemDetailsBro", menuItemDetails.menuItemAdditions.size.toString())
-        viewModel.onEvent(RestaurantMenuItemEvent.SetRestaurantDetailsEvent(menuItemDetails))
+    private fun setUpQuantityPlusMinus(){
+        binding.imageButtonMinus.setOnClickListener {
+            viewModel.onEvent(RestaurantMenuItemEvent.MinusQuantityEvent(binding.tvQuantity.text.toString().toInt()))
+        }
+
+        binding.imageButtonPlus.setOnClickListener {
+            viewModel.onEvent(RestaurantMenuItemEvent.PlusQuantityEvent(binding.tvQuantity.text.toString().toInt()))
+        }
+    }
+
+    private fun submitMenuItemData(menuOrderDetails: MenuOrderDetails) {
+        viewModel.onEvent(RestaurantMenuItemEvent.SetRestaurantDetailsEvent(menuOrderDetails))
     }
 
     companion object {

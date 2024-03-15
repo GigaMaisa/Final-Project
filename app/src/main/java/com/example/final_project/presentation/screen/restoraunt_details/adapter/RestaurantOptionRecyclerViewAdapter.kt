@@ -1,6 +1,5 @@
 package com.example.final_project.presentation.screen.restoraunt_details.adapter
 
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -44,7 +43,6 @@ class RestaurantOptionRecyclerViewAdapter: ListAdapter<MenuItemAdditions, Restau
                             it.copy(selected = it.name == menuItem.name)
                         }
                         submitList(updatedOptions)
-                        d("updatedOptionsList", updatedOptions.toString())
                         onOptionClick?.invoke(option.copy(options = updatedOptions))
                     }
                 }

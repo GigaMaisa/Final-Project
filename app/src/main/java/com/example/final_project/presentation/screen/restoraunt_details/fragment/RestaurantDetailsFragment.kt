@@ -11,7 +11,7 @@ import com.example.final_project.databinding.FragmentRestorauntDetailsBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.restaurant.RestaurantDetailsEvent
 import com.example.final_project.presentation.extension.showSnackBar
-import com.example.final_project.presentation.model.restaurant.MenuItemDetails
+import com.example.final_project.presentation.model.restaurant.MenuOrderDetails
 import com.example.final_project.presentation.model.restaurant.RestaurantDetails
 import com.example.final_project.presentation.screen.restoraunt_details.adapter.RestaurantMenuRecyclerViewAdapter
 import com.example.final_project.presentation.screen.restoraunt_details.bottomsheet.RestaurantBottomSheet
@@ -35,7 +35,8 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>
 
     override fun setUpListeners() {
         restaurantMenuRecyclerAdapter.onClick = {
-            setUpBottomSheet(it)
+            val menuOrderDetails = MenuOrderDetails(args.restaurantId, it.category, it.menuItemDetails)
+            setUpBottomSheet(menuOrderDetails)
         }
     }
 
@@ -84,9 +85,8 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>
         restaurantMenuRecyclerAdapter.submitList(restaurantDetails.menu)
     }
 
-    private fun setUpBottomSheet(menuItemDetails: MenuItemDetails) {
+    private fun setUpBottomSheet(menuOrderDetails: MenuOrderDetails) {
         modalBottomSheet.show(childFragmentManager, RestaurantBottomSheet.RESTAURANT_MENU_BOTTOM_SHEET)
-        //TODO callbackbro
-        modalBottomSheet.menuItemDetails = menuItemDetails
+        modalBottomSheet.menuOrderDetails = menuOrderDetails
     }
 }

@@ -7,5 +7,4 @@ data class MenuItemDetails(
     val name: String,
     val price: Double,
     val menuItemAdditions: List<MenuItemAdditions>
-
 )

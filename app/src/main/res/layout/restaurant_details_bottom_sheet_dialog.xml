@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                     app:layout_constraintTop_toBottomOf="@id/imageViewCover"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="ბრინჯუს ატრია საშუალო"
+                    tools:text="ბრინჯუს ატრია საშუალო"
                     android:textSize="30sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -48,7 +48,7 @@
                     android:layout_marginTop="20dp"
                     app:layout_constraintTop_toBottomOf="@id/tvTitle"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:text="9.40 ₾"
+                    tools:text="9.40 ₾"
                     android:textColor="@color/green"
                     android:textSize="15sp" />
 
@@ -62,7 +62,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="15dp"
                     android:lineSpacingExtra="2dp"
-                    android:text="very good and all my friend very good and all my friend very good and all my friendvery good and all my friendvery good and all my friendvery good and all my friend" />
+                    tools:text="very good and all my friend very good and all my friend very good and all my friendvery good and all my friendvery good and all my friendvery good and all my friend" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerOptions"
@@ -88,7 +88,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/appCompatImageButton"
+            android:id="@+id/imageButtonMinus"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="7dp"
@@ -99,10 +99,10 @@
             app:layout_constraintTop_toTopOf="@+id/view" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView2"
+            android:id="@+id/tvQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:text="@string/_1"
             android:textColor="@color/green"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -112,6 +112,7 @@
             app:layout_constraintTop_toTopOf="@+id/view" />
 
         <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imageButtonPlus"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginEnd="7dp"
@@ -122,7 +123,7 @@
             app:layout_constraintTop_toTopOf="@+id/view" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView3"
+            android:id="@+id/tvAddToOrder"
             android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_marginBottom="24dp"
@@ -138,17 +139,17 @@
             app:layout_constraintStart_toEndOf="@+id/view" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTotalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="11.40 ლ"
             android:textSize="17sp"
             android:background="@android:color/transparent"
             android:textColor="@color/white"
             android:layout_marginEnd="15dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/appCompatTextView3"
-            app:layout_constraintEnd_toEndOf="@+id/appCompatTextView3"
-            app:layout_constraintTop_toTopOf="@+id/appCompatTextView3" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvAddToOrder"
+            app:layout_constraintEnd_toEndOf="@+id/tvAddToOrder"
+            app:layout_constraintTop_toTopOf="@+id/tvAddToOrder" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

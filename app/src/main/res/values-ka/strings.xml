@@ -112,4 +112,6 @@
     <string name="phone_email_validation_error">არავალიდური იმეილი და პაროლი</string>
     <string name="chat_bot">ჩატ ბოტი</string>
     <string name="your_order_is_empty_start_ordering_now">თქვენი შეკვეთა ცარიელია, დაიწყეთ შეკვეთა ახლავე</string>
+    <string name="add_to_order">შეკვეთის დამატება</string>
+    <string name="_1">1</string>
 </resources>

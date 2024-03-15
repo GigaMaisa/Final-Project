@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.databinding.RecyclerRestaurantMenuItemBinding
-import com.example.final_project.presentation.model.restaurant.MenuItemDetails
+import com.example.final_project.presentation.model.restaurant.MenuOrderCategoryDetails
 import com.example.final_project.presentation.model.restaurant.RestaurantMenu
 
 class RestaurantMenuRecyclerViewAdapter : ListAdapter<RestaurantMenu, RestaurantMenuRecyclerViewAdapter.RestaurantMenuViewHolder>(
     RestaurantMenuItemDiffCallback
 ) {
 
-    var onClick: ((MenuItemDetails) -> Unit)? = null
+    var onClick: ((MenuOrderCategoryDetails) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantMenuViewHolder {
         return RestaurantMenuViewHolder(
@@ -40,7 +40,7 @@ class RestaurantMenuRecyclerViewAdapter : ListAdapter<RestaurantMenu, Restaurant
                 adapter = RestaurantMenuItemRecyclerViewAdapter().apply {
                     submitList(menuItem.items)
                     onItemClick = {
-                        onClick?.invoke(it)
+                        onClick?.invoke(MenuOrderCategoryDetails(menuItem.menuCategory, it))
                     }
                 }
             }

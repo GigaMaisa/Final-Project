@@ -9,6 +9,6 @@ class AddOrderUseCase @Inject constructor(
     private val getLastRestaurantIdUseCase: GetLastRestaurantIdUseCase
 ) {
     suspend operator fun invoke(getOrder: GetOrder) {
-        if (getOrder.restaurantId == getLastRestaurantIdUseCase()) orderDetailsRepository.addOrder(getOrder)
+        orderDetailsRepository.addOrder(getOrder)
     }
 }

@@ -9,7 +9,6 @@ import com.example.final_project.databinding.RecyclerCartItemBinding
 import com.example.final_project.databinding.RecyclerCheckoutCartItemBinding
 import com.example.final_project.presentation.extension.loadImage
 import com.example.final_project.presentation.model.cart.CartCheckout
-import com.example.final_project.presentation.model.cart.CartItem
 import com.example.final_project.presentation.model.order.Order
 
 class CartRecyclerViewAdapter : ListAdapter<CartCheckout, ViewHolder>(CartItemDiffCallback) {
@@ -47,7 +46,7 @@ class CartRecyclerViewAdapter : ListAdapter<CartCheckout, ViewHolder>(CartItemDi
                 tvTitle.text = name
                 tvCategory.text = menuCategory
                 tvQuantity.text = quantity.toString()
-                tvPrice.text = price.toString().plus(" ₾")
+                tvPrice.text = String.format("%.2f ₾", price)
 
                 btnAddItem.setOnClickListener {
                     onPLusClick?.invoke(cartItem)

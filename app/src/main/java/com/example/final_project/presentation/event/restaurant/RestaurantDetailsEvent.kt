@@ -1,4 +1,4 @@
-package com.example.final_project.presentation.event
+package com.example.final_project.presentation.event.restaurant
 
 import com.example.final_project.presentation.model.restaurant.Restaurant
 

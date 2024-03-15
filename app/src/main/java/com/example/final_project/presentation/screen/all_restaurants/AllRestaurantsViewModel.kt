@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.domain.usecase.restaurant.GetRestaurantsUseCase
-import com.example.final_project.presentation.event.AllRestaurantsEvent
+import com.example.final_project.presentation.event.restaurant.AllRestaurantsEvent
 import com.example.final_project.presentation.mapper.restaurant.toPresentation
 import com.example.final_project.presentation.state.AllRestaurantsState
 import com.example.final_project.presentation.util.getErrorMessage

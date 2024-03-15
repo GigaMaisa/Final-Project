@@ -8,7 +8,7 @@ import com.example.final_project.domain.usecase.favourites.AddFavouriteUseCase
 import com.example.final_project.domain.usecase.favourites.DeleteFavouriteUseCase
 import com.example.final_project.domain.usecase.favourites.GetSingleFavouriteUseCase
 import com.example.final_project.domain.usecase.restaurant.GetRestaurantDetailsUseCase
-import com.example.final_project.presentation.event.RestaurantDetailsEvent
+import com.example.final_project.presentation.event.restaurant.RestaurantDetailsEvent
 import com.example.final_project.presentation.mapper.restaurant.toDomain
 import com.example.final_project.presentation.mapper.restaurant.toPresentation
 import com.example.final_project.presentation.model.restaurant.Restaurant

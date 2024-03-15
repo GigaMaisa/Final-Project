@@ -1,146 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    app:behavior_peekHeight="800dp"
-    app:behavior_hideable="false"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageViewCover"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/ic_launcher_background" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/imageViewCover"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="ბრინჯუს ატრია საშუალო"
+                    android:textSize="30sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="9.40 ₾"
+                    android:textColor="@color/green"
+                    android:textSize="15sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tvPrice"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="2dp"
+                    tools:text="very good and all my friend very good and all my friend very good and all my friendvery good and all my friendvery good and all my friendvery good and all my friend" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerOptions"
+                    android:layout_width="match_parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvDescription"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="80dp"
+                    android:clipToPadding="false"
+                    android:layout_marginTop="15dp" />
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
         <View
             android:id="@+id/view"
-            android:layout_width="58dp"
-            android:layout_height="5dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_back_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="PrivateResource" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnPopular"
-            android:layout_width="76dp"
-            android:layout_height="34dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="45dp"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/btn_light_green_background"
-            android:fontFamily="@font/bentonsansregular"
-            android:text="@string/popular"
-            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imageButtonMinus"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="7dp"
+            android:background="@drawable/btn_round_white_background"
+            android:src="@drawable/ic_minus"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toTopOf="@+id/view" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_1"
             android:textColor="@color/green"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toTopOf="@+id/view" />
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/imageBtnHeart"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:layout_marginTop="45dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/circle_light_red_background"
-            android:src="@drawable/ic_heart"
+            android:id="@+id/imageButtonPlus"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="7dp"
+            android:background="@drawable/btn_green_background"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintTop_toTopOf="@+id/view" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAddToOrder"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/btn_green_background"
+            android:gravity="start|center"
+            android:paddingHorizontal="15dp"
+            android:text="@string/add_to_order"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/imageBtnLocation"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:layout_marginTop="45dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/circle_light_green_background"
-            android:src="@drawable/ic_location"
-            app:layout_constraintEnd_toStartOf="@+id/imageBtnHeart"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/view" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/bentonsansbold"
-            android:text="Wijie Bar and Resto"
-            android:textColor="?android:textColor"
-            android:textSize="27sp"
-            app:layout_constraintTop_toBottomOf="@id/btnPopular" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDistance"
+            android:id="@+id/tvTotalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_location_outline"
-            android:drawablePadding="10dp"
-            android:fontFamily="@font/bentonsansregular"
-            android:gravity="center"
-            android:text="19 km"
-            android:textColor="@color/grey"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_half_star"
-            android:drawablePadding="10dp"
-            android:fontFamily="@font/bentonsansregular"
-            android:gravity="center"
-            android:text="4,8 Rating"
-            android:textColor="@color/grey"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/tvDistance"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:lineSpacingExtra="5dp"
-            android:fontFamily="@font/bentonsansbook"
-            android:text="Most whole Alaskan Red King Crabs get broken down into legs, claws, and lump meat. We offer all of these options as well in our online shop, but there is nothing like getting the whole . . . ."
-            android:textColor="?android:textColor"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRating" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:textColor="?android:textColor"
-            android:fontFamily="@font/bentonsansbold"
-            android:text="@string/menu"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewMenu"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginHorizontal="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMenu" />
+            android:textSize="17sp"
+            android:background="@android:color/transparent"
+            android:textColor="@color/white"
+            android:layout_marginEnd="15dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tvAddToOrder"
+            app:layout_constraintEnd_toEndOf="@+id/tvAddToOrder"
+            app:layout_constraintTop_toTopOf="@+id/tvAddToOrder" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

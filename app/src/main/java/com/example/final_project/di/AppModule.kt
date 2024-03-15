@@ -8,6 +8,7 @@ import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
 import com.example.final_project.data.remote.service.ChatBotApiService
 import com.example.final_project.data.remote.service.DirectionsApiService
+import com.example.final_project.data.remote.service.GoogleDistanceMatrixApiService
 import com.example.final_project.data.remote.service.RestaurantDetailsApiService
 import com.example.final_project.data.remote.service.RestaurantsApiService
 import com.example.final_project.presentation.util.EncryptionHelper
@@ -166,5 +167,11 @@ object AppModule {
     @Singleton
     fun provideRestaurantDetailsApiService(@FirebaseRetrofit retrofit: Retrofit): RestaurantDetailsApiService {
         return retrofit.create(RestaurantDetailsApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDistanceMatrixApiService(@GoogleMapRetrofit retrofit: Retrofit): GoogleDistanceMatrixApiService {
+        return retrofit.create(GoogleDistanceMatrixApiService::class.java)
     }
 }

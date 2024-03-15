@@ -65,6 +65,11 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>
             requireView().showSnackBar(resources.getString(it))
             viewModel.onEvent(RestaurantDetailsEvent.UpdateErrorMessageEvent(null))
         }
+
+        distance?.let {
+            binding.tvDistance.text = it.distance
+            binding.tvDeliveryTime.text = it.duration
+        }
     }
 
     private fun setUpRecycler() {
@@ -79,6 +84,7 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>
         tvType.text = restaurantDetails.type
         tvRating.text = restaurantDetails.rating.toString()
         tvDescription.text = restaurantDetails.description
+        tvDeliveryFee.text = restaurantDetails.deliveryFee.toString()
         restaurantDetails.deliveryFee?.let {
             tvDeliveryFee.text = it.toString().plus(" ₾")
         }

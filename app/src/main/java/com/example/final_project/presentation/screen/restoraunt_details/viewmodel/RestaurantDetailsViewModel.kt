@@ -4,6 +4,7 @@ import android.util.Log.d
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
+import com.example.final_project.domain.usecase.distance.GetDistanceAndDurationUseCase
 import com.example.final_project.domain.usecase.favourites.AddFavouriteUseCase
 import com.example.final_project.domain.usecase.favourites.DeleteFavouriteUseCase
 import com.example.final_project.domain.usecase.favourites.GetSingleFavouriteUseCase
@@ -14,6 +15,7 @@ import com.example.final_project.presentation.mapper.restaurant.toPresentation
 import com.example.final_project.presentation.model.restaurant.Restaurant
 import com.example.final_project.presentation.state.RestaurantDetailsState
 import com.example.final_project.presentation.util.getErrorMessage
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,7 +28,8 @@ class RestaurantDetailsViewModel @Inject constructor(
     private val addFavouriteUseCase: AddFavouriteUseCase,
     private val deleteFavouriteUseCase: DeleteFavouriteUseCase,
     private val getSingleFavouriteUseCase: GetSingleFavouriteUseCase,
-    private val getRestaurantDetailsUseCase: GetRestaurantDetailsUseCase
+    private val getRestaurantDetailsUseCase: GetRestaurantDetailsUseCase,
+    private val getDistanceAndDurationUseCase: GetDistanceAndDurationUseCase
 ) : ViewModel() {
 
     private val _restaurantDetailsStateFlow = MutableStateFlow(RestaurantDetailsState())
@@ -60,7 +63,14 @@ class RestaurantDetailsViewModel @Inject constructor(
                 d("resourceRestaurantDetails", resource.toString())
                 when(resource) {
                     is Resource.Loading -> _restaurantDetailsStateFlow.update { currentState -> currentState.copy(isLoading = resource.loading) }
-                    is Resource.Success -> _restaurantDetailsStateFlow.update { currentState -> currentState.copy(restaurantDetails = resource.response.toPresentation()) }
+                    is Resource.Success -> {
+                        _restaurantDetailsStateFlow.update { currentState ->
+                            currentState.copy(
+                                restaurantDetails = resource.response.toPresentation()
+                            )
+                        }
+                        updateDistanceAndDuration()
+                    }
                     is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
                 }
             }
@@ -76,6 +86,27 @@ class RestaurantDetailsViewModel @Inject constructor(
     private fun deleteFavourite(restaurant: Restaurant) {
         viewModelScope.launch {
             deleteFavouriteUseCase(restaurant.toDomain())
+        }
+    }
+
+    private fun updateDistanceAndDuration() {
+        viewModelScope.launch {
+            getDistanceAndDurationUseCase(
+                origin = LatLng(41.7934135, 44.8025545),
+                destination = LatLng(_restaurantDetailsStateFlow.value.restaurantDetails!!.latitude, _restaurantDetailsStateFlow.value.restaurantDetails!!.longitude)
+            ).collect {resource->
+                when(resource) {
+                    is Resource.Loading -> _restaurantDetailsStateFlow.update { currentState -> currentState.copy(isLoading = resource.loading) }
+                    is Resource.Success -> {
+                        _restaurantDetailsStateFlow.update { currentState ->
+                            currentState.copy(
+                                distance = resource.response.toPresentation()
+                            )
+                        }
+                    }
+                    is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
+                }
+            }
         }
     }
 

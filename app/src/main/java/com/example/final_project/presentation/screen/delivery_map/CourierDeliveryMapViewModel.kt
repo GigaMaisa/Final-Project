@@ -8,6 +8,11 @@ import com.example.final_project.domain.usecase.route.GetDirectionUseCase
 import com.example.final_project.presentation.mapper.toPresentation
 import com.example.final_project.presentation.state.CourierDeliveryState
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.Firebase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,6 +25,10 @@ class CourierDeliveryMapViewModel @Inject constructor(private val getDirectionUs
     private val _directionsStateFlow = MutableStateFlow(CourierDeliveryState())
     val directionStateFlow = _directionsStateFlow.asStateFlow()
 
+    init {
+        getLocationUpdate()
+    }
+
     fun getDirection(origin: LatLng, destination: LatLng) {
         viewModelScope.launch {
             getDirectionUseCase(origin = origin, destination = destination).collect {resource ->
@@ -31,5 +40,22 @@ class CourierDeliveryMapViewModel @Inject constructor(private val getDirectionUs
                 }
             }
         }
+    }
+
+    private fun getLocationUpdate() {
+        Firebase.database.reference.child("deliveries").child("your_delivery_id")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val location = mutableMapOf<String?, Double?>()
+
+                    snapshot.children.forEach {
+                        location.put(it.key, it.getValue(Double::class.java))
+                    }
+
+                    d("locationUpdated", location.toString())
+                    getDirection(origin = LatLng(41.709904512556946, 44.79725170393272), LatLng(location["latitude"]!!, location["longitude"]!!))
+                }
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 }

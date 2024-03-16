@@ -49,6 +49,7 @@ class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(FragmentChatBotBind
 
         errorMessage?.let {
             requireView().showSnackBar(resources.getString(it))
+            viewModel.onEvent(ChatBotEvents.UpdateErrorMessage(null))
         }
     }
 

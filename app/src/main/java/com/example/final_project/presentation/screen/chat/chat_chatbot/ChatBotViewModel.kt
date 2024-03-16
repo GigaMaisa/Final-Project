@@ -28,6 +28,7 @@ class ChatBotViewModel @Inject constructor(private val sentTextToChatBotUseCase:
         when(event) {
             is ChatBotEvents.SendTextToChatBotEvent -> sendMessageToChatBot(message = event.text)
             is ChatBotEvents.UpdateSessionIdEvent -> setSessionId(sessionId = event.sessionId)
+            is ChatBotEvents.UpdateErrorMessage -> updateErrorMessage(errorMessage = event.errorMessage)
         }
     }
 

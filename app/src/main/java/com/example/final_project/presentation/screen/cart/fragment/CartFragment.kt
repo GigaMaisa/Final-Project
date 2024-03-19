@@ -5,9 +5,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.final_project.NavGraphDirections
+import com.example.final_project.R
 import com.example.final_project.databinding.FragmentCartBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.CartEvent
@@ -31,13 +35,22 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
 
     override fun setUpListeners() {
         setUpCartAddRemoveListener()
+        setUpSubmitOrderListener()
     }
 
     override fun setUpObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.cartStateFlow.collect {
-                    handleState(it)
+                launch {
+                    viewModel.cartStateFlow.collect {
+                        handleState(it)
+                    }
+                }
+
+                launch {
+                    viewModel.uiEvent.collect {
+                        handleUiEvent(it)
+                    }
                 }
             }
         }
@@ -70,6 +83,14 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
         }
     }
 
+    private fun handleUiEvent(event: CartViewModel.CartUiEvent)  {
+        when(event) {
+            is CartViewModel.CartUiEvent.GoBackEvent -> findNavController().navigateUp()
+            is CartViewModel.CartUiEvent.GoToDeliveryMapEvent -> requireActivity().findNavController(
+                R.id.nav_host_fragment).navigate(NavGraphDirections.actionGlobalToCourierDeliveryFragment(location = event.latLng))
+        }
+    }
+
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
         viewModel.onEvent(CartEvent.DeleteItemEvent(cartAdapter.currentList[position].id))
     }
@@ -83,6 +104,12 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
             onPLusClick = {
                 viewModel.onEvent(CartEvent.AddCartItemQuantityEvent(it))
             }
+        }
+    }
+
+    private fun setUpSubmitOrderListener() {
+        cartAdapter.onPlaceMyOrderClick = {
+            viewModel.onEvent(CartEvent.SubmitOrderEvent)
         }
     }
 

@@ -15,6 +15,9 @@
         app:popUpTo="@id/nav_graph"
         app:popUpToInclusive="true"/>
 
+    <action android:id="@+id/action_global_to_courierDeliveryFragment"
+        app:destination="@+id/courierDeliveryMapFragment" />
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.final_project.presentation.screen.splash.fragment.SplashFragment"
@@ -39,7 +42,12 @@
         android:id="@+id/courierDeliveryMapFragment"
         android:name="com.example.final_project.presentation.screen.delivery_map.CourierDeliveryMapFragment"
         android:label="fragment_courier_delivery_map"
-        tools:layout="@layout/fragment_courier_delivery_map" />
+        tools:layout="@layout/fragment_courier_delivery_map" >
+
+        <argument
+            android:name="location"
+            app:argType="com.google.android.gms.maps.model.LatLng" />
+    </fragment>
     <fragment android:id="@+id/placeholderAuthentication"
         android:label="auth_placeholder"
         tools:layout="@layout/fragment_authentification_container"

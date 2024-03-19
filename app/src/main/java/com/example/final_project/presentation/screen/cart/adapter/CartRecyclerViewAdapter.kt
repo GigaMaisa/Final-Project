@@ -15,6 +15,7 @@ class CartRecyclerViewAdapter : ListAdapter<CartCheckout, ViewHolder>(CartItemDi
 
     var onPLusClick: ((Order) -> Unit)? = null
     var onMinusClick: ((Order) -> Unit)? = null
+    var onPlaceMyOrderClick: ((Double) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when(viewType) {
@@ -65,6 +66,9 @@ class CartRecyclerViewAdapter : ListAdapter<CartCheckout, ViewHolder>(CartItemDi
             tvSubTotalPrice.text = String.format("%.2f ₾", checkout.subTotal)
             tvDeliveryChargePrice.text = String.format("%.2f ₾", checkout.chargeTotal)
             tvTotalPrice.text = String.format("%.2f ₾", checkout.subTotal + checkout.chargeTotal)
+            binding.btnPlaceOrder.setOnClickListener {
+                onPlaceMyOrderClick?.invoke(checkout.subTotal + checkout.chargeTotal)
+            }
         }
     }
 

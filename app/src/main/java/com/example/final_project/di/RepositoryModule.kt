@@ -34,6 +34,7 @@ import com.example.final_project.data.repository.remote.firebase.FirebaseSignOut
 import com.example.final_project.data.repository.remote.firebase.FirebaseUserDataRepositoryImpl
 import com.example.final_project.data.repository.remote.home.BannerRepositoryImpl
 import com.example.final_project.data.repository.remote.home.RestaurantsRepositoryImpl
+import com.example.final_project.data.repository.remote.order.SubmitOrderRepositoryImpl
 import com.example.final_project.data.repository.remote.restaurant_details.RestaurantDetailsRepositoryImpl
 import com.example.final_project.data.repository.remote.route.DirectionsRepositoryImpl
 import com.example.final_project.di.DispatchersModule.IoDispatcher
@@ -56,6 +57,7 @@ import com.example.final_project.domain.repository.forgot_pass.ForgotPasswordRep
 import com.example.final_project.domain.repository.home.BannerRepository
 import com.example.final_project.domain.repository.home.RestaurantsRepository
 import com.example.final_project.domain.repository.order.OrderDetailsRepository
+import com.example.final_project.domain.repository.order.SubmitOrderRepository
 import com.example.final_project.domain.repository.restaurant_details.RestaurantDetailsRepository
 import com.example.final_project.domain.repository.route.DirectionsRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -81,6 +83,11 @@ object RepositoryModule {
     @Singleton
     fun provideFavouriteRestaurantsRepository(dao: FavouriteRestaurantDao, @IoDispatcher ioDispatcher: CoroutineDispatcher): FavouriteRestaurantsRepository =
         FavouriteRestaurantsRepositoryImpl(dao, ioDispatcher)
+
+    @Provides
+    @Singleton
+    fun provideSubmitOrderRepository(databaseReference: DatabaseReference, @IoDispatcher ioDispatcher: CoroutineDispatcher): SubmitOrderRepository =
+        SubmitOrderRepositoryImpl(databaseReference, ioDispatcher)
 
     @Provides
     @Singleton

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.final_project.databinding.FragmentChatBotBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.bot.ChatBotEvents
+import com.example.final_project.presentation.extension.hideKeyboard
 import com.example.final_project.presentation.extension.showSnackBar
 import com.example.final_project.presentation.screen.chat.adapter.ChatBotMessageRecyclerViewAdapter
 import com.example.final_project.presentation.state.ChatBotState
@@ -29,6 +30,7 @@ class ChatBotFragment : BaseFragment<FragmentChatBotBinding>(FragmentChatBotBind
         binding.sentButton.setOnClickListener {
             viewModel.onEvent(ChatBotEvents.SendTextToChatBotEvent(binding.messageBox.text.toString()))
             binding.messageBox.text?.clear()
+            view?.let { activity?.hideKeyboard(it) }
         }
     }
 

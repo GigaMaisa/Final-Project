@@ -11,6 +11,9 @@ interface DeliveryLocationDao {
     @Query("SELECT * FROM delivery_location")
     fun getAll(): Flow<List<DeliveryLocationEntity>>
 
+    @Query("SELECT * FROM delivery_location LIMIT 1")
+    fun getOneLocation(): Flow<DeliveryLocationEntity>
+
     @Insert
     suspend fun addDeliveryLocation(deliveryLocation: DeliveryLocationEntity)
 

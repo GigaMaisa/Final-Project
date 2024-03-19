@@ -17,6 +17,10 @@ class DeliveryLocationRepositoryImpl @Inject constructor(private val deliveryLoc
         return deliveryLocationDao.getAll().map { it.map { it.toDomain() } }.flowOn(ioDispatcher)
     }
 
+    override fun getLocation(): Flow<GetDeliveryLocation> {
+        return deliveryLocationDao.getOneLocation().map { it.toDomain() }.flowOn(ioDispatcher)
+    }
+
     override suspend fun addLocation(location: GetDeliveryLocation) = withContext(ioDispatcher) {
         deliveryLocationDao.addDeliveryLocation(location.toData())
     }

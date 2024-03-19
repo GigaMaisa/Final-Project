@@ -30,7 +30,7 @@ class MainActivity @Inject constructor() : AppCompatActivity() {
 
     private fun requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requestPermission.launch(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION))
+            requestPermission.launch(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.POST_NOTIFICATIONS))
         }
     }
 }

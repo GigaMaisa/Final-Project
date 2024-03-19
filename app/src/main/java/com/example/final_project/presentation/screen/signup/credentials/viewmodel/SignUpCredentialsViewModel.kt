@@ -125,7 +125,6 @@ class SignUpCredentialsViewModel @Inject constructor(
             currentState.copy(errorMessage = errorMessage, isLoading = false)
         }
         }
-
     }
 
     private fun validateFields(fullName: String, email: String, password: String) : Boolean {
@@ -149,5 +148,4 @@ class SignUpCredentialsViewModel @Inject constructor(
 
 sealed class SignUpCredentialsNavigationEvents {
     object NavigateToSuccessPage : SignUpCredentialsNavigationEvents()
-
 }

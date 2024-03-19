@@ -115,4 +115,15 @@
     <string name="add_to_order">შეკვეთის დამატება</string>
     <string name="_1">1</string>
     <string name="loading">იტვირთება…</string>
+    <string name="phone_number">ტელეფონის ნომერი</string>
+    <string name="reset_passwprd">პაროლის ცვლილებისთვის მიჰყევით მეილს</string>
+    <string name="fill_one_field">შეავსეთ მხოლოდ ერთი ველი</string>
+    <string name="reset_your_password_here">განაახლეთ პაროლი</string>
+    <string name="please_provide_new_password">გთხოვთ, შეიყვანოთ ახალი პაროლი</string>
+    <string name="new_password">ახალი პაროლი</string>
+    <string name="repeat_new_password">გაიმეორეთ ახალი პაროლი</string>
+    <string name="back">უკან</string>
+    <string name="passwords_dont_match">პაროლები ერთმანეთს არ ემთხვევა</string>
+    <string name="password_reset_succesful">პაროლი წარმატებით შეიცვალა</string>
+
 </resources>

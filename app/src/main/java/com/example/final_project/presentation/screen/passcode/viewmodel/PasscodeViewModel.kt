@@ -1,6 +1,5 @@
 package com.example.final_project.presentation.screen.passcode.viewmodel
 
-import android.util.Log.d
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.R
@@ -43,6 +42,7 @@ class PasscodeViewModel @Inject constructor(
                 verificationId = event.verificationId
             )
             is PasscodeEvent.SignUp -> signUp(event.verificationId)
+            is PasscodeEvent.ResetPassword -> resetPassword(event.verificationId)
         }
     }
 
@@ -69,6 +69,47 @@ class PasscodeViewModel @Inject constructor(
                     _navigationEvent.emit(PasscodeNavigationEvents.NavigateToHomePage)
                 }
             }
+
+            is PasscodeNavigationEvents.NavigateToResetPasswordPage -> {
+                viewModelScope.launch {
+                    _navigationEvent.emit(PasscodeNavigationEvents.NavigateToResetPasswordPage)
+                }
+            }
+        }
+    }
+
+    private fun resetPassword(verificationId: String) {
+        viewModelScope.launch {
+            val smsCode = _passcodeStateFlow.value.passcode
+                .mapNotNull { it.currentNumber?.toString() }
+                .reduceOrNull { acc, s -> acc + s }
+
+            smsCode?.let {
+                val credential = PhoneAuthProvider.getCredential(verificationId, it)
+                signInWithAuthCredentialUseCase(credential).collect {resource ->
+
+                    when (resource) {
+                        is Resource.Loading -> _authStateFlow.update { currentState ->
+                            currentState.copy(isLoading = true)
+                        }
+
+                        is Resource.Success -> {
+                            _authStateFlow.update { currentState ->
+                                currentState.copy(data = resource.response)
+                            }
+
+                            _navigationEvent.emit(
+                                PasscodeNavigationEvents.NavigateToResetPasswordPage
+                            )
+                        }
+
+                        is Resource.Error -> {
+                            updateErrorMessage(getErrorMessage(resource.error))
+                            _passcodeStateFlow.update { currentState -> currentState.copy(errorMessage = getErrorMessage(resource.error)) }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -81,7 +122,6 @@ class PasscodeViewModel @Inject constructor(
             smsCode?.let {
                 val credential = PhoneAuthProvider.getCredential(verificationId, it)
                 signInWithAuthCredentialUseCase(credential).collect {resource ->
-                    d("resourceSignuper", resource.toString())
 
                     when (resource) {
                         is Resource.Loading -> _authStateFlow.update { currentState ->
@@ -176,5 +216,6 @@ class PasscodeViewModel @Inject constructor(
 sealed class PasscodeNavigationEvents {
     object NavigateBack : PasscodeNavigationEvents()
     object NavigateToHomePage : PasscodeNavigationEvents()
+    object NavigateToResetPasswordPage : PasscodeNavigationEvents()
     data class NavigateToSignUpCredentialsPage(val phoneNumber: String?) : PasscodeNavigationEvents()
 }

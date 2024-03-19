@@ -28,6 +28,7 @@ import com.example.final_project.data.repository.remote.chatbot.ChatBotRepositor
 import com.example.final_project.data.repository.remote.distance.DistanceRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAuthStateRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseEmailLoginRepositoryImpl
+import com.example.final_project.data.repository.remote.firebase.FirebaseForgotPasswordRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebasePhotosRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseSignOutRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseUserDataRepositoryImpl
@@ -52,6 +53,7 @@ import com.example.final_project.domain.repository.distance.DistanceRepository
 import com.example.final_project.domain.repository.favourites.FavouriteRestaurantsRepository
 import com.example.final_project.domain.repository.firebase.FirebasePhotosRepository
 import com.example.final_project.domain.repository.firebase.FirebaseUserDataRepository
+import com.example.final_project.domain.repository.forgot_pass.ForgotPasswordRepository
 import com.example.final_project.domain.repository.home.BannerRepository
 import com.example.final_project.domain.repository.home.RestaurantsRepository
 import com.example.final_project.domain.repository.order.OrderDetailsRepository
@@ -129,6 +131,12 @@ object RepositoryModule {
     @Singleton
     fun provideFirebaseAdditionalUserDataRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : FirebaseAdditionalUserDataRepository {
         return FirebaseAdditionalUserDataRepositoryImpl(auth = auth, ioDispatcher = ioDispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseForgotPasswordRepository(auth: FirebaseAuth, @IoDispatcher ioDispatcher: CoroutineDispatcher) : ForgotPasswordRepository {
+        return FirebaseForgotPasswordRepositoryImpl(auth = auth, ioDispatcher = ioDispatcher)
     }
 
     @Provides

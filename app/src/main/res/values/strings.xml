@@ -105,7 +105,7 @@
     <string name="fullname_validation_error">enter your full name with space between</string>
     <string name="email_validation_error">enter valid email</string>
     <string name="password_validation_error">password must contain 8 symbols, minimum 1 upper and lower case and 1 symbol</string>
-    <string name="phone_validation_error">enter appropriate number with 9 digits</string>
+    <string name="phone_validation_error">enter appropriate number</string>
     <string name="invalid_credentials_error">Invalid email or password</string>
     <string name="invalid_passcode_error">Invalid passcode try again</string>
     <string name="phone_email_validation_error">Invalid number and email.</string>
@@ -114,4 +114,15 @@
     <string name="add_to_order">Add to order</string>
     <string name="_1">1</string>
     <string name="loading">loading…</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="reset_passwprd">Password Reset Email is Sent</string>
+    <string name="fill_one_field">Please Fill Only One Field</string>
+    <string name="reset_your_password_here">Reset your password here</string>
+    <string name="please_provide_new_password">Please Provide New Password</string>
+    <string name="new_password">New Password</string>
+    <string name="repeat_new_password">Repeat New Password</string>
+    <string name="back">Back</string>
+    <string name="passwords_dont_match">Passwords Don\'t Match</string>
+    <string name="password_reset_succesful">Password reset successful</string>
+
 </resources>

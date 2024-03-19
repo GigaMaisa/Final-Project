@@ -1,5 +1,6 @@
 package com.example.final_project.data.repository.remote.firebase
 
+import android.util.Log
 import com.example.final_project.data.remote.common.HandleErrorStates
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.di.DispatchersModule.IoDispatcher
@@ -72,6 +73,8 @@ class FirebaseAdditionalUserDataRepositoryImpl @Inject constructor(
                     if (task.isSuccessful) {
                         trySend(Resource.Success(true))
                     } else {
+                        Log.d("VAHME", "VAHME ${task.exception}")
+
                         trySend(
                             Resource.Error(
                                 error = HandleErrorStates.handleException(task.exception!!),

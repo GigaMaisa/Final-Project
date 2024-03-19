@@ -6,8 +6,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.final_project.NavGraphDirections
+import com.example.final_project.R
 import com.example.final_project.databinding.FragmentPasswordBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.EmailPasswordEvents
@@ -64,7 +67,9 @@ class PasswordFragment : BaseFragment<FragmentPasswordBinding>(FragmentPasswordB
 
     private fun handleNavigation(event: EmailPasswordUiEvents) {
         when (event) {
-            is EmailPasswordUiEvents.NavigateToHomeFragment -> findNavController().navigate(PasswordFragmentDirections.actionPasswordFragmentToPlaceholderDestination())
+            is EmailPasswordUiEvents.NavigateToHomeFragment ->
+                requireActivity().findNavController(R.id.nav_host_fragment).navigate(
+                    NavGraphDirections.actionGlobalToHomeFragment())
         }
     }
 }

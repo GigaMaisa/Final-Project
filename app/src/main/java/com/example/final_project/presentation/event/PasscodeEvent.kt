@@ -7,4 +7,5 @@ sealed interface PasscodeEvent {
     data class SignUp(val verificationId: String, val smsCode: String) : PasscodeEvent
     class ChangeTextInputEvent(val passcode: Passcode) : PasscodeEvent
     object ResetPasscode : PasscodeEvent
+    data class ResetPassword(val verificationId: String, val smsCode: String) : PasscodeEvent
 }

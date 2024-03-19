@@ -50,11 +50,14 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
         btnNext.setOnClickListener {
             val smsCodeUserInput = viewModel.passcodeStateFlow.value.passcode.joinToString()
 
+            if (args.isForgot) {
+                viewModel.onEvent(PasscodeEvent.ResetPassword(args.verificationId!!, smsCodeUserInput))
+            }
+
             if (args.phoneNumber == null) {
                 viewModel.onEvent(PasscodeEvent.SignInWithVerificationCode(args.verificationId!!, smsCodeUserInput))
             } else {
                 viewModel.onEvent(PasscodeEvent.SignUp(args.verificationId!!, smsCodeUserInput))
-
             }
         }
     }
@@ -91,6 +94,10 @@ class PasscodeFragment : BaseFragment<FragmentPasscodeBinding>(FragmentPasscodeB
 
             is PasscodeNavigationEvents.NavigateToSignUpCredentialsPage -> {
                 findNavController().navigate(PasscodeFragmentDirections.actionPasscodeFragmentToSignUpCredentialsFragment(state.phoneNumber))
+            }
+
+            is PasscodeNavigationEvents.NavigateToResetPasswordPage -> {
+                findNavController().navigate(PasscodeFragmentDirections.actionPasscodeFragmentToResetPasswordFragment())
             }
 
             is PasscodeNavigationEvents.NavigateToHomePage -> {

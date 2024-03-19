@@ -6,5 +6,6 @@ enum class ErrorType {
     EMAIL,
     FULL_NAME,
     PASSWORD,
-    All
+    All,
+    PASSWORDS_NOT_MATCHING
 }

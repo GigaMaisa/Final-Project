@@ -150,12 +150,26 @@
         <action
             android:id="@+id/action_passcodeFragment_to_placeholderDestination"
             app:destination="@id/placeholderDestination" />
+        <argument
+            android:name="isForgot"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_passcodeFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.final_project.presentation.screen.forgot_password.fragment.ForgotPasswordFragment"
         tools:layout="@layout/fragment_forgot_password"
-        android:label="fragment_forgot_password" />
+        android:label="fragment_forgot_password" >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_passcodeFragment"
+            app:destination="@id/passcodeFragment" />
+    </fragment>
     <action
         android:id="@+id/action_signUpSuccessFragment_to_placeholderDestination"
         app:destination="@id/placeholderDestination"
@@ -170,4 +184,18 @@
     <action
         android:id="@+id/action_passwordFragment_to_placeholderDestination"
         app:destination="@id/placeholderDestination" />
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.example.final_project.presentation.screen.reset_password.password.fragment.ResetPasswordFragment"
+        android:label="fragment_reset_password"
+        tools:layout="@layout/fragment_reset_password" >
+        <action
+            android:id="@+id/action_resetPasswordFragment_to_resetSuccessFragment"
+            app:destination="@id/resetSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resetSuccessFragment"
+        android:name="com.example.final_project.presentation.screen.reset_password.success.fragment.ResetSuccessFragment"
+        android:label="fragment_reset_success"
+        tools:layout="@layout/fragment_reset_success" />
 </navigation>

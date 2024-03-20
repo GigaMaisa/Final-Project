@@ -3,6 +3,7 @@ package com.example.final_project.presentation.screen.all_restaurants
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
+import com.example.final_project.domain.usecase.favourites.GetFavouritesUseCase
 import com.example.final_project.domain.usecase.restaurant.GetRestaurantsUseCase
 import com.example.final_project.presentation.event.restaurant.AllRestaurantsEvent
 import com.example.final_project.presentation.mapper.restaurant.toPresentation
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AllRestaurantsViewModel @Inject constructor(private val getRestaurantsUseCase: GetRestaurantsUseCase) : ViewModel() {
+class AllRestaurantsViewModel @Inject constructor(private val getRestaurantsUseCase: GetRestaurantsUseCase, private val getFavouritesUseCase: GetFavouritesUseCase) : ViewModel() {
     private val _restaurantsStateFlow = MutableStateFlow(AllRestaurantsState())
     val restaurantsStateFlow = _restaurantsStateFlow.asStateFlow()
 
@@ -41,6 +42,7 @@ class AllRestaurantsViewModel @Inject constructor(private val getRestaurantsUseC
             }
 
             is AllRestaurantsEvent.UpdateErrorMessageEvent -> updateErrorMessage(errorMessage = event.message)
+            is AllRestaurantsEvent.GetFavouriteRestaurants -> getFavouriteRestaurants()
         }
     }
 
@@ -52,6 +54,14 @@ class AllRestaurantsViewModel @Inject constructor(private val getRestaurantsUseC
                     is Resource.Success -> _restaurantsStateFlow.update { currentState -> currentState.copy(restaurants = resource.response.map { it.toPresentation() }) }
                     is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
                 }
+            }
+        }
+    }
+
+    private fun getFavouriteRestaurants() {
+        viewModelScope.launch {
+            getFavouritesUseCase().collect {
+                _restaurantsStateFlow.update { currentState -> currentState.copy(restaurants = it.map { it.toPresentation() }) }
             }
         }
     }

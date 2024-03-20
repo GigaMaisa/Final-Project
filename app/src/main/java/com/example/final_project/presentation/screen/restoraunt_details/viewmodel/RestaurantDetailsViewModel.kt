@@ -12,6 +12,7 @@ import com.example.final_project.domain.usecase.restaurant.GetRestaurantDetailsU
 import com.example.final_project.presentation.event.restaurant.RestaurantDetailsEvent
 import com.example.final_project.presentation.mapper.restaurant.toDomain
 import com.example.final_project.presentation.mapper.restaurant.toPresentation
+import com.example.final_project.presentation.mapper.restaurant.toRestaurant
 import com.example.final_project.presentation.model.restaurant.Restaurant
 import com.example.final_project.presentation.state.RestaurantDetailsState
 import com.example.final_project.presentation.util.getErrorMessage
@@ -42,16 +43,19 @@ class RestaurantDetailsViewModel @Inject constructor(
             is RestaurantDetailsEvent.RemoverFavouriteEvent -> deleteFavourite(restaurant = event.restaurant)
             is RestaurantDetailsEvent.GetRestaurantDetailsEvent -> getRestaurantDetails(restaurantId = event.restaurantId)
             is RestaurantDetailsEvent.UpdateErrorMessageEvent -> updateErrorMessage(errorMessage = event.errorMessage)
+            is RestaurantDetailsEvent.UpdateFavouriteEvent -> updateIfFavourite()
         }
     }
 
     private fun getIfFavourite(restaurantId: Int) {
         viewModelScope.launch {
+            d("getSingleFavouriteUseCase", getSingleFavouriteUseCase(restaurantId).toString())
             _restaurantDetailsStateFlow.update { currentState ->
                 currentState.copy(
                     isFavourite = getSingleFavouriteUseCase(
                         restaurantId = restaurantId
-                    ) == null
+                    ) != null,
+                    favouriteRestaurant = getSingleFavouriteUseCase(restaurantId = restaurantId)?.toPresentation()
                 )
             }
         }
@@ -72,6 +76,19 @@ class RestaurantDetailsViewModel @Inject constructor(
                         updateDistanceAndDuration()
                     }
                     is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
+                }
+            }
+        }
+    }
+
+    private fun updateIfFavourite() {
+        viewModelScope.launch {
+            if (_restaurantDetailsStateFlow.value.isFavourite) {
+                deleteFavourite(_restaurantDetailsStateFlow.value.favouriteRestaurant!!)
+            }else {
+                val restaurant = _restaurantDetailsStateFlow.value.restaurantDetails?.toRestaurant()
+                restaurant?.let {
+                    addFavourite(it)
                 }
             }
         }

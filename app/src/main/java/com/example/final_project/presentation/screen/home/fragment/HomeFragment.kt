@@ -10,6 +10,7 @@ import com.example.final_project.databinding.FragmentHomeBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.home.HomeEvent
 import com.example.final_project.presentation.extension.showSnackBar
+import com.example.final_project.presentation.model.restaurant.RestaurantType
 import com.example.final_project.presentation.screen.home.viewmodel.HomeViewModel
 import com.example.final_project.presentation.screen.home.adapter.BannersViewPagerAdapter
 import com.example.final_project.presentation.screen.home.adapter.RestaurantsRecyclerAdapter
@@ -24,13 +25,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val viewModel: HomeViewModel by viewModels()
     private val bannerAdapter = BannersViewPagerAdapter()
     private val restaurantsRecyclerAdapter by lazy { RestaurantsRecyclerAdapter() }
+    private val favouriteRestaurantsAdapter by lazy { RestaurantsRecyclerAdapter() }
 
     override fun setUp() {
         viewModel.onEvent(HomeEvent.GetBannersEvent)
         viewModel.onEvent(HomeEvent.GetRestaurantsEvent)
+        viewModel.onEvent(HomeEvent.GetFavouriteRestaurantsEvent)
 
         setUpViewPager()
         setUpRestaurantsRecyclerView()
+        setUpFavouriteRestaurantsRecycler()
     }
 
     override fun setUpListeners()  {
@@ -40,6 +44,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         binding.btnSeeAllRestaurants.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomePageToAllRestaurantsFragment())
+        }
+
+        binding.btnSeeAllFavouriteRestaurants.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomePageToAllRestaurantsFragment(restaurantType = RestaurantType.FAVOURITES))
+        }
+
+        favouriteRestaurantsAdapter.onClick = {
+            findNavController().navigate(HomeFragmentDirections.actionHomePageToRestaurantDetailsFragment(restaurantId = it))
         }
     }
 
@@ -65,6 +77,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         errorMessage?.let {
             requireView().showSnackBar(resources.getString(it))
         }
+
+        favouriteRestaurants?.let {
+            favouriteRestaurantsAdapter.submitList(it)
+        }
     }
 
     private fun setUpRestaurantsRecyclerView() = with(binding) {
@@ -72,6 +88,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             adapter = restaurantsRecyclerAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
+    }
+
+    private fun setUpFavouriteRestaurantsRecycler() = with(binding.recyclerViewFavouriteRestaurants) {
+        adapter = favouriteRestaurantsAdapter
+        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun setUpViewPager() {

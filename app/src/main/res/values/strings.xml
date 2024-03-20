@@ -125,5 +125,6 @@
     <string name="passwords_dont_match">Passwords Don\'t Match</string>
     <string name="password_reset_succesful">Password reset successful</string>
     <string name="favourite_restaurants">Favourite Restaurants</string>
+    <string name="go_to_checkout">Go To Checkout</string>
 
 </resources>

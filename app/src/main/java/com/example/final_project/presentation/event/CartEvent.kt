@@ -10,4 +10,5 @@ sealed class CartEvent {
     object CalculateCheckoutEvent : CartEvent()
     class DeleteItemEvent(val id: String): CartEvent()
     object SubmitOrderEvent : CartEvent()
+    object GoBackEvent: CartEvent()
 }

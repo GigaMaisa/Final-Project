@@ -12,13 +12,14 @@ import com.example.final_project.presentation.event.restaurant.RestaurantMenuIte
 import com.example.final_project.presentation.extension.loadImage
 import com.example.final_project.presentation.model.restaurant.MenuOrderDetails
 import com.example.final_project.presentation.screen.restoraunt_details.adapter.RestaurantOptionRecyclerViewAdapter
+import com.example.final_project.presentation.screen.restoraunt_details.listener.MenuItemSelectListener
 import com.example.final_project.presentation.state.RestaurantMenuItemState
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RestaurantBottomSheet : BaseBottomSheetFragment<RestaurantDetailsBottomSheetDialogBinding>(RestaurantDetailsBottomSheetDialogBinding::inflate) {
+class RestaurantBottomSheet(private val menuItemSelectListener: MenuItemSelectListener) : BaseBottomSheetFragment<RestaurantDetailsBottomSheetDialogBinding>(RestaurantDetailsBottomSheetDialogBinding::inflate) {
     private val restaurantMenuAdapter = RestaurantOptionRecyclerViewAdapter()
     private val viewModel: RestaurantMenuItemViewModel by viewModels()
     var menuOrderDetails: MenuOrderDetails? = null
@@ -34,6 +35,7 @@ class RestaurantBottomSheet : BaseBottomSheetFragment<RestaurantDetailsBottomShe
         viewModel.onEvent(RestaurantMenuItemEvent.UpdateTotalPriceEvent)
         binding.tvAddToOrder.setOnClickListener {
             viewModel.onEvent(RestaurantMenuItemEvent.AddItemToCartEvent)
+            menuItemSelectListener.onMenuItemSelect()
         }
     }
 
@@ -57,7 +59,7 @@ class RestaurantBottomSheet : BaseBottomSheetFragment<RestaurantDetailsBottomShe
 
     private fun handleUiEvent(event: RestaurantMenuItemViewModel.RestaurantMenuItemUiEvent) {
         when(event) {
-            is RestaurantMenuItemViewModel.RestaurantMenuItemUiEvent.DismissBottomSheetEvent -> dismiss()
+            is RestaurantMenuItemViewModel.RestaurantMenuItemUiEvent.DismissBottomSheetEvent -> dismissAllowingStateLoss()
         }
     }
 

@@ -9,5 +9,6 @@ sealed class RestaurantDetailsEvent {
     class GetRestaurantDetailsEvent(val restaurantId: Int): RestaurantDetailsEvent()
     class UpdateErrorMessageEvent(val errorMessage: Int?): RestaurantDetailsEvent()
     object UpdateFavouriteEvent : RestaurantDetailsEvent()
+    object GoToCartPageEvent: RestaurantDetailsEvent()
 
 }

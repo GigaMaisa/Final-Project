@@ -36,6 +36,9 @@ class CartFragment : BaseFragment<FragmentCartBinding>(FragmentCartBinding::infl
     override fun setUpListeners() {
         setUpCartAddRemoveListener()
         setUpSubmitOrderListener()
+        binding.btnGoBack.setOnClickListener {
+            viewModel.onEvent(CartEvent.GoBackEvent)
+        }
     }
 
     override fun setUpObservers() {

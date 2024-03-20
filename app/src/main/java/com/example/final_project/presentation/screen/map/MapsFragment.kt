@@ -27,8 +27,7 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(FragmentMapsBinding::infl
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var map: GoogleMap? = null
-    private val requestPermission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {}
+    private val requestPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {}
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
@@ -69,6 +68,8 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(FragmentMapsBinding::infl
                     requestPermission.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
                 }
             }
+        } else {
+            requestPermission.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
         }
     }
 
@@ -86,9 +87,7 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(FragmentMapsBinding::infl
                     }
                 }
 
-                override fun onError(status: Status) {
-                    Log.i("error occured", "An error occurred: $status ${status.statusMessage}")
-                }
+                override fun onError(status: Status) {}
             })
         }
     }

@@ -149,6 +149,9 @@
         <argument
             android:name="restaurantId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_restaurantDetailsFragment_to_cartPage"
+            app:destination="@id/cartPage" />
     </fragment>
     <dialog
         android:id="@+id/restaurantBottomSheet"

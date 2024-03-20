@@ -18,7 +18,9 @@ import com.example.final_project.presentation.state.RestaurantDetailsState
 import com.example.final_project.presentation.util.getErrorMessage
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -36,6 +38,9 @@ class RestaurantDetailsViewModel @Inject constructor(
     private val _restaurantDetailsStateFlow = MutableStateFlow(RestaurantDetailsState())
     val restaurantMenuStateFlow = _restaurantDetailsStateFlow.asStateFlow()
 
+    private val _uiEvent = MutableSharedFlow<RestaurantDetailsUiEvent>()
+    val uiEvent = _uiEvent.asSharedFlow()
+
     fun onEvent(event: RestaurantDetailsEvent) {
         when(event) {
             is RestaurantDetailsEvent.AddFavouriteEvent -> addFavourite(restaurant = event.restaurant)
@@ -44,6 +49,7 @@ class RestaurantDetailsViewModel @Inject constructor(
             is RestaurantDetailsEvent.GetRestaurantDetailsEvent -> getRestaurantDetails(restaurantId = event.restaurantId)
             is RestaurantDetailsEvent.UpdateErrorMessageEvent -> updateErrorMessage(errorMessage = event.errorMessage)
             is RestaurantDetailsEvent.UpdateFavouriteEvent -> updateIfFavourite()
+            is RestaurantDetailsEvent.GoToCartPageEvent -> viewModelScope.launch { _uiEvent.emit(RestaurantDetailsUiEvent.GoToCartPageEvent) }
         }
     }
 
@@ -129,5 +135,9 @@ class RestaurantDetailsViewModel @Inject constructor(
 
     private fun updateErrorMessage(errorMessage: Int?) {
         _restaurantDetailsStateFlow.update { currentState -> currentState.copy(errorMessage = errorMessage) }
+    }
+
+    sealed interface RestaurantDetailsUiEvent {
+        object GoToCartPageEvent : RestaurantDetailsUiEvent
     }
 }

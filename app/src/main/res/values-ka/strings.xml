@@ -125,5 +125,7 @@
     <string name="back">უკან</string>
     <string name="passwords_dont_match">პაროლები ერთმანეთს არ ემთხვევა</string>
     <string name="password_reset_succesful">პაროლი წარმატებით შეიცვალა</string>
+    <string name="favourite_restaurants">საყვარელი რესტორნები</string>
+    <string name="go_to_checkout">გადადი კალათაზე</string>
 
 </resources>

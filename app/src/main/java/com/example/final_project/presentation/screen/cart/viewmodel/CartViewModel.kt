@@ -52,6 +52,7 @@ class CartViewModel @Inject constructor(
             is CartEvent.GetAllOrders -> getAllOrdersFromDb()
             is CartEvent.AddOrder -> addOrder(event.order)
             is CartEvent.SubmitOrderEvent -> submitOrder()
+            is CartEvent.GoBackEvent -> viewModelScope.launch { _uiEvent.emit(CartUiEvent.GoBackEvent) }
         }
     }
 

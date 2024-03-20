@@ -1,158 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/tvType"
-            android:layout_width="76dp"
-            android:layout_height="34dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="45dp"
-            android:background="@drawable/btn_light_green_background"
-            android:fontFamily="@font/bentonsansregular"
-            tools:text="Pizza"
-            android:textAllCaps="false"
-            android:textColor="@color/green"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/imageBtnHeart"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:layout_marginTop="45dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/circle_light_red_background"
-            android:src="@drawable/ic_heart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTitle"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/bentonsansbold"
-            tools:text="Wijie Bar and Resto"
-            android:textColor="?android:textColor"
-            android:textSize="27sp"
-            app:layout_constraintTop_toBottomOf="@id/tvType" />
+            android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_location_outline"
-            android:drawablePadding="10dp"
-            android:fontFamily="@font/bentonsansregular"
-            android:gravity="center"
-            android:text="@string/loading"
-            android:textColor="@color/grey"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageViewRestaurantCover"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_half_star"
-            android:drawablePadding="10dp"
-            android:fontFamily="@font/bentonsansregular"
-            android:gravity="center"
-            tools:text="4,8 Rating"
-            android:textColor="@color/grey"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/tvDistance"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/tvType"
+                android:layout_width="76dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/btn_light_green_background"
+                android:fontFamily="@font/bentonsansregular"
+                android:textAllCaps="false"
+                android:textColor="@color/green"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewRestaurantCover"
+                tools:text="Pizza" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDeliveryFee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_cost"
-            android:drawablePadding="10dp"
-            android:fontFamily="@font/bentonsansregular"
-            android:gravity="center"
-            tools:text="4 ₾"
-            android:textColor="@color/grey"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/tvRating"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imageBtnHeart"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/circle_light_red_background"
+                android:src="@drawable/ic_heart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewRestaurantCover" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/bentonsansbold"
+                tools:text="Wijie Bar and Resto"
+                android:textColor="?android:textColor"
+                android:textSize="27sp"
+                app:layout_constraintTop_toBottomOf="@id/tvType" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/ic_location_outline"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/bentonsansregular"
+                android:gravity="center"
+                android:text="@string/loading"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/ic_half_star"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/bentonsansregular"
+                android:gravity="center"
+                tools:text="4,8 Rating"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/tvDistance"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDeliveryFee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/ic_cost"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/bentonsansregular"
+                android:gravity="center"
+                tools:text="4 ₾"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/tvRating"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDeliveryTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_time"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:drawablePadding="5dp"
-            android:fontFamily="@font/bentonsansregular"
-            android:gravity="center"
-            android:text="@string/loading"
-            android:textColor="@color/grey"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/tvDeliveryFee"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDeliveryTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_time"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/bentonsansregular"
+                android:gravity="center"
+                android:text="@string/loading"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/tvDeliveryFee"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/bentonsansbook"
-            android:lineSpacingExtra="5dp"
-            android:maxLines="3"
-            tools:text="Most whole Alaskan Red King Crabs get broken down into legs, claws, and lump meat. We offer all of these options as well in our online shop, but there is nothing like getting the whole . . . ."
-            android:textColor="?android:textColor"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRating" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/bentonsansbook"
+                android:lineSpacingExtra="5dp"
+                android:maxLines="3"
+                tools:text="Most whole Alaskan Red King Crabs get broken down into legs, claws, and lump meat. We offer all of these options as well in our online shop, but there is nothing like getting the whole . . . ."
+                android:textColor="?android:textColor"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRating" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:textStyle="bold"
-            android:fontFamily="@font/bentonsansbold"
-            android:text="@string/menu"
-            android:textColor="?android:textColor"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/bentonsansbold"
+                android:text="@string/menu"
+                android:textColor="?android:textColor"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewMenu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMenu" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvMenu" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGoToCart"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginHorizontal="30dp"
+        android:background="@drawable/btn_green_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/go_to_checkout"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_gravity="bottom|center"
+        android:visibility="gone"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</FrameLayout>
+
 

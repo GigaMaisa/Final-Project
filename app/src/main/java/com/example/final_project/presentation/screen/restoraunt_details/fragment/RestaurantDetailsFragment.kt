@@ -1,5 +1,6 @@
 package com.example.final_project.presentation.screen.restoraunt_details.fragment
 
+import android.util.Log.d
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -38,6 +39,8 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>
             val menuOrderDetails = MenuOrderDetails(args.restaurantId, it.category, it.menuItemDetails)
             setUpBottomSheet(menuOrderDetails)
         }
+
+        updateFavourite()
     }
 
     override fun setUpObservers() {
@@ -51,6 +54,7 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>
     }
 
     private fun handleState(state: RestaurantDetailsState) = with(state) {
+        d("showStateBro", state.isFavourite.toString())
         if (isFavourite) {
             binding.imageBtnHeart.setImageResource(R.drawable.ic_heart)
         }else {
@@ -94,5 +98,12 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>
     private fun setUpBottomSheet(menuOrderDetails: MenuOrderDetails) {
         modalBottomSheet.show(childFragmentManager, RestaurantBottomSheet.RESTAURANT_MENU_BOTTOM_SHEET)
         modalBottomSheet.menuOrderDetails = menuOrderDetails
+    }
+
+    private fun updateFavourite() {
+        binding.imageBtnHeart.setOnClickListener {
+            viewModel.onEvent(RestaurantDetailsEvent.UpdateFavouriteEvent)
+            viewModel.onEvent(RestaurantDetailsEvent.GetIfFavouriteEvent(args.restaurantId))
+        }
     }
 }

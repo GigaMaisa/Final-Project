@@ -7,5 +7,6 @@ data class HomeState(
     val banners: List<Banner>? = null,
     val restaurants: List<Restaurant>? = null,
     val isLoading: Boolean = false,
-    val errorMessage: Int? = null
+    val errorMessage: Int? = null,
+    val favouriteRestaurants: List<Restaurant>? = null
 )

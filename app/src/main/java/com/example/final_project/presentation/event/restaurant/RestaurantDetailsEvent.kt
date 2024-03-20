@@ -8,4 +8,6 @@ sealed class RestaurantDetailsEvent {
     class RemoverFavouriteEvent(val restaurant: Restaurant): RestaurantDetailsEvent()
     class GetRestaurantDetailsEvent(val restaurantId: Int): RestaurantDetailsEvent()
     class UpdateErrorMessageEvent(val errorMessage: Int?): RestaurantDetailsEvent()
+    object UpdateFavouriteEvent : RestaurantDetailsEvent()
+
 }

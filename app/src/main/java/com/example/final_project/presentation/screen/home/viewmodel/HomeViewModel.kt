@@ -3,6 +3,7 @@ package com.example.final_project.presentation.screen.home.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
+import com.example.final_project.domain.usecase.favourites.GetFavouritesUseCase
 import com.example.final_project.domain.usecase.home.GetBannersUseCase
 import com.example.final_project.domain.usecase.restaurant.GetRestaurantsUseCase
 import com.example.final_project.presentation.event.home.HomeEvent
@@ -18,7 +19,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val getBannersUseCase: GetBannersUseCase, private val getRestaurantsUseCase: GetRestaurantsUseCase) : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val getBannersUseCase: GetBannersUseCase,
+    private val getRestaurantsUseCase: GetRestaurantsUseCase,
+    private val getFavouritesUseCase: GetFavouritesUseCase
+) : ViewModel() {
 
     private val _homeStateFlow = MutableStateFlow(HomeState())
     val homeStateFlow = _homeStateFlow.asStateFlow()
@@ -27,6 +32,7 @@ class HomeViewModel @Inject constructor(private val getBannersUseCase: GetBanner
         when(event) {
             is HomeEvent.GetBannersEvent -> getBanners()
             is HomeEvent.GetRestaurantsEvent -> getRestaurants()
+            is HomeEvent.GetFavouriteRestaurantsEvent -> getFavouriteRestaurants()
             is HomeEvent.UpdateErrorMessageEvent -> updateErrorMessage(errorMessage = event.errorMessage)
         }
     }
@@ -51,6 +57,14 @@ class HomeViewModel @Inject constructor(private val getBannersUseCase: GetBanner
                     is Resource.Success -> _homeStateFlow.update { currentState -> currentState.copy(restaurants = resource.response.map { it.toPresentation() }) }
                     is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
                 }
+            }
+        }
+    }
+
+    private fun getFavouriteRestaurants() {
+        viewModelScope.launch {
+            getFavouritesUseCase().collect {
+                _homeStateFlow.update { currentState -> currentState.copy(favouriteRestaurants = it.map { it.toPresentation() }) }
             }
         }
     }

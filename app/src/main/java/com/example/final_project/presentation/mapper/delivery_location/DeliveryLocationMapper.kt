@@ -16,7 +16,8 @@ fun DeliveryLocation.toDomain() = GetDeliveryLocation(
     entrance = entrance,
     floor = floor,
     apartmentNumber = apartmentNumber,
-    extraDescription = extraDescription
+    extraDescription = extraDescription,
+    isDefault = isDefault
 )
 
 private fun locationTypeConvertor(locationType: LocationType): GetLocationType {

@@ -15,6 +15,7 @@ fun GetDeliveryLocation.toPresentation() = DeliveryLocation(
     floor = floor,
     apartmentNumber = apartmentNumber,
     extraDescription = extraDescription,
+    isDefault = isDefault
 )
 
 private fun convertAddressType(addressType: GetDeliveryLocation.GetAddressType): AddressType {

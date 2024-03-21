@@ -16,7 +16,8 @@ fun DeliveryLocationEntity.toDomain() = GetDeliveryLocation(
     entrance = entrance,
     floor = floor,
     apartmentNumber = apartmentNumber,
-    extraDescription = extraDescription
+    extraDescription = extraDescription,
+    isDefault = isDeliveryDefault ?: false
 )
 
 private fun locationTypeConvertor(locationTypeEntity: LocationTypeEntity): GetLocationType {

@@ -1,5 +1,6 @@
 package com.example.final_project.data.local.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -14,6 +15,8 @@ data class DeliveryLocationEntity(
     val entrance: Int,
     val floor: Int,
     val apartmentNumber: Int,
+    @ColumnInfo(name = "isDeliveryDefault", defaultValue = "false")
+    val isDeliveryDefault: Boolean? = false,
     val extraDescription: String? = null
 ) {
     enum class AddressTypeEntity {

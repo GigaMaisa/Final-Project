@@ -10,8 +10,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.final_project.databinding.FragmentAddCardBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.AddCardNavigationEvents
+import com.example.final_project.presentation.extension.showSnackBar
 import com.example.final_project.presentation.screen.card_add.viewmodel.AddCardEvents
 import com.example.final_project.presentation.screen.card_add.viewmodel.AddCardViewModel
+import com.example.final_project.presentation.util.getErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -41,7 +43,7 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding>(FragmentAddCardBind
                 cardNumber = etCardNumber.text.toString(),
                 expiryDate = etExpiryDate.text.toString(),
                 cvv = etCvv.text.toString(),
-                cardName = "Saxelfaso"
+                cardName = etCardName.text.toString()
             ))
         }
     }
@@ -52,6 +54,15 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding>(FragmentAddCardBind
                 launch {
                     addCardViewModel.uiEvent.collect {
                         handleNavigationEvent(event = it)
+                    }
+                }
+
+                launch {
+                    addCardViewModel.errorFlow.collect {errorCode ->
+                        errorCode?.let {
+                            view?.showSnackBar(getString(it))
+                            addCardViewModel.onEvent(AddCardEvents.ResetErrorMessage)
+                        }
                     }
                 }
             }

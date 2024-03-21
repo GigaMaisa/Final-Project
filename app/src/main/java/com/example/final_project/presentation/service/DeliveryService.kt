@@ -24,17 +24,17 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class DeliveryService : Service() {
-
     private val locationManager: LocationManager by lazy {
         getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
+
     private val databaseReference: DatabaseReference by lazy {
         FirebaseDatabase.getInstance().getReference("deliveries/$deliveryId")
     }
+
     private val handler = Handler(Looper.getMainLooper())
     private val notificationChannelId = "delivery_channel"
     private val notificationId = 1
-
     private var deliveryId: String = ""
 
     override fun onCreate() {
@@ -44,6 +44,7 @@ class DeliveryService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         deliveryId = intent?.getStringExtra("deliveryId") ?: ""
+
         if (deliveryId.isEmpty()) {
             stopSelf()
             return START_NOT_STICKY
@@ -61,6 +62,7 @@ class DeliveryService : Service() {
             "Delivery Updates",
             NotificationManager.IMPORTANCE_DEFAULT
         )
+
         channel.description = "Notification for ongoing delivery"
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
@@ -75,8 +77,8 @@ class DeliveryService : Service() {
         )
 
         val navigationIntent = NavDeepLinkBuilder(this)
-            .setGraph(R.navigation.nav_graph) // Replace with your navigation graph resource ID
-            .setDestination(R.id.courierDeliveryMapFragment) // Replace with your fragment ID
+            .setGraph(R.navigation.nav_graph)
+            .setDestination(R.id.courierDeliveryMapFragment)
             .createPendingIntent()
 
         val notificationBuilder = NotificationCompat.Builder(this, notificationChannelId)
@@ -101,8 +103,8 @@ class DeliveryService : Service() {
         if (locationPermissionGranted) {
             locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
-                10000, // Update every 10 seconds
-                0f, // Minimum distance change in meters
+                10000,
+                0f,
                 locationListener
             )
         } else {
@@ -115,6 +117,7 @@ class DeliveryService : Service() {
             location.latitude,
             location.longitude
         )
+
         databaseReference.setValue(locationData)
     }
 
@@ -122,7 +125,8 @@ class DeliveryService : Service() {
         super.onDestroy()
         handler.removeCallbacksAndMessages(null)
         locationManager.removeUpdates(locationListener)
-        stopForeground(STOP_FOREGROUND_REMOVE)    }
+        stopForeground(STOP_FOREGROUND_REMOVE)
+    }
 
     override fun onBind(intent: Intent?): IBinder? {
         return null

@@ -37,7 +37,7 @@ class CourierDeliveryMapFragment : BaseFragment<FragmentCourierDeliveryMapBindin
         mMap = googleMap
         updateLocationUi(LatLng(41.7934135, 44.8025545))
 
-        viewModel.getDirection(LatLng(41.79353332519531, 44.80256652832031), LatLng(41.79208755493164, 44.81571578979492))
+//        viewModel.getDirection(LatLng(41.79353332519531, 44.80256652832031), LatLng(41.79208755493164, 44.81571578979492))
     }
 
     override fun setUp() {
@@ -69,9 +69,9 @@ class CourierDeliveryMapFragment : BaseFragment<FragmentCourierDeliveryMapBindin
 
                         val bitmap = getDrawable(requireContext(), R.drawable.ic_delivery)!!.toBitmap(80, 80)
                         val markerOptions = MarkerOptions()
-                            .position(LatLng(41.709904512556946, 44.79725170393272)) // Replace with your desired LatLng object (location)
-                            .title("Delivery Location") // Set marker title (optional)
-                            .snippet("Delivery Details") // Set marker snippet (optional)
+                            .position(LatLng(41.709904512556946, 44.79725170393272))
+                            .title("Delivery Location")
+                            .snippet("Delivery Details")
                             .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
 
                         mMap.clear()

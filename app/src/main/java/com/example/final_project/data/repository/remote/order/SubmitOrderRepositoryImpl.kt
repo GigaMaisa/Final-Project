@@ -15,7 +15,7 @@ class SubmitOrderRepositoryImpl @Inject constructor(
     @DispatchersModule.IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : SubmitOrderRepository {
     override suspend fun addOrder(submitOrder: GetSubmitOrder): Unit = withContext(ioDispatcher) {
-        val orderRef = databaseReference.child("orders")
+        val orderRef = databaseReference.child("orders").child("0")
         orderRef.setValue(submitOrder.toData()).await()
     }
 }

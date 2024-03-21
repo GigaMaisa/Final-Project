@@ -9,7 +9,7 @@ import com.example.final_project.domain.model.GetDeliveryLocation.GetLocationTyp
 import com.google.android.gms.maps.model.LatLng
 
 fun DeliveryLocationEntity.toDomain() = GetDeliveryLocation(
-    location = LatLng(longitude, latitude),
+    location = LatLng(latitude, longitude),
     locationName = locationName,
     locationType = locationTypeConvertor(locationType),
     addressType = addressTypeConvertor(addressType),

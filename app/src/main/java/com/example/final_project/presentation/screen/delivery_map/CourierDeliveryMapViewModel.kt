@@ -1,6 +1,5 @@
 package com.example.final_project.presentation.screen.delivery_map
 
-import android.util.Log.d
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
@@ -32,7 +31,6 @@ class CourierDeliveryMapViewModel @Inject constructor(private val getDirectionUs
     fun getDirection(origin: LatLng, destination: LatLng) {
         viewModelScope.launch {
             getDirectionUseCase(origin = origin, destination = destination).collect {resource ->
-                d("ResourceResponse", resource.toString())
                 when(resource) {
                     is Resource.Loading -> {}
                     is Resource.Error -> {}
@@ -52,7 +50,6 @@ class CourierDeliveryMapViewModel @Inject constructor(private val getDirectionUs
                         location.put(it.key, it.getValue(Double::class.java))
                     }
 
-                    d("locationUpdated", location.toString())
                     getDirection(origin = LatLng(41.709904512556946, 44.79725170393272), LatLng(location["latitude"]!!, location["longitude"]!!))
                 }
                 override fun onCancelled(error: DatabaseError) {}

@@ -38,7 +38,7 @@ class DeliveryLocationAddViewModel @Inject constructor(
         when (event) {
             is DeliveryLocationAddEvent.SelectAddressTypeEvent -> selectAddressType(address = event.addressType)
             is DeliveryLocationAddEvent.AddLocationEvent -> with(event) {
-                addLocation(buildingName, entrance, floor, apartment, description, locationType, addressLocationName, addressLocation)
+                addLocation(buildingName, entrance, floor, apartment, description, locationType, addressLocationName, addressLocation, isDefault)
 
             }
             is DeliveryLocationAddEvent.UpdateErrorMessage -> updateErrorMessage(errorMessage = event.errorMessage)
@@ -59,7 +59,7 @@ class DeliveryLocationAddViewModel @Inject constructor(
         _deliveryLocationStateFlow.update { currentState -> currentState.copy(errorMessage = errorMessage) }
     }
 
-    private fun addLocation(buildingName: String, entrance: String, floor: String, apartment: String, description: String, locationType: LocationType, addressLocationName: String, addressLocation: LatLng) {
+    private fun addLocation(buildingName: String, entrance: String, floor: String, apartment: String, description: String, locationType: LocationType, addressLocationName: String, addressLocation: LatLng, isDefault: Boolean) {
         viewModelScope.launch {
             if (!emptyFieldsValidationUseCase(buildingName, entrance, floor, apartment)) {
                 updateErrorMessage(R.string.fill_all_fields)
@@ -75,7 +75,8 @@ class DeliveryLocationAddViewModel @Inject constructor(
                     entrance = entrance.toInt(),
                     floor = floor.toInt(),
                     apartmentNumber = apartment.toInt(),
-                    extraDescription = description
+                    extraDescription = description,
+                    isDefault = isDefault
                 )
                 addDeliveryLocationUseCase(selectedLocation.toDomain())
                 _uiState.emit(DeliveryLocationAddUiEvent.NavigateToDeliveryLocations)

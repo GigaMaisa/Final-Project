@@ -10,6 +10,7 @@ data class GetDeliveryLocation(
     val entrance: Int,
     val floor: Int,
     val apartmentNumber: Int,
+    val isDefault: Boolean,
     val extraDescription: String? = null
 ) {
     enum class GetLocationType{

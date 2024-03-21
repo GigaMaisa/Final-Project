@@ -122,7 +122,8 @@ class DeliveryLocationAddFragment :
                     description = binding.etDescription.text.toString(),
                     locationType = selectedLocationType,
                     addressLocation = args.location,
-                    addressLocationName = args.locationName
+                    addressLocationName = args.locationName,
+                    isDefault = true
                 )
             )
         }

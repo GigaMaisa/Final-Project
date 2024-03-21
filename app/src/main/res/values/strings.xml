@@ -126,5 +126,10 @@
     <string name="password_reset_succesful">Password reset successful</string>
     <string name="favourite_restaurants">Favourite Restaurants</string>
     <string name="go_to_checkout">Go To Checkout</string>
+    <string name="card_name">Card Name</string>
+    <string name="card_number_error">Enter Correct Card Number</string>
+    <string name="card_name_error">Enter Card Name</string>
+    <string name="card_exp_date_error">Enter Correct Date</string>
+    <string name="card_cvv_error">Enter Three Digit Number</string>
 
 </resources>

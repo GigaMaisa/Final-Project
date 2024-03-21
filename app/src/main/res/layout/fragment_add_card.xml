@@ -85,23 +85,30 @@
             android:maxLength="3" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <CheckBox
-        android:id="@+id/checkbox_default_card"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cardNameContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/checkbox_background"
-        android:text="@string/is_it_your_default_card_for_payment"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:paddingStart="16dp"
+        android:layout_gravity="center"
         android:paddingTop="8dp"
-        android:paddingEnd="16dp"
         android:paddingBottom="8dp"
-        android:layout_marginTop="16dp"
-        android:buttonTint="@color/green"
-        android:checked="true"
+        android:layout_marginTop="30dp"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edittext_container3" />
+        app:layout_constraintTop_toBottomOf="@+id/edittext_container3"
+        app:layout_constraintWidth_default="wrap">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCardName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_selector"
+            android:hint="@string/card_name"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddCard"

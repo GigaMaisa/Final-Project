@@ -16,6 +16,7 @@ fun GetDeliveryLocation.toData() = DeliveryLocationEntity(
     entrance = entrance,
     floor = floor,
     apartmentNumber = apartmentNumber,
+    isDeliveryDefault = isDefault,
     extraDescription = extraDescription
 )
 

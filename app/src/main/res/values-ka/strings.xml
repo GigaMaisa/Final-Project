@@ -127,5 +127,10 @@
     <string name="password_reset_succesful">პაროლი წარმატებით შეიცვალა</string>
     <string name="favourite_restaurants">საყვარელი რესტორნები</string>
     <string name="go_to_checkout">გადადი კალათაზე</string>
+    <string name="card_name">ბარათის სახელი</string>
+    <string name="card_number_error">შეიყვანეთ სწორი ბარათის მონაცემები</string>
+    <string name="card_name_error">შეიყვანეთ ბარათის სახელი</string>
+    <string name="card_exp_date_error">შეიყვანეთ სწორი თარიღი</string>
+    <string name="card_cvv_error">შეიყვანეთ სამნიშნა რიცხვი</string>
 
 </resources>

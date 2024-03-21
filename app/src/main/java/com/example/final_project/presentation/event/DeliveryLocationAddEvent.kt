@@ -10,6 +10,7 @@ sealed class DeliveryLocationAddEvent {
                            val entrance: String,
                            val floor: String,
                            val apartment: String,
+                           val isDefault: Boolean,
                            val description: String,
                            val locationType: LocationType,
                            val addressLocationName: String,

@@ -6,12 +6,12 @@
     app:startDestination="@id/homePage">
 
     <fragment
-        android:id="@+id/chatPage"
+        android:id="@+id/cartPage"
         android:name="com.example.final_project.presentation.screen.cart.fragment.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" />
     <fragment
-        android:id="@+id/chatContactsFragment"
+        android:id="@+id/chatPage"
         android:name="com.example.final_project.presentation.screen.chat.chat_contacts.ChatContactsFragment"
         android:label="fragment_chat_contacts"
         tools:layout="@layout/fragment_chat_contacts" />

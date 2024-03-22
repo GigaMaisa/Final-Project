@@ -4,11 +4,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.final_project.R
 import com.example.final_project.databinding.FragmentChatContactsBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.chat.ChatContactEvent
+import com.example.final_project.presentation.screen.bottom_nav_container.BottomNavContainerFragmentDirections
 import com.example.final_project.presentation.screen.chat.adapter.ContactsRecyclerViewAdapter
 import com.example.final_project.presentation.state.ContactsState
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +29,7 @@ class ChatContactsFragment : BaseFragment<FragmentChatContactsBinding>(FragmentC
 
     override fun setUpListeners() {
         contactsAdapter.onHumanContactClick = {
-            findNavController().navigate(ChatContactsFragmentDirections.actionChatPageToChatFragment(
+            requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToChatFragment(
                 uuid = it.receiverId!! ,
                 fullName = it.fullName!!,
                 imageUrl = it.imageUrl
@@ -35,7 +37,7 @@ class ChatContactsFragment : BaseFragment<FragmentChatContactsBinding>(FragmentC
         }
 
         contactsAdapter.onChatbotContactClick = {
-            findNavController().navigate(ChatContactsFragmentDirections.actionChatPageToChatBotFragment())
+            requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToChatBotFragment())
         }
     }
 

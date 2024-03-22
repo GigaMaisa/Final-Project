@@ -8,5 +8,11 @@ interface DeliveryLocationRepository {
 
     fun getLocation(): Flow<GetDeliveryLocation>
 
+    suspend fun updateLocation(location: GetDeliveryLocation)
+
+    suspend fun deleteLocation(location: GetDeliveryLocation)
+
+    suspend fun updateDefaultToFalse()
+
     suspend fun addLocation(location: GetDeliveryLocation)
 }

@@ -1,15 +1,16 @@
 package com.example.final_project.presentation.screen.restoraunt_details.viewmodel
 
-import android.util.Log.d
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
+import com.example.final_project.domain.usecase.delivery_location.GetDeliveryLocationUseCase
 import com.example.final_project.domain.usecase.distance.GetDistanceAndDurationUseCase
 import com.example.final_project.domain.usecase.favourites.AddFavouriteUseCase
 import com.example.final_project.domain.usecase.favourites.DeleteFavouriteUseCase
 import com.example.final_project.domain.usecase.favourites.GetSingleFavouriteUseCase
 import com.example.final_project.domain.usecase.restaurant.GetRestaurantDetailsUseCase
 import com.example.final_project.presentation.event.restaurant.RestaurantDetailsEvent
+import com.example.final_project.presentation.mapper.delivery_location.toPresentation
 import com.example.final_project.presentation.mapper.restaurant.toDomain
 import com.example.final_project.presentation.mapper.restaurant.toPresentation
 import com.example.final_project.presentation.mapper.restaurant.toRestaurant
@@ -32,7 +33,8 @@ class RestaurantDetailsViewModel @Inject constructor(
     private val deleteFavouriteUseCase: DeleteFavouriteUseCase,
     private val getSingleFavouriteUseCase: GetSingleFavouriteUseCase,
     private val getRestaurantDetailsUseCase: GetRestaurantDetailsUseCase,
-    private val getDistanceAndDurationUseCase: GetDistanceAndDurationUseCase
+    private val getDistanceAndDurationUseCase: GetDistanceAndDurationUseCase,
+    private val getDeliveryLocationUseCase: GetDeliveryLocationUseCase
 ) : ViewModel() {
 
     private val _restaurantDetailsStateFlow = MutableStateFlow(RestaurantDetailsState())
@@ -53,9 +55,12 @@ class RestaurantDetailsViewModel @Inject constructor(
         }
     }
 
+    init {
+        getDefaultLocation()
+    }
+
     private fun getIfFavourite(restaurantId: Int) {
         viewModelScope.launch {
-            d("getSingleFavouriteUseCase", getSingleFavouriteUseCase(restaurantId).toString())
             _restaurantDetailsStateFlow.update { currentState ->
                 currentState.copy(
                     isFavourite = getSingleFavouriteUseCase(
@@ -70,7 +75,6 @@ class RestaurantDetailsViewModel @Inject constructor(
     private fun getRestaurantDetails(restaurantId: Int) {
         viewModelScope.launch {
             getRestaurantDetailsUseCase(restaurantId).collect {resource ->
-                d("resourceRestaurantDetails", resource.toString())
                 when(resource) {
                     is Resource.Loading -> _restaurantDetailsStateFlow.update { currentState -> currentState.copy(isLoading = resource.loading) }
                     is Resource.Success -> {
@@ -114,21 +118,31 @@ class RestaurantDetailsViewModel @Inject constructor(
 
     private fun updateDistanceAndDuration() {
         viewModelScope.launch {
-            getDistanceAndDurationUseCase(
-                origin = LatLng(41.7934135, 44.8025545),
-                destination = LatLng(_restaurantDetailsStateFlow.value.restaurantDetails!!.latitude, _restaurantDetailsStateFlow.value.restaurantDetails!!.longitude)
-            ).collect {resource->
-                when(resource) {
-                    is Resource.Loading -> _restaurantDetailsStateFlow.update { currentState -> currentState.copy(isLoading = resource.loading) }
-                    is Resource.Success -> {
-                        _restaurantDetailsStateFlow.update { currentState ->
-                            currentState.copy(
-                                distance = resource.response.toPresentation()
-                            )
+            _restaurantDetailsStateFlow.value.defaultLocation?.let {
+                getDistanceAndDurationUseCase(
+                    origin = it.location,
+                    destination = LatLng(_restaurantDetailsStateFlow.value.restaurantDetails!!.latitude, _restaurantDetailsStateFlow.value.restaurantDetails!!.longitude)
+                ).collect {resource->
+                    when(resource) {
+                        is Resource.Loading -> _restaurantDetailsStateFlow.update { currentState -> currentState.copy(isLoading = resource.loading) }
+                        is Resource.Success -> {
+                            _restaurantDetailsStateFlow.update { currentState ->
+                                currentState.copy(
+                                    distance = resource.response.toPresentation()
+                                )
+                            }
                         }
+                        is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
                     }
-                    is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
                 }
+            }
+        }
+    }
+
+    private fun getDefaultLocation() {
+        viewModelScope.launch {
+            getDeliveryLocationUseCase().collect {
+                _restaurantDetailsStateFlow.update { currentState -> currentState.copy(defaultLocation = it.toPresentation()) }
             }
         }
     }

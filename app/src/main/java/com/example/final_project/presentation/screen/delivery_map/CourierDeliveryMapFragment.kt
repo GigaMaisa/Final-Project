@@ -1,6 +1,5 @@
 package com.example.final_project.presentation.screen.delivery_map
 
-import android.content.Intent
 import android.graphics.Color
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.graphics.drawable.toBitmap
@@ -11,7 +10,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.final_project.R
 import com.example.final_project.databinding.FragmentCourierDeliveryMapBinding
 import com.example.final_project.presentation.base.BaseFragment
-import com.example.final_project.presentation.service.DeliveryService
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
@@ -36,8 +34,6 @@ class CourierDeliveryMapFragment : BaseFragment<FragmentCourierDeliveryMapBindin
     private val callback = OnMapReadyCallback { googleMap ->
         mMap = googleMap
         updateLocationUi(LatLng(41.7934135, 44.8025545))
-
-//        viewModel.getDirection(LatLng(41.79353332519531, 44.80256652832031), LatLng(41.79208755493164, 44.81571578979492))
     }
 
     override fun setUp() {
@@ -45,16 +41,9 @@ class CourierDeliveryMapFragment : BaseFragment<FragmentCourierDeliveryMapBindin
             LocationServices.getFusedLocationProviderClient(requireActivity())
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
-
-        val deliveryId = "your_delivery_id"
-        val serviceIntent = Intent(requireActivity(), DeliveryService::class.java)
-        serviceIntent.putExtra("deliveryId", deliveryId)
-
-        requireActivity().startForegroundService(serviceIntent)
     }
 
-        override fun setUpListeners() {
-    }
+    override fun setUpListeners() {}
 
     override fun setUpObservers() {
         viewLifecycleOwner.lifecycleScope.launch {

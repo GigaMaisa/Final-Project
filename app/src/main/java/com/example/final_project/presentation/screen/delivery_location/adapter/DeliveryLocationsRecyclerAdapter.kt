@@ -5,11 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.final_project.R
 import com.example.final_project.databinding.RecyclerDeliveryLocationItemBinding
 import com.example.final_project.presentation.model.delivery_location.DeliveryLocation
 
 
 class DeliveryLocationsRecyclerAdapter: ListAdapter<DeliveryLocation, DeliveryLocationsRecyclerAdapter.DeliveryLocationViewHolder>(DeliveryLocationItemDiffCallback) {
+
+    var onDeleteClick: ((DeliveryLocation) -> Unit)? = null
+    var onSelectClick: ((DeliveryLocation) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeliveryLocationViewHolder {
         return DeliveryLocationViewHolder(
@@ -31,6 +35,20 @@ class DeliveryLocationsRecyclerAdapter: ListAdapter<DeliveryLocation, DeliveryLo
             val currentLocation = currentList[adapterPosition]
             ImageViewAddressType.setImageResource(currentLocation.addressType.icon)
             tvLocationName.text = currentLocation.locationName
+
+            if (currentLocation.isDefault) {
+                root.setBackgroundResource(R.drawable.btn_light_green_background)
+            } else {
+                root.setBackgroundResource(R.drawable.edit_text_background)
+            }
+
+            imageBtnRemoveLocation.setOnClickListener {
+                onDeleteClick?.invoke(currentLocation)
+            }
+
+            root.setOnClickListener {
+                onSelectClick?.invoke(currentLocation)
+            }
         }
     }
 

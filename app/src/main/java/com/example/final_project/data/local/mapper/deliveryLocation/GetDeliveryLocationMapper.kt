@@ -8,6 +8,7 @@ import com.example.final_project.domain.model.GetDeliveryLocation.GetAddressType
 import com.example.final_project.domain.model.GetDeliveryLocation.GetLocationType
 
 fun GetDeliveryLocation.toData() = DeliveryLocationEntity(
+    id = id?:0,
     longitude = location.longitude,
     latitude = location.latitude,
     locationName = locationName,

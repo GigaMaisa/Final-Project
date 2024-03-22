@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.R
 import com.example.final_project.domain.usecase.delivery_location.AddDeliveryLocationUseCase
+import com.example.final_project.domain.usecase.delivery_location.UpdateDefaultToFalseUseCase
 import com.example.final_project.domain.usecase.validators.EmptyFieldsValidationUseCase
 import com.example.final_project.domain.usecase.validators.EmptyNumberFieldsValidationUseCase
 import com.example.final_project.presentation.event.DeliveryLocationAddEvent
@@ -26,7 +27,8 @@ import javax.inject.Inject
 class DeliveryLocationAddViewModel @Inject constructor(
     private val emptyNumberFieldsValidationUseCase: EmptyNumberFieldsValidationUseCase,
     private val emptyFieldsValidationUseCase: EmptyFieldsValidationUseCase,
-    private val addDeliveryLocationUseCase: AddDeliveryLocationUseCase
+    private val addDeliveryLocationUseCase: AddDeliveryLocationUseCase,
+    private val updateDefaultToFalseUseCase: UpdateDefaultToFalseUseCase
 ) : ViewModel() {
     private val _deliveryLocationStateFlow = MutableStateFlow(DeliveryLocationState())
     val deliveryLocationStateFlow = _deliveryLocationStateFlow.asStateFlow()
@@ -78,6 +80,7 @@ class DeliveryLocationAddViewModel @Inject constructor(
                     extraDescription = description,
                     isDefault = isDefault
                 )
+                updateDefaultToFalseUseCase()
                 addDeliveryLocationUseCase(selectedLocation.toDomain())
                 _uiState.emit(DeliveryLocationAddUiEvent.NavigateToDeliveryLocations)
             }

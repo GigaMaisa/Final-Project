@@ -3,6 +3,7 @@ package com.example.final_project.domain.model
 import com.google.android.gms.maps.model.LatLng
 
 data class GetDeliveryLocation(
+    val id: Int? = null,
     val location: LatLng,
     val locationName: String,
     val locationType: GetLocationType,

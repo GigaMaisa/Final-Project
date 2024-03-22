@@ -4,13 +4,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.final_project.R
 import com.example.final_project.databinding.FragmentHomeBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.home.HomeEvent
 import com.example.final_project.presentation.extension.showSnackBar
 import com.example.final_project.presentation.model.restaurant.RestaurantType
+import com.example.final_project.presentation.screen.bottom_nav_container.BottomNavContainerFragmentDirections
 import com.example.final_project.presentation.screen.home.viewmodel.HomeViewModel
 import com.example.final_project.presentation.screen.home.adapter.BannersViewPagerAdapter
 import com.example.final_project.presentation.screen.home.adapter.RestaurantsRecyclerAdapter
@@ -39,19 +41,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun setUpListeners()  {
         restaurantsRecyclerAdapter.onClick = {
-            findNavController().navigate(HomeFragmentDirections.actionHomePageToRestaurantDetailsFragment(restaurantId = it))
+            requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToRestaurantDetailsFragment(restaurantId = it))
         }
 
         binding.btnSeeAllRestaurants.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomePageToAllRestaurantsFragment())
+            requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToAllRestaurantsFragment())
         }
 
         binding.btnSeeAllFavouriteRestaurants.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomePageToAllRestaurantsFragment(restaurantType = RestaurantType.FAVOURITES))
+            requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToAllRestaurantsFragment(restaurantType = RestaurantType.FAVOURITES))
         }
 
         favouriteRestaurantsAdapter.onClick = {
-            findNavController().navigate(HomeFragmentDirections.actionHomePageToRestaurantDetailsFragment(restaurantId = it))
+            requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToRestaurantDetailsFragment(restaurantId = it))
         }
     }
 

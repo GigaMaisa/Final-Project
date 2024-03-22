@@ -86,8 +86,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideSubmitOrderRepository(databaseReference: DatabaseReference, @IoDispatcher ioDispatcher: CoroutineDispatcher): SubmitOrderRepository =
-        SubmitOrderRepositoryImpl(databaseReference, ioDispatcher)
+    fun provideSubmitOrderRepository(databaseReference: DatabaseReference, @IoDispatcher ioDispatcher: CoroutineDispatcher, auth: FirebaseAuth): SubmitOrderRepository =
+        SubmitOrderRepositoryImpl(auth, databaseReference, ioDispatcher)
 
     @Provides
     @Singleton

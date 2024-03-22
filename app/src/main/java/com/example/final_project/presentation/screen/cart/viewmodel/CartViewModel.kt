@@ -74,7 +74,7 @@ class CartViewModel @Inject constructor(
                         isActive = true,
                         location = location,
                         menu = orders,
-                        totalPrice = _cartStateFlow.value.checkout!!.chargeTotal + _cartStateFlow.value.checkout!!.subTotal
+                        totalPrice = _cartStateFlow.value.checkout!!.chargeTotal + _cartStateFlow.value.checkout!!.subTotal,
                     )
                 }
             }

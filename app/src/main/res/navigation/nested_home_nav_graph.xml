@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nested_home_nav_graph"
-    app:startDestination="@id/homePage">
+    app:startDestination="@id/bottomNavPlaceHolder">
 
     <fragment
         android:id="@+id/chatFragment"
@@ -23,49 +23,10 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/homePage"
-        android:name="com.example.final_project.presentation.screen.home.fragment.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homePage_to_allRestaurantsFragment"
-            app:destination="@id/allRestaurantsFragment" />
-        <action
-            android:id="@+id/action_homePage_to_restaurantDetailsFragment"
-            app:destination="@id/restaurantDetailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/profilePage"
-        android:name="com.example.final_project.presentation.screen.profile.fragment.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_profilePage_to_cardFragment"
-            app:destination="@id/cardFragment" />
-        <action
-            android:id="@+id/action_profilePage_to_deliveryLocationFragment"
-            app:destination="@id/deliveryLocationFragment" />
-        <action
-            android:id="@+id/action_profilePage_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/cartPage"
         android:name="com.example.final_project.presentation.screen.cart.fragment.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" />
-    <fragment
-        android:id="@+id/chatPage"
-        android:name="com.example.final_project.presentation.screen.chat.chat_contacts.ChatContactsFragment"
-        android:label="fragment_chat_contacts"
-        tools:layout="@layout/fragment_chat_contacts" >
-        <action
-            android:id="@+id/action_chatPage_to_chatFragment"
-            app:destination="@id/chatFragment" />
-        <action
-            android:id="@+id/action_chatPage_to_chatBotFragment"
-            app:destination="@id/chatBotFragment" />
-    </fragment>
     <fragment
         android:id="@+id/cardFragment"
         android:name="com.example.final_project.presentation.screen.card.fragment.CardFragment"
@@ -157,5 +118,32 @@
         android:id="@+id/restaurantBottomSheet"
         android:name="com.example.final_project.presentation.screen.restoraunt_details.bottomsheet.RestaurantBottomSheet"
         android:label="RestaurantBottomSheet" />
+
+    <fragment android:id="@+id/bottomNavPlaceHolder"
+        android:name="com.example.final_project.presentation.screen.bottom_nav_container.BottomNavContainerFragment"
+        android:label="bottomNavContainer"
+        tools:layout="@layout/fragment_bottom_nav_container">
+        <action
+            android:id="@+id/action_bottomNavPlaceHolder_to_restaurantDetailsFragment"
+            app:destination="@id/restaurantDetailsFragment" />
+        <action
+            android:id="@+id/action_bottomNavPlaceHolder_to_allRestaurantsFragment"
+            app:destination="@id/allRestaurantsFragment" />
+        <action
+            android:id="@+id/action_bottomNavPlaceHolder_to_deliveryLocationFragment"
+            app:destination="@id/deliveryLocationFragment" />
+        <action
+            android:id="@+id/action_bottomNavPlaceHolder_to_cardFragment"
+            app:destination="@id/cardFragment" />
+        <action
+            android:id="@+id/action_bottomNavPlaceHolder_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_bottomNavPlaceHolder_to_chatBotFragment"
+            app:destination="@id/chatBotFragment" />
+        <action
+            android:id="@+id/action_bottomNavPlaceHolder_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
 
 </navigation>

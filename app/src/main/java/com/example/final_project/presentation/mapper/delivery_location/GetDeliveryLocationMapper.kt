@@ -7,6 +7,7 @@ import com.example.final_project.presentation.model.delivery_location.DeliveryLo
 import com.example.final_project.presentation.model.delivery_location.LocationType
 
 fun GetDeliveryLocation.toPresentation() = DeliveryLocation(
+    id = id,
     location = location,
     locationName = locationName,
     addressType = convertAddressType(addressType),

@@ -11,13 +11,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.final_project.R
 import com.example.final_project.databinding.FragmentProfileBinding
 import com.example.final_project.presentation.base.BaseFragment
 import com.example.final_project.presentation.event.ProfileNavigationUiEvents
 import com.example.final_project.presentation.extension.loadImage
 import com.example.final_project.presentation.extension.showSnackBar
+import com.example.final_project.presentation.screen.bottom_nav_container.BottomNavContainerFragmentDirections
 import com.example.final_project.presentation.screen.profile.adapter.ProfileFavouritesRecyclerViewAdapter
 import com.example.final_project.presentation.screen.profile.viewmodel.ProfileViewModel
 import com.example.final_project.presentation.state.ProfileState
@@ -131,14 +131,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             }
 
             is ProfileNavigationUiEvents.NavigateToLocation -> {
-                findNavController().navigate(ProfileFragmentDirections.actionProfilePageToDeliveryLocationFragment())
+                requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToDeliveryLocationFragment())
             }
 
             is ProfileNavigationUiEvents.NavigateToPayment -> {
-                findNavController().navigate(ProfileFragmentDirections.actionProfilePageToCardFragment())
+                requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToCardFragment())
             }
 
-            is ProfileNavigationUiEvents.NavigateToSettings -> findNavController().navigate(ProfileFragmentDirections.actionProfilePageToSettingsFragment())
+            is ProfileNavigationUiEvents.NavigateToSettings ->
+                requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToSettingsFragment())
         }
     }
 }

@@ -9,6 +9,7 @@ import com.example.final_project.presentation.model.delivery_location.DeliveryLo
 import com.example.final_project.presentation.model.delivery_location.LocationType
 
 fun DeliveryLocation.toDomain() = GetDeliveryLocation(
+    id = id,
     location = location,
     locationName = locationName,
     locationType = locationTypeConvertor(locationType),

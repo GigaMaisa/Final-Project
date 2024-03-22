@@ -136,6 +136,44 @@
             tools:ignore="RtlSymmetry" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="45dp"
+            android:text="@string/categories"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvRestaurants" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSeeAllCategories"
+            android:layout_width="90dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="31dp"
+            android:background="@drawable/button_background"
+            android:text="@string/see_all"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvCategories"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvCategories" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="31dp"
+            android:layout_marginTop="35dp"
+            android:clipToPadding="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCategories"
+            tools:ignore="RtlSymmetry" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvFavouriteRestaurants"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -145,7 +183,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvRestaurants"/>
+            app:layout_constraintTop_toBottomOf="@id/rvCategories"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSeeAllFavouriteRestaurants"

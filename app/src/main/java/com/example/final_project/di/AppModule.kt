@@ -6,6 +6,7 @@ import com.example.final_project.data.local.datasource.ChatBotAuthTokenDataSourc
 import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
+import com.example.final_project.data.remote.service.CategoriesApiService
 import com.example.final_project.data.remote.service.ChatBotApiService
 import com.example.final_project.data.remote.service.DirectionsApiService
 import com.example.final_project.data.remote.service.GoogleDistanceMatrixApiService
@@ -173,5 +174,11 @@ object AppModule {
     @Singleton
     fun provideDistanceMatrixApiService(@GoogleMapRetrofit retrofit: Retrofit): GoogleDistanceMatrixApiService {
         return retrofit.create(GoogleDistanceMatrixApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCategoriesApiService(@FirebaseRetrofit retrofit: Retrofit): CategoriesApiService {
+        return retrofit.create(CategoriesApiService::class.java)
     }
 }

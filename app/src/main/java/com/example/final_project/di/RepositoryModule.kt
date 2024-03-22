@@ -10,6 +10,7 @@ import com.example.final_project.data.local.datasource.ChatBotAuthTokenDataSourc
 import com.example.final_project.data.remote.common.EmailSignInResponseHandler
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.service.BannersApiService
+import com.example.final_project.data.remote.service.CategoriesApiService
 import com.example.final_project.data.remote.service.ChatBotApiService
 import com.example.final_project.data.remote.service.DirectionsApiService
 import com.example.final_project.data.remote.service.GoogleDistanceMatrixApiService
@@ -33,6 +34,7 @@ import com.example.final_project.data.repository.remote.firebase.FirebasePhotosR
 import com.example.final_project.data.repository.remote.firebase.FirebaseSignOutRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseUserDataRepositoryImpl
 import com.example.final_project.data.repository.remote.home.BannerRepositoryImpl
+import com.example.final_project.data.repository.remote.home.CategoriesRepositoryImpl
 import com.example.final_project.data.repository.remote.home.RestaurantsRepositoryImpl
 import com.example.final_project.data.repository.remote.order.SubmitOrderRepositoryImpl
 import com.example.final_project.data.repository.remote.restaurant_details.RestaurantDetailsRepositoryImpl
@@ -55,6 +57,7 @@ import com.example.final_project.domain.repository.firebase.FirebasePhotosReposi
 import com.example.final_project.domain.repository.firebase.FirebaseUserDataRepository
 import com.example.final_project.domain.repository.forgot_pass.ForgotPasswordRepository
 import com.example.final_project.domain.repository.home.BannerRepository
+import com.example.final_project.domain.repository.home.CategoriesRepository
 import com.example.final_project.domain.repository.home.RestaurantsRepository
 import com.example.final_project.domain.repository.order.OrderDetailsRepository
 import com.example.final_project.domain.repository.order.SubmitOrderRepository
@@ -186,6 +189,10 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideRestaurantsRepository(restaurantsApiService: RestaurantsApiService, responseHandler: ResponseHandler): RestaurantsRepository = RestaurantsRepositoryImpl(restaurantsApiService, responseHandler)
+
+    @Provides
+    @Singleton
+    fun provideCategoriesRepository(categoriesApiService: CategoriesApiService, responseHandler: ResponseHandler): CategoriesRepository = CategoriesRepositoryImpl(categoriesApiService, responseHandler)
 
     @Provides
     @Singleton

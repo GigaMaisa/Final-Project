@@ -30,6 +30,7 @@ class AllRestaurantsFragment : BaseFragment<FragmentAllRestaurantsBinding>(Fragm
         when(args.restaurantType) {
             RestaurantType.ALL -> viewModel.onEvent(AllRestaurantsEvent.GetAllRestaurantsEvent)
             RestaurantType.FAVOURITES -> viewModel.onEvent(AllRestaurantsEvent.GetFavouriteRestaurants)
+            else -> viewModel.onEvent(AllRestaurantsEvent.GetRestaurantByCategoryEvent(args.restaurantType))
         }
     }
 

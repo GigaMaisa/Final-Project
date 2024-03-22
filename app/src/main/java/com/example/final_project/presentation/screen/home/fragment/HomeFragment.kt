@@ -15,6 +15,7 @@ import com.example.final_project.presentation.model.restaurant.RestaurantType
 import com.example.final_project.presentation.screen.bottom_nav_container.BottomNavContainerFragmentDirections
 import com.example.final_project.presentation.screen.home.viewmodel.HomeViewModel
 import com.example.final_project.presentation.screen.home.adapter.BannersViewPagerAdapter
+import com.example.final_project.presentation.screen.home.adapter.CategoriesRecyclerAdapter
 import com.example.final_project.presentation.screen.home.adapter.RestaurantsRecyclerAdapter
 import com.example.final_project.presentation.state.HomeState
 import com.google.android.material.tabs.TabLayoutMediator
@@ -28,15 +29,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val bannerAdapter = BannersViewPagerAdapter()
     private val restaurantsRecyclerAdapter by lazy { RestaurantsRecyclerAdapter() }
     private val favouriteRestaurantsAdapter by lazy { RestaurantsRecyclerAdapter() }
+    private val categoriesAdapter by lazy { CategoriesRecyclerAdapter() }
 
     override fun setUp() {
         viewModel.onEvent(HomeEvent.GetBannersEvent)
         viewModel.onEvent(HomeEvent.GetRestaurantsEvent)
         viewModel.onEvent(HomeEvent.GetFavouriteRestaurantsEvent)
+        viewModel.onEvent(HomeEvent.GetCategoriesEvent)
 
         setUpViewPager()
         setUpRestaurantsRecyclerView()
         setUpFavouriteRestaurantsRecycler()
+        setUpCategoriesRecycler()
     }
 
     override fun setUpListeners()  {
@@ -54,6 +58,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         favouriteRestaurantsAdapter.onClick = {
             requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToRestaurantDetailsFragment(restaurantId = it))
+        }
+
+        categoriesAdapter.onClick = {
+            requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToAllRestaurantsFragment(restaurantType = it))
         }
     }
 
@@ -83,6 +91,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         favouriteRestaurants?.let {
             favouriteRestaurantsAdapter.submitList(it)
         }
+
+        categories?.let {
+            categoriesAdapter.submitList(it)
+        }
     }
 
     private fun setUpRestaurantsRecyclerView() = with(binding) {
@@ -94,6 +106,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun setUpFavouriteRestaurantsRecycler() = with(binding.recyclerViewFavouriteRestaurants) {
         adapter = favouriteRestaurantsAdapter
+        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun setUpCategoriesRecycler() = with(binding.rvCategories) {
+        adapter = categoriesAdapter
         layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 

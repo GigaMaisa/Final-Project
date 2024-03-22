@@ -132,5 +132,6 @@
     <string name="card_name_error">შეიყვანეთ ბარათის სახელი</string>
     <string name="card_exp_date_error">შეიყვანეთ სწორი თარიღი</string>
     <string name="card_cvv_error">შეიყვანეთ სამნიშნა რიცხვი</string>
+    <string name="categories">კატეგორიები</string>
 
 </resources>

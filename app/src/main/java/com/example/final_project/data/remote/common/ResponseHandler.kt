@@ -18,7 +18,6 @@ class ResponseHandler @Inject constructor() {
 
         val response = call()
         val responseBody = response.body()
-
         if (response.isSuccessful && responseBody != null) {
             emit(Resource.Success(responseBody))
         } else {

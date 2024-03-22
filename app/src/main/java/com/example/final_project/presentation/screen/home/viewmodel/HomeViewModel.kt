@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.domain.usecase.favourites.GetFavouritesUseCase
 import com.example.final_project.domain.usecase.home.GetBannersUseCase
+import com.example.final_project.domain.usecase.home.GetCategoriesUseCase
 import com.example.final_project.domain.usecase.restaurant.GetRestaurantsUseCase
 import com.example.final_project.presentation.event.home.HomeEvent
 import com.example.final_project.presentation.mapper.restaurant.toPresentation
@@ -22,7 +23,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getBannersUseCase: GetBannersUseCase,
     private val getRestaurantsUseCase: GetRestaurantsUseCase,
-    private val getFavouritesUseCase: GetFavouritesUseCase
+    private val getFavouritesUseCase: GetFavouritesUseCase,
+    private val getCategoriesUseCase: GetCategoriesUseCase
 ) : ViewModel() {
 
     private val _homeStateFlow = MutableStateFlow(HomeState())
@@ -34,6 +36,7 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.GetRestaurantsEvent -> getRestaurants()
             is HomeEvent.GetFavouriteRestaurantsEvent -> getFavouriteRestaurants()
             is HomeEvent.UpdateErrorMessageEvent -> updateErrorMessage(errorMessage = event.errorMessage)
+            is HomeEvent.GetCategoriesEvent -> getCategories()
         }
     }
 
@@ -65,6 +68,18 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getFavouritesUseCase().collect {
                 _homeStateFlow.update { currentState -> currentState.copy(favouriteRestaurants = it.map { it.toPresentation() }) }
+            }
+        }
+    }
+
+    private fun getCategories() {
+        viewModelScope.launch {
+            getCategoriesUseCase().collect {resource ->
+                when(resource) {
+                    is Resource.Loading -> _homeStateFlow.update { currentState -> currentState.copy(isLoading = resource.loading) }
+                    is Resource.Success -> _homeStateFlow.update { currentState -> currentState.copy(categories = resource.response.map { it.toPresentation() }) }
+                    is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
+                }
             }
         }
     }

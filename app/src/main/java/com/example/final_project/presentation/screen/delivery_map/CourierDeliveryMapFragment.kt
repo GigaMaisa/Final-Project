@@ -1,12 +1,19 @@
 package com.example.final_project.presentation.screen.delivery_map
 
+import android.Manifest
+import android.app.Notification
+import android.content.pm.PackageManager
 import android.graphics.Color
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavDeepLinkBuilder
 import com.example.final_project.R
 import com.example.final_project.databinding.FragmentCourierDeliveryMapBinding
 import com.example.final_project.presentation.base.BaseFragment
@@ -41,6 +48,12 @@ class CourierDeliveryMapFragment : BaseFragment<FragmentCourierDeliveryMapBindin
             LocationServices.getFusedLocationProviderClient(requireActivity())
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+        val notification = buildNotification()
+        val notificationManager = NotificationManagerCompat.from(requireContext())
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            return
+        }
+        notificationManager.notify(1, notification)
     }
 
     override fun setUpListeners() {}
@@ -70,6 +83,23 @@ class CourierDeliveryMapFragment : BaseFragment<FragmentCourierDeliveryMapBindin
                 }
             }
         }
+    }
+
+    private fun buildNotification(): Notification {
+        val navigationIntent = NavDeepLinkBuilder(requireContext())
+            .setGraph(R.navigation.nav_graph)
+            .setDestination(R.id.courierDeliveryMapFragment)
+            .createPendingIntent()
+
+        val notificationBuilder = NotificationCompat.Builder(requireContext(), "deliveryNotificationChannel")
+            .setContentTitle("Delivery in Progress")
+            .setContentText("Delivering to...")
+            .setSmallIcon(R.drawable.ic_delivery)
+            .setContentIntent(navigationIntent)
+            .setStyle(NotificationCompat.BigTextStyle())
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+
+        return notificationBuilder.build()
     }
 
     private fun updateLocationUi(latLng: LatLng) = with(mMap) {

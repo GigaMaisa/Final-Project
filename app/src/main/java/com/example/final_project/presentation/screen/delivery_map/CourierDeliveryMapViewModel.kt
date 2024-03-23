@@ -68,6 +68,7 @@ class CourierDeliveryMapViewModel @Inject constructor(
                     snapshot.children.forEach {
                         location[it.key] = it.getValue(Double::class.java)
                     }
+
                     _directionsStateFlow.value.defaultLocation?.let {
                         getDirection(origin = it.location, LatLng(location["latitude"]!!, location["longitude"]!!))
                     }

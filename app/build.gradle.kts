@@ -90,6 +90,7 @@ dependencies {
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.google.firebase:firebase-database-ktx:20.3.1")
     implementation("com.google.firebase:firebase-firestore-ktx:24.10.3")
+    implementation("com.google.firebase:firebase-messaging-ktx:23.4.1")
 
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("com.google.firebase:firebase-sessions:1.2.2")

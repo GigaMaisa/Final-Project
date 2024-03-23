@@ -26,6 +26,7 @@ import com.example.final_project.data.repository.remote.firebase.FirebasePhonePh
 import com.example.final_project.data.repository.remote.chat.ChatContactsRepositoryImpl
 import com.example.final_project.data.repository.remote.chat.ChatMessagesRepositoryImpl
 import com.example.final_project.data.repository.remote.chatbot.ChatBotRepositoryImpl
+import com.example.final_project.data.repository.remote.delivery.LocationDeliveryRepositoryImpl
 import com.example.final_project.data.repository.remote.distance.DistanceRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseAuthStateRepositoryImpl
 import com.example.final_project.data.repository.remote.firebase.FirebaseEmailLoginRepositoryImpl
@@ -59,6 +60,7 @@ import com.example.final_project.domain.repository.forgot_pass.ForgotPasswordRep
 import com.example.final_project.domain.repository.home.BannerRepository
 import com.example.final_project.domain.repository.home.CategoriesRepository
 import com.example.final_project.domain.repository.home.RestaurantsRepository
+import com.example.final_project.domain.repository.location.LocationDeliveryRepository
 import com.example.final_project.domain.repository.order.OrderDetailsRepository
 import com.example.final_project.domain.repository.order.SubmitOrderRepository
 import com.example.final_project.domain.repository.restaurant_details.RestaurantDetailsRepository
@@ -177,6 +179,10 @@ object RepositoryModule {
     fun provideCardRepository(dao: CardDao, @IoDispatcher ioDispatcher: CoroutineDispatcher): CardRepository {
         return CardRepositoryImpl(cardDao = dao, ioDispatcher = ioDispatcher)
     }
+
+    @Provides
+    @Singleton
+    fun provideLocationDeliveryRepository(databaseReference: DatabaseReference, @IoDispatcher ioDispatcher: CoroutineDispatcher): LocationDeliveryRepository = LocationDeliveryRepositoryImpl(databaseReference, ioDispatcher)
 
     @Provides
     @Singleton

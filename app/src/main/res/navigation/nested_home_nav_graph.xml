@@ -5,6 +5,9 @@
     android:id="@+id/nested_home_nav_graph"
     app:startDestination="@id/bottomNavPlaceHolder">
 
+    <action android:id="@+id/action_global_to_chatFragment"
+        app:destination="@id/chatFragment" />
+
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.example.final_project.presentation.screen.chat.chat_messaging.fragment.ChatFragment"

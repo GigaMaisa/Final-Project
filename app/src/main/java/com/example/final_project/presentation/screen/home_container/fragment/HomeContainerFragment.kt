@@ -5,7 +5,6 @@ import com.example.final_project.presentation.base.BaseFragment
 
 class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding>(FragmentHomeContainerBinding::inflate) {
     override fun setUp() {
-
     }
 
     override fun setUpListeners() {
@@ -13,5 +12,4 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding>(Fragmen
 
     override fun setUpObservers() {
     }
-
 }

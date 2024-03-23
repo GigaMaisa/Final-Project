@@ -61,24 +61,27 @@ class CourierDeliveryMapFragment : BaseFragment<FragmentCourierDeliveryMapBindin
     override fun setUpObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.directionStateFlow.collect {
-                    it.direction?.let {
-                        val path = PolyUtil.decode(it.routes[0].overview_polyline.points)
-                        val polylineOptions = PolylineOptions()
-                            .width(10f)
-                            .color(Color.RED)
-                            .addAll(path)
+                viewModel.directionStateFlow.collect {state->
+                    state.direction?.let {
+                        state.courierLocation?.let {courierLocation->
+                            val path = PolyUtil.decode(it.routes[0].overview_polyline.points)
+                            val polylineOptions = PolylineOptions()
+                                .width(10f)
+                                .color(Color.RED)
+                                .addAll(path)
 
-                        val bitmap = getDrawable(requireContext(), R.drawable.ic_delivery)!!.toBitmap(80, 80)
-                        val markerOptions = MarkerOptions()
-                            .position(LatLng(41.709904512556946, 44.79725170393272))
-                            .title("Delivery Location")
-                            .snippet("Delivery Details")
-                            .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                            val bitmap = getDrawable(requireContext(), R.drawable.ic_delivery)!!.toBitmap(80, 80)
+                            val markerOptions = MarkerOptions()
+                                .position(courierLocation)
+                                .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                                .title("Delivery Location")
+                                .snippet("Delivery Details")
+                                .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
 
-                        mMap.clear()
-                        mMap.addMarker(markerOptions)
-                        mMap.addPolyline(polylineOptions)
+                            mMap.clear()
+                            mMap.addMarker(markerOptions)
+                            mMap.addPolyline(polylineOptions)
+                        }
                     }
                 }
             }

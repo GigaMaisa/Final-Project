@@ -64,6 +64,7 @@ class CourierDeliveryMapViewModel @Inject constructor(
                     is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
                     is Resource.Success -> {
                         _directionsStateFlow.value.defaultLocation?.let {
+                            _directionsStateFlow.update { currentState -> currentState.copy(courierLocation = LatLng(resource.response["latitude"]!!, resource.response["longitude"]!!)) }
                             getDirection(origin = it.location, LatLng(resource.response["latitude"]!!, resource.response["longitude"]!!))
                         }
                     }

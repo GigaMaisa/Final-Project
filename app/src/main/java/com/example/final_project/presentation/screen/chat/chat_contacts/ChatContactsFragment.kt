@@ -18,13 +18,12 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ChatContactsFragment : BaseFragment<FragmentChatContactsBinding>(FragmentChatContactsBinding::inflate) {
-
     private val viewModel: ChatContactsViewModel by viewModels()
     private val contactsAdapter = ContactsRecyclerViewAdapter()
+
     override fun setUp() {
         setUpRecycler()
         viewModel.onEvent(ChatContactEvent.GetContactsEvent)
-//        viewModel.onEvent(ChatContactEvent.AddContactEvent(Contact(null, "", "YeMuykw1zFgHOQrBSVP3Vd5XkPq2", "Goga Gradienti")))
     }
 
     override fun setUpListeners() {
@@ -65,5 +64,4 @@ class ChatContactsFragment : BaseFragment<FragmentChatContactsBinding>(FragmentC
             adapter = contactsAdapter
         }
     }
-
 }

@@ -73,6 +73,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.browser:browser:1.8.0")
     implementation("com.google.auth:google-auth-library-oauth2-http:1.23.0")
 
     implementation("com.google.android.libraries.places:places:3.3.0")

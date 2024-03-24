@@ -1,5 +1,6 @@
 package com.example.final_project.data.remote.common
 
+import android.util.Log
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import retrofit2.HttpException
@@ -24,6 +25,7 @@ sealed class HandleErrorStates(val errorCode: ErrorCode) {
 
     companion object {
         fun handleException(throwable: Exception): HandleErrorStates {
+            Log.d("RACXA ERROR", "$throwable")
             return when (throwable) {
                 is IOException -> NetworkError
                 is HttpException -> when (throwable.code()) {

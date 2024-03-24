@@ -44,10 +44,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     override fun setUpListeners() = with(binding) {
-        ivPhoto.setOnClickListener {
-            d("itInteracts", "CLICKED")
-        }
-
         btnLogOut.setOnClickListener {
             viewModel.onEvent(ProfileViewModel.ProfileEvent.SignOutEvent)
         }

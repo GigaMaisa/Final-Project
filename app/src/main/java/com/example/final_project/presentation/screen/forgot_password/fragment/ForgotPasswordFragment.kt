@@ -72,6 +72,10 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(Fragm
                 arrowIconPhone.setImageResource(R.drawable.ic_arrow_down)
             }
         }
+
+        btnGoBack.setOnClickListener {
+            viewModel.onEvent(ForgotPasswordEvents.GoBackEvent)
+        }
     }
 
     override fun setUpObservers() {
@@ -121,6 +125,8 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(Fragm
                     isForgot = true
                 ))
             }
+
+            is ForgotPasswordViewModel.ForgotPasswordNavigationEvents.NavigateBack -> findNavController().navigateUp()
         }
     }
 

@@ -5,4 +5,5 @@ import com.google.firebase.auth.PhoneAuthOptions
 sealed class ForgotPasswordEvents {
     data class SendVerificationToEmail(val email: String) : ForgotPasswordEvents()
     data class SendVerificationToPhoneNumber(val phoneNumber: String, val options: PhoneAuthOptions.Builder) : ForgotPasswordEvents()
+    object GoBackEvent: ForgotPasswordEvents()
 }

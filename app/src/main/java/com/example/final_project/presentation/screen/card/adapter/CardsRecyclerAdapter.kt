@@ -14,22 +14,19 @@ import com.example.final_project.presentation.model.card.Card
 import com.example.final_project.presentation.model.cart.CartItem
 
 class CardsRecyclerAdapter : ListAdapter<Card, CardsRecyclerAdapter.CardViewHolder>(CardsItemDiffCallback) {
-
     inner class CardViewHolder(private val binding: CardItemBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind() = with(binding) {
             val card = getItem(adapterPosition)
 
             if (card.cardNumber.startsWith("4")) {
-                Log.d("RACXA TYPE", "VIZAAA")
                 ivCardManufacturer.setImageResource(R.drawable.iv_visa)
             } else if (card.cardNumber.startsWith("5")) {
-                Log.d("RACXA TYPE", "MASTERCARD")
                 ivCardManufacturer.setImageResource(R.drawable.iv_mastercard_logo)
             }
 
             tvCardName.text = card.cardName
-            tvCardNumber.text = "**** **** **** ${card.cardNumber.takeLast(4)}"
+            tvCardNumber.text = "**** **** ${card.cardNumber.takeLast(4)}"
         }
     }
 

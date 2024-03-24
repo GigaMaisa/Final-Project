@@ -1,6 +1,5 @@
 package com.example.final_project.presentation.screen.bottom_nav_container
 
-import android.util.Log.d
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -36,7 +35,6 @@ class BottomNavContainerFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.cartItemsNumber.collect {
-                    d("showItemsNumber", it.toString())
                     if (it > 0) {
                         binding.bottomNavigationView.getOrCreateBadge(R.id.cartPage).number = it
                     }else{

@@ -9,7 +9,29 @@ import javax.inject.Inject
 
 class CardExpiryDateValidationUseCase @Inject constructor() {
     operator fun invoke(input: String): Boolean {
-        return true
-        // TODO
+        val dateFormat = SimpleDateFormat("MM/yy", Locale.US)
+        dateFormat.isLenient = false // To strictly parse the date format
+
+        try {
+            val expiryDateObj = dateFormat.parse(input)
+
+            val calendar = Calendar.getInstance()
+            calendar.time = expiryDateObj!!
+            val month = calendar.get(Calendar.MONTH) + 1
+
+            if (month !in 1..12) {
+                return false
+            }
+
+            val currentYear = Calendar.getInstance().get(Calendar.YEAR) % 100
+            val year = calendar.get(Calendar.YEAR) % 100
+            if (year < currentYear) {
+                return false
+            }
+
+            return true
+        } catch (e: Exception) {
+            return false
+        }
     }
 }

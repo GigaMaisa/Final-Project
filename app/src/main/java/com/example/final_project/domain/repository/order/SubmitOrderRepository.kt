@@ -5,5 +5,6 @@ import com.google.firebase.auth.FirebaseUser
 
 interface SubmitOrderRepository {
     val currentUser: FirebaseUser?
+
     suspend fun addOrder(submitOrder: GetSubmitOrder)
 }

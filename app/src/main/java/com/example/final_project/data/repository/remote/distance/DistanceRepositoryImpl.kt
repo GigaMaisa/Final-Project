@@ -4,7 +4,7 @@ import com.example.final_project.data.remote.common.HandleErrorStates
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.data.remote.mapper.distance.toDomain
 import com.example.final_project.data.remote.service.GoogleDistanceMatrixApiService
-import com.example.final_project.di.DispatchersModule
+import com.example.final_project.di.DispatchersModule.IoDispatcher
 import com.example.final_project.domain.model.distance.GetDistance
 import com.example.final_project.domain.repository.distance.DistanceRepository
 import com.google.android.gms.maps.model.LatLng
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 class DistanceRepositoryImpl @Inject constructor(
     private val googleDistanceMatrixApiService: GoogleDistanceMatrixApiService,
-    @DispatchersModule.IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): DistanceRepository {
     override suspend fun getDistanceAndDuration(
         origin: LatLng,

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ChatMessagesRepository {
     val currentUser: FirebaseUser?
-    suspend fun getMessages(receiverUuid: String): Flow<Resource<List<GetMessage>>>
 
+    suspend fun getMessages(receiverUuid: String): Flow<Resource<List<GetMessage>>>
     suspend fun addMessage(message: GetMessage, receiverUuid: String)
 }

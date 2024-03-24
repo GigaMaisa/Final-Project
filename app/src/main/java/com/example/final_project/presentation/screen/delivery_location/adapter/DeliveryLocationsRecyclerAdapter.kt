@@ -43,7 +43,8 @@ class DeliveryLocationsRecyclerAdapter: ListAdapter<DeliveryLocation, DeliveryLo
             }
 
             imageBtnRemoveLocation.setOnClickListener {
-                onDeleteClick?.invoke(currentLocation)
+                if (!currentLocation.isDefault)
+                    onDeleteClick?.invoke(currentLocation)
             }
 
             root.setOnClickListener {

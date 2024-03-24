@@ -34,7 +34,6 @@ class DeliveryLocationAddFragment :
         setUpLocationName()
         setUpRecycler()
         setUpSpinner()
-
     }
 
     override fun setUpListeners() {

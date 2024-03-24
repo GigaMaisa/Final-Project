@@ -63,7 +63,6 @@ The android app lets you:
 
 Appliacation requires the following permissions:
 - Full Network Access.
-- Access to change wallpaper of your phone
 - Access to your location
 - Access to send notifications
 

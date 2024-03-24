@@ -101,6 +101,11 @@
             android:name="restaurantType"
             app:argType="com.example.final_project.presentation.model.restaurant.RestaurantType"
             android:defaultValue="ALL" />
+        <argument
+            android:name="searchFilter"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/restaurantDetailsFragment"
@@ -115,7 +120,9 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_restaurantDetailsFragment_to_cartPage"
-            app:destination="@id/cartPage" />
+            app:destination="@id/cartPage"
+            app:popUpTo="@id/restaurantDetailsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <dialog
         android:id="@+id/restaurantBottomSheet"

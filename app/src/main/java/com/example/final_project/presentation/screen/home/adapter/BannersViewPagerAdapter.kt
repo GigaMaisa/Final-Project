@@ -12,6 +12,8 @@ import com.example.final_project.presentation.model.home.Banner
 class BannersViewPagerAdapter :
     ListAdapter<Banner, BannersViewPagerAdapter.BannersViewHolder>(BannersItemDiffCallback) {
 
+    var onBuyClick: ((Int)->Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BannersViewHolder {
         return BannersViewHolder(
             ViewPagerOfferItemBinding.inflate(
@@ -33,6 +35,9 @@ class BannersViewPagerAdapter :
             with(binding) {
                 ivCover.loadImage(banner.image)
                 tvSpecialOffer.text = banner.title
+                btnBuyNow.setOnClickListener {
+                    onBuyClick?.invoke(banner.restaurantId)
+                }
             }
         }
     }

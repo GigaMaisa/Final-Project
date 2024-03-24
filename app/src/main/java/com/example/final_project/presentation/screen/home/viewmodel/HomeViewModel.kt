@@ -10,10 +10,13 @@ import com.example.final_project.domain.usecase.restaurant.GetRestaurantsUseCase
 import com.example.final_project.presentation.event.home.HomeEvent
 import com.example.final_project.presentation.mapper.restaurant.toPresentation
 import com.example.final_project.presentation.mapper.home.toPresentation
+import com.example.final_project.presentation.model.restaurant.RestaurantType
 import com.example.final_project.presentation.state.HomeState
 import com.example.final_project.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -30,6 +33,9 @@ class HomeViewModel @Inject constructor(
     private val _homeStateFlow = MutableStateFlow(HomeState())
     val homeStateFlow = _homeStateFlow.asStateFlow()
 
+    private val _uiEvent = MutableSharedFlow<HomeUiEvent>()
+    val uiEvent = _uiEvent.asSharedFlow()
+
     fun onEvent(event: HomeEvent) {
         when(event) {
             is HomeEvent.GetBannersEvent -> getBanners()
@@ -37,6 +43,12 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.GetFavouriteRestaurantsEvent -> getFavouriteRestaurants()
             is HomeEvent.UpdateErrorMessageEvent -> updateErrorMessage(errorMessage = event.errorMessage)
             is HomeEvent.GetCategoriesEvent -> getCategories()
+            is HomeEvent.GoToAllRestaurantsEvent -> viewModelScope.launch {
+                _uiEvent.emit(HomeUiEvent.GoToAllRestaurantsFragment(event.restaurantType, event.searchFilter)
+                )
+            }
+
+            is HomeEvent.GoToRestaurantDetailsEvent -> viewModelScope.launch { _uiEvent.emit(HomeUiEvent.GoToRestaurantDetailsFragment(event.restaurantId)) }
         }
     }
 
@@ -86,5 +98,10 @@ class HomeViewModel @Inject constructor(
 
     private fun updateErrorMessage(errorMessage: Int?) {
         _homeStateFlow.update { currentState -> currentState.copy(errorMessage = errorMessage) }
+    }
+
+    sealed interface HomeUiEvent {
+        class GoToAllRestaurantsFragment(val restaurantType: RestaurantType = RestaurantType.ALL, val searchFilter: String? = null): HomeUiEvent
+        class GoToRestaurantDetailsFragment(val restaurantId: Int): HomeUiEvent
     }
 }

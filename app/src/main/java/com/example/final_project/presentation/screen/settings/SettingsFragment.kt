@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.final_project.R
 import com.example.final_project.databinding.FragmentSettingsBinding
 import com.example.final_project.presentation.base.BaseFragment
@@ -35,6 +36,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsB
     override fun setUpListeners() {
         binding.switchMaterial.setOnCheckedChangeListener { _, isChecked ->
             viewModel.onEvent(SettingsEvents.IsDarkModeChecked(isChecked))
+        }
+
+        binding.btnGoBack.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 

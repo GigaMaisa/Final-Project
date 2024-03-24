@@ -1,9 +1,11 @@
 package com.example.final_project.presentation.screen.all_restaurants
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.domain.usecase.favourites.GetFavouritesUseCase
+import com.example.final_project.domain.usecase.restaurant.GetFilteredRestaurantsUseCase
 import com.example.final_project.domain.usecase.restaurant.GetRestaurantByCategoryUseCase
 import com.example.final_project.domain.usecase.restaurant.GetRestaurantsUseCase
 import com.example.final_project.presentation.event.restaurant.AllRestaurantsEvent
@@ -25,7 +27,8 @@ import javax.inject.Inject
 class AllRestaurantsViewModel @Inject constructor(
     private val getRestaurantsUseCase: GetRestaurantsUseCase,
     private val getFavouritesUseCase: GetFavouritesUseCase,
-    private val getRestaurantByCategoryUseCase: GetRestaurantByCategoryUseCase
+    private val getRestaurantByCategoryUseCase: GetRestaurantByCategoryUseCase,
+    private val getFilteredRestaurantsUseCase: GetFilteredRestaurantsUseCase
 ) : ViewModel() {
     private val _restaurantsStateFlow = MutableStateFlow(AllRestaurantsState())
     val restaurantsStateFlow = _restaurantsStateFlow.asStateFlow()
@@ -41,7 +44,14 @@ class AllRestaurantsViewModel @Inject constructor(
                 )
             }
 
-            is AllRestaurantsEvent.GetAllRestaurantsEvent -> getRestaurants()
+            is AllRestaurantsEvent.GetAllRestaurantsEvent -> {
+                Log.d("showArgsMate2", "${event.searchFilter}")
+                if (event.searchFilter == null)
+                    getRestaurants()
+                else
+                    getFilteredRestaurants(filter = event.searchFilter)
+            }
+
             is AllRestaurantsEvent.GoToRestaurantsDetailsEvent -> viewModelScope.launch {
                 _uiState.emit(
                     AllRestaurantsUiEvents.NavigateToRestaurantDetails(restaurantId = event.restaurantId)
@@ -57,6 +67,18 @@ class AllRestaurantsViewModel @Inject constructor(
     private fun getRestaurants() {
         viewModelScope.launch {
             getRestaurantsUseCase().collect {resource ->
+                when(resource) {
+                    is Resource.Loading -> _restaurantsStateFlow.update { currentState -> currentState.copy(isLoading = resource.loading) }
+                    is Resource.Success -> _restaurantsStateFlow.update { currentState -> currentState.copy(restaurants = resource.response.map { it.toPresentation() }) }
+                    is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
+                }
+            }
+        }
+    }
+
+    private fun getFilteredRestaurants(filter: String) {
+        viewModelScope.launch {
+            getFilteredRestaurantsUseCase(filter).collect {resource->
                 when(resource) {
                     is Resource.Loading -> _restaurantsStateFlow.update { currentState -> currentState.copy(isLoading = resource.loading) }
                     is Resource.Success -> _restaurantsStateFlow.update { currentState -> currentState.copy(restaurants = resource.response.map { it.toPresentation() }) }

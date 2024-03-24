@@ -16,6 +16,9 @@ interface OrderDao {
     @Query("SELECT restaurantId FROM order_details LIMIT 1")
     suspend fun getLastAddedRestaurantId(): Int?
 
+    @Query("SELECT count(*) FROM order_details")
+    fun getCartItemsNumber(): Flow<Int>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addOrder(orderDetailsEntity: OrderDetailsEntity)
 

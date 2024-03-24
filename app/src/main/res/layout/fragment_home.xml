@@ -57,7 +57,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="18dp"
             android:background="@drawable/btn_back_background"
-            android:src="@drawable/ic_filter"
+            android:src="@drawable/ic_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/etSearch"
             app:layout_constraintTop_toBottomOf="@+id/tvFindFood" />
@@ -146,20 +146,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rvRestaurants" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSeeAllCategories"
-            android:layout_width="90dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="31dp"
-            android:background="@drawable/button_background"
-            android:text="@string/see_all"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="@id/tvCategories"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvCategories" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategories"

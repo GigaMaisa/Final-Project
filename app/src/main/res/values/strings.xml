@@ -132,5 +132,6 @@
     <string name="card_exp_date_error">Enter Correct Date</string>
     <string name="card_cvv_error">Enter Three Digit Number</string>
     <string name="categories">Categories</string>
+    <string name="waiting_for_a_courier">Waiting for a courier</string>
 
 </resources>

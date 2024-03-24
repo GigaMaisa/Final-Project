@@ -107,12 +107,14 @@ class RestaurantDetailsViewModel @Inject constructor(
     private fun addFavourite(restaurant: Restaurant) {
         viewModelScope.launch {
             addFavouriteUseCase(restaurant.toDomain())
+            getIfFavourite(restaurant.restaurantId)
         }
     }
 
     private fun deleteFavourite(restaurant: Restaurant) {
         viewModelScope.launch {
             deleteFavouriteUseCase(restaurant.toDomain())
+            getIfFavourite(restaurant.restaurantId)
         }
     }
 

@@ -7,5 +7,6 @@ enum class RestaurantType {
     ASIAN,
     GEORGIAN,
     SUSHI,
-    PIZZA
+    PIZZA,
+    VEGETARIAN
 }

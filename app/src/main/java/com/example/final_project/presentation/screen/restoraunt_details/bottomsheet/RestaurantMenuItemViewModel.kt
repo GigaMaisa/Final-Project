@@ -1,6 +1,5 @@
 package com.example.final_project.presentation.screen.restoraunt_details.bottomsheet
 
-import android.util.Log.d
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.domain.usecase.order.AddOrderUseCase
@@ -97,7 +96,6 @@ class RestaurantMenuItemViewModel @Inject constructor(
 
     private fun addItemToCart() {
         viewModelScope.launch {
-            d("showResutlBro", "${getLastRestaurantIdUseCase()} - ${_restaurantMenuItemStateFlow.value.restaurantId}")
             if (getLastRestaurantIdUseCase() == null || getLastRestaurantIdUseCase() == _restaurantMenuItemStateFlow.value.restaurantId) {
                 addCartItem()
             } else {

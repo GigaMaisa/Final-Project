@@ -8,6 +8,7 @@ fun String.toRestaurantType() = when(this) {
     "Asian" -> RestaurantType.ASIAN
     "Georgian" -> RestaurantType.GEORGIAN
     "Pizza" -> RestaurantType.PIZZA
+    "Vegeterian" -> RestaurantType.VEGETARIAN
     else -> RestaurantType.ALL
 }
 
@@ -17,5 +18,6 @@ fun RestaurantType.toCategory() = when(this) {
     RestaurantType.ASIAN -> "Asian"
     RestaurantType.GEORGIAN -> "Georgian"
     RestaurantType.PIZZA -> "Pizza"
+    RestaurantType.VEGETARIAN -> "Vegeterian"
     else -> ""
 }

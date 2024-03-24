@@ -8,7 +8,7 @@ fun RestaurantDto.toDomain() = GetRestaurant(
     image = image,
     title = title,
     type = type,
-     deliveryTime = deliveryTime,
+    deliveryTime = deliveryTime,
     rating = rating,
     deliveryFee = deliveryFee
 )

@@ -10,9 +10,6 @@ import com.example.final_project.domain.usecase.validators.EmailValidationUseCas
 import com.example.final_project.domain.usecase.validators.PhoneNumberValidatorUseCase
 import com.example.final_project.presentation.event.forgot_pass.ForgotPasswordEvents
 import com.example.final_project.presentation.model.ErrorType
-import com.example.final_project.presentation.screen.login.viewmodel.LoginFragmentUiEvents
-import com.example.final_project.presentation.screen.signup.credentials.viewmodel.SignUpCredentialsNavigationEvents
-import com.example.final_project.presentation.state.AdditionalDataState
 import com.example.final_project.presentation.state.ForgotPasswordState
 import com.example.final_project.presentation.util.getErrorMessage
 import com.google.firebase.auth.PhoneAuthOptions
@@ -47,6 +44,10 @@ class ForgotPasswordViewModel @Inject constructor(
                 phoneNumber = events.phoneNumber,
                 options = events.options
             )
+
+            is ForgotPasswordEvents.GoBackEvent -> viewModelScope.launch {
+                _navigationEvent.emit(ForgotPasswordNavigationEvents.NavigateBack)
+            }
         }
     }
 
@@ -125,6 +126,7 @@ class ForgotPasswordViewModel @Inject constructor(
 
     sealed class ForgotPasswordNavigationEvents {
         object NavigateToRestorePasswordPage : ForgotPasswordNavigationEvents()
-        data class NavigateToPasscodeFragment(val verificationId: String) : ForgotPasswordNavigationEvents()
+        class NavigateToPasscodeFragment(val verificationId: String) : ForgotPasswordNavigationEvents()
+        object NavigateBack : ForgotPasswordNavigationEvents()
     }
 }

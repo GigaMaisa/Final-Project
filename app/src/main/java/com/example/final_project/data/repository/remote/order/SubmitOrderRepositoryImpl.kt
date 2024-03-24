@@ -20,6 +20,6 @@ class SubmitOrderRepositoryImpl @Inject constructor(
     override val currentUser: FirebaseUser? get() = auth.currentUser
     override suspend fun addOrder(submitOrder: GetSubmitOrder): Unit = withContext(ioDispatcher) {
         val orderRef = databaseReference.child("orders").child("0")
-        orderRef.setValue(submitOrder.toData().copy(userUuid = currentUser?.uid)).await()
+        orderRef.setValue(submitOrder.toData().copy(userUuid = currentUser?.uid, fullName = currentUser?.displayName)).await()
     }
 }

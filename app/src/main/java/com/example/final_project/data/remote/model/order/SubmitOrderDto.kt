@@ -5,5 +5,6 @@ data class SubmitOrderDto(
     val isActive: Boolean,
     val location: DeliveryLocationDto,
     val menu: List<OrderDto>,
-    val totalPrice: Double
+    val totalPrice: Double,
+    val fullName: String? = null
 )

@@ -28,7 +28,6 @@ class CategoriesRecyclerAdapter  : ListAdapter<CategoryType, CategoriesRecyclerA
             val category = currentList[adapterPosition]
             shapeableImageViewCover.loadImage(category.imageUrl)
             tvType.text = category.type
-            tvNumberOfRestaurants.text = category.numberOfRestaurants.toString()
             itemClick()
         }
 

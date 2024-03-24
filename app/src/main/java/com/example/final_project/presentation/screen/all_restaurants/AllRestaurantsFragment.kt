@@ -1,5 +1,6 @@
 package com.example.final_project.presentation.screen.all_restaurants
 
+import android.util.Log.d
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -27,8 +28,9 @@ class AllRestaurantsFragment : BaseFragment<FragmentAllRestaurantsBinding>(Fragm
 
     override fun setUp() {
         setUpRecycler()
+        d("showArgsMate", "${args.restaurantType}  ${args.searchFilter}")
         when(args.restaurantType) {
-            RestaurantType.ALL -> viewModel.onEvent(AllRestaurantsEvent.GetAllRestaurantsEvent)
+            RestaurantType.ALL -> viewModel.onEvent(AllRestaurantsEvent.GetAllRestaurantsEvent(args.searchFilter))
             RestaurantType.FAVOURITES -> viewModel.onEvent(AllRestaurantsEvent.GetFavouriteRestaurants)
             else -> viewModel.onEvent(AllRestaurantsEvent.GetRestaurantByCategoryEvent(args.restaurantType))
         }

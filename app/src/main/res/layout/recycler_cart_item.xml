@@ -20,15 +20,19 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="18dp"
         android:fontFamily="@font/bentonsansregular"
         android:text="Spacy fresh crab"
+        android:ellipsize="end"
+        android:lines="1"
+        android:layout_marginEnd="15dp"
         android:textColor="?android:textColor"
         android:textSize="15sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/btnRemoveItem"
         app:layout_constraintStart_toEndOf="@id/imageViewCover"
         app:layout_constraintTop_toTopOf="parent" />
 

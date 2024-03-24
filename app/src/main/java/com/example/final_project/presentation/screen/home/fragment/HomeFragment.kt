@@ -45,33 +45,62 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun setUpListeners()  {
         restaurantsRecyclerAdapter.onClick = {
-            requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToRestaurantDetailsFragment(restaurantId = it))
+            viewModel.onEvent(HomeEvent.GoToRestaurantDetailsEvent(it))
         }
 
         binding.btnSeeAllRestaurants.setOnClickListener {
-            requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToAllRestaurantsFragment())
+            viewModel.onEvent(HomeEvent.GoToAllRestaurantsEvent())
         }
 
         binding.btnSeeAllFavouriteRestaurants.setOnClickListener {
-            requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToAllRestaurantsFragment(restaurantType = RestaurantType.FAVOURITES))
+            viewModel.onEvent(HomeEvent.GoToAllRestaurantsEvent(restaurantType = RestaurantType.FAVOURITES))
         }
 
         favouriteRestaurantsAdapter.onClick = {
-            requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToRestaurantDetailsFragment(restaurantId = it))
+            viewModel.onEvent(HomeEvent.GoToRestaurantDetailsEvent(it))
         }
 
         categoriesAdapter.onClick = {
-            requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections.actionBottomNavPlaceHolderToAllRestaurantsFragment(restaurantType = it))
+            viewModel.onEvent(HomeEvent.GoToAllRestaurantsEvent(restaurantType = it))
+        }
+
+        binding.imageBtnFilter.setOnClickListener {
+            viewModel.onEvent(HomeEvent.GoToAllRestaurantsEvent(searchFilter = binding.etSearch.text.toString()))
+        }
+
+        bannerAdapter.onBuyClick = {
+            viewModel.onEvent(HomeEvent.GoToRestaurantDetailsEvent(it))
         }
     }
 
     override fun setUpObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.homeStateFlow.collect {
-                    handleState(it)
+                launch {
+                    viewModel.homeStateFlow.collect {
+                        handleState(it)
+                    }
+                }
+                launch {
+                    viewModel.uiEvent.collect {
+                        handleUiEvent(it)
+                    }
                 }
             }
+        }
+    }
+
+    private fun handleUiEvent(event: HomeViewModel.HomeUiEvent) {
+        when(event) {
+            is HomeViewModel.HomeUiEvent.GoToAllRestaurantsFragment ->
+                requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections
+                    .actionBottomNavPlaceHolderToAllRestaurantsFragment(restaurantType = event.restaurantType, searchFilter = event.searchFilter))
+
+            is HomeViewModel.HomeUiEvent.GoToRestaurantDetailsFragment ->
+                requireActivity().findNavController(R.id.nested_nav_host_fragment).navigate(BottomNavContainerFragmentDirections
+                    .actionBottomNavPlaceHolderToRestaurantDetailsFragment(restaurantId = event.restaurantId))
+
+
         }
     }
 

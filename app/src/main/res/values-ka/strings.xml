@@ -133,5 +133,6 @@
     <string name="card_exp_date_error">შეიყვანეთ სწორი თარიღი</string>
     <string name="card_cvv_error">შეიყვანეთ სამნიშნა რიცხვი</string>
     <string name="categories">კატეგორიები</string>
+    <string name="waiting_for_a_courier">ველოდებით კურიერს</string>
 
 </resources>

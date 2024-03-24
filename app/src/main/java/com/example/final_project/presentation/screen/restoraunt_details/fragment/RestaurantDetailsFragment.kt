@@ -49,6 +49,10 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>
         binding.btnGoToCart.setOnClickListener {
             viewModel.onEvent(RestaurantDetailsEvent.GoToCartPageEvent)
         }
+
+        binding.btnGoBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     override fun setUpObservers() {

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="150dp"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginHorizontal="10dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/shapeableImageViewCover"
@@ -19,24 +20,14 @@
         android:id="@+id/tvType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fast Food"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="15dp"
+        tools:text="Fast Food"
+        android:textColor="?android:textColor"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="?android:textColor"
-        android:layout_marginTop="7dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shapeableImageViewCover" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvNumberOfRestaurants"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="15 Restaurants"
-        android:textColor="?android:textColor"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvType" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

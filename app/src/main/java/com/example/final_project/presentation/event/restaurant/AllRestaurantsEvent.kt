@@ -4,7 +4,7 @@ import com.example.final_project.presentation.model.restaurant.RestaurantType
 
 sealed class AllRestaurantsEvent {
     object GoBackEvent: AllRestaurantsEvent()
-    object GetAllRestaurantsEvent: AllRestaurantsEvent()
+    class GetAllRestaurantsEvent(val searchFilter: String? = null): AllRestaurantsEvent()
     object GetFavouriteRestaurants: AllRestaurantsEvent()
     class GoToRestaurantsDetailsEvent(val restaurantId: Int): AllRestaurantsEvent()
     class UpdateErrorMessageEvent(val message: Int?): AllRestaurantsEvent()

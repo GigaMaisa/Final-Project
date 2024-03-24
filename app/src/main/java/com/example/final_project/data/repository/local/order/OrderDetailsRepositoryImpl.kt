@@ -25,6 +25,10 @@ class OrderDetailsRepositoryImpl @Inject constructor(
         orderDao.addOrder(order.toData())
     }
 
+    override fun getCartItemsNumber(): Flow<Int> {
+        return orderDao.getCartItemsNumber()
+    }
+
     override suspend fun deleteOrders() = withContext(ioDispatcher) {
         orderDao.deleteAllRows()
     }

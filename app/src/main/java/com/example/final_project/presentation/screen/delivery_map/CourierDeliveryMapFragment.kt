@@ -9,6 +9,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +18,7 @@ import androidx.navigation.NavDeepLinkBuilder
 import com.example.final_project.R
 import com.example.final_project.databinding.FragmentCourierDeliveryMapBinding
 import com.example.final_project.presentation.base.BaseFragment
+import com.example.final_project.presentation.state.CourierDeliveryState
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
@@ -61,29 +63,38 @@ class CourierDeliveryMapFragment : BaseFragment<FragmentCourierDeliveryMapBindin
     override fun setUpObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.directionStateFlow.collect {state->
-                    state.direction?.let {
-                        state.courierLocation?.let {courierLocation->
-                            val path = PolyUtil.decode(it.routes[0].overview_polyline.points)
-                            val polylineOptions = PolylineOptions()
-                                .width(10f)
-                                .color(Color.RED)
-                                .addAll(path)
-
-                            val bitmap = getDrawable(requireContext(), R.drawable.ic_delivery)!!.toBitmap(80, 80)
-                            val markerOptions = MarkerOptions()
-                                .position(courierLocation)
-                                .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
-                                .title("Delivery Location")
-                                .snippet("Delivery Details")
-                                .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
-
-                            mMap.clear()
-                            mMap.addMarker(markerOptions)
-                            mMap.addPolyline(polylineOptions)
-                        }
-                    }
+                viewModel.directionStateFlow.collect {
+                    handleState(it)
                 }
+            }
+        }
+    }
+
+    private fun handleState(state: CourierDeliveryState) {
+        state.direction?.let {
+            state.courierLocation?.let {courierLocation->
+
+                binding.map.isVisible = courierLocation.isActive
+                binding.progressBar.isVisible = !courierLocation.isActive
+                binding.tvLookingForOrder.isVisible = !courierLocation.isActive
+
+                val path = PolyUtil.decode(it.routes[0].overview_polyline.points)
+                val polylineOptions = PolylineOptions()
+                    .width(10f)
+                    .color(Color.RED)
+                    .addAll(path)
+
+                val bitmap = getDrawable(requireContext(), R.drawable.ic_delivery)!!.toBitmap(100, 100)
+                val markerOptions = MarkerOptions()
+                    .position(LatLng(courierLocation.latitude, courierLocation.longitude))
+                    .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                    .title("Delivery Location")
+                    .snippet("Delivery Details")
+                    .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+
+                mMap.clear()
+                mMap.addMarker(markerOptions)
+                mMap.addPolyline(polylineOptions)
             }
         }
     }

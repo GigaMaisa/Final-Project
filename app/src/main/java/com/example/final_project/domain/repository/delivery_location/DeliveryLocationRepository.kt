@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface DeliveryLocationRepository {
     fun getLocations(): Flow<List<GetDeliveryLocation>>
 
-    fun getLocation(): Flow<GetDeliveryLocation>
+    fun getLocation(): Flow<GetDeliveryLocation?>
 
     suspend fun updateLocation(location: GetDeliveryLocation)
 

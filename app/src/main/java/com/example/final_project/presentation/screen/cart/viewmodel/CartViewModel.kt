@@ -83,14 +83,13 @@ class CartViewModel @Inject constructor(
                 deleteAllOrdersUseCase()
                 _uiEvent.emit(CartUiEvent.GoToDeliveryMapEvent(_cartStateFlow.value.deliveryLocation!!.location))
             }
-
         }
     }
 
     private fun updateDeliveryLocation() {
         viewModelScope.launch {
             getDeliveryLocationUseCase().collect {
-                _cartStateFlow.update { currentState -> currentState.copy(deliveryLocation = it.toPresentation()) }
+                _cartStateFlow.update { currentState -> currentState.copy(deliveryLocation = it?.toPresentation()) }
             }
         }
     }

@@ -24,7 +24,6 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 
 class MapsFragment : BaseFragment<FragmentMapsBinding>(FragmentMapsBinding::inflate) {
-
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var map: GoogleMap? = null
     private val requestPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {}

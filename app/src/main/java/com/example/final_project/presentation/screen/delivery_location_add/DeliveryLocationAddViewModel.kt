@@ -68,12 +68,12 @@ class DeliveryLocationAddViewModel @Inject constructor(
             } else if (!emptyNumberFieldsValidationUseCase(entrance, floor, apartment)) {
                 updateErrorMessage(R.string.fill_number_fields)
             } else {
-                val address = _deliveryLocationStateFlow.value.addressType.first { it.isSelected }
+                val address = _deliveryLocationStateFlow.value.addressType.find { it.isSelected }
                 val selectedLocation = DeliveryLocation(
                     location = addressLocation,
                     locationName = addressLocationName,
                     locationType = locationType,
-                    addressType = address,
+                    addressType = address!!,
                     entrance = entrance.toInt(),
                     floor = floor.toInt(),
                     apartmentNumber = apartment.toInt(),

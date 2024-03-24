@@ -35,6 +35,8 @@ class AddressTypeRecyclerAdapter :
         fun bind() {
             val addressType = currentList[adapterPosition]
             with(binding) {
+//                if (addressType.isSelected)
+//                    onAddressClick?.invoke(addressType)
                 if (addressType.isSelected) {
                     imageViewIcon.setImageResource(addressType.selectedIcon)
                     containerAddressType.setBackgroundResource(R.drawable.selected_background)

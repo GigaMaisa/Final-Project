@@ -1,6 +1,5 @@
 package com.example.final_project.presentation.screen.delivery_map
 
-import android.util.Log.d
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.final_project.data.remote.common.Resource
@@ -8,7 +7,7 @@ import com.example.final_project.domain.usecase.delivery_location.GetDeliveryLoc
 import com.example.final_project.domain.usecase.location.GetCourierLocationUpdateUseCase
 import com.example.final_project.domain.usecase.route.GetDirectionUseCase
 import com.example.final_project.presentation.mapper.delivery_location.toPresentation
-import com.example.final_project.presentation.mapper.location.toPresentation
+import com.example.final_project.presentation.mapper.location.toPresentationModel
 import com.example.final_project.presentation.mapper.toPresentation
 import com.example.final_project.presentation.state.CourierDeliveryState
 import com.example.final_project.presentation.util.getErrorMessage
@@ -49,7 +48,7 @@ class CourierDeliveryMapViewModel @Inject constructor(
     private fun getDefaultLocation() {
         viewModelScope.launch {
             getDeliveryLocationUseCase().collect {
-                _directionsStateFlow.update { currentState -> currentState.copy(defaultLocation = it.toPresentation()) }
+                _directionsStateFlow.update { currentState -> currentState.copy(defaultLocation = it?.toPresentation()) }
             }
         }
     }
@@ -65,8 +64,7 @@ class CourierDeliveryMapViewModel @Inject constructor(
                     is Resource.Loading -> {}
                     is Resource.Error -> updateErrorMessage(getErrorMessage(resource.error))
                     is Resource.Success -> {
-                        d("locationDeliveryBro", resource.response.toPresentation().toString())
-                        _directionsStateFlow.update { currentState -> currentState.copy(courierLocation = resource.response.toPresentation()) }
+                        _directionsStateFlow.update { currentState -> currentState.copy(courierLocation = resource.response.toPresentationModel()) }
                         _directionsStateFlow.value.defaultLocation?.let {
                             getDirection(origin = it.location, LatLng(resource.response.latitude, resource.response.longitude))
                         }

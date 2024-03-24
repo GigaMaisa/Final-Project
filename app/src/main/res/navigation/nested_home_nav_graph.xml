@@ -8,6 +8,9 @@
     <action android:id="@+id/action_global_to_chatFragment"
         app:destination="@id/chatFragment" />
 
+    <action android:id="@+id/action_global_to_locationsFragment"
+        app:destination="@id/deliveryLocationFragment" />
+
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.example.final_project.presentation.screen.chat.chat_messaging.fragment.ChatFragment"

@@ -1,6 +1,5 @@
 package com.example.final_project.data.repository.local.delivery_location
 
-import android.util.Log
 import com.example.final_project.data.local.dao.DeliveryLocationDao
 import com.example.final_project.data.local.mapper.deliveryLocation.toData
 import com.example.final_project.data.local.mapper.deliveryLocation.toDomain
@@ -18,8 +17,8 @@ class DeliveryLocationRepositoryImpl @Inject constructor(private val deliveryLoc
         return deliveryLocationDao.getAll().map { it.map { it.toDomain() } }.flowOn(ioDispatcher)
     }
 
-    override fun getLocation(): Flow<GetDeliveryLocation> {
-        return deliveryLocationDao.getOneLocation().map { it.toDomain() }.flowOn(ioDispatcher)
+    override fun getLocation(): Flow<GetDeliveryLocation?> {
+        return deliveryLocationDao.getOneLocation().map { it?.toDomain() }.flowOn(ioDispatcher)
     }
 
     override suspend fun updateLocation(location: GetDeliveryLocation) = withContext(ioDispatcher) {
@@ -27,7 +26,6 @@ class DeliveryLocationRepositoryImpl @Inject constructor(private val deliveryLoc
     }
 
     override suspend fun deleteLocation(location: GetDeliveryLocation) = withContext(ioDispatcher) {
-        Log.d("clickIsNotHappening31", location.toData().toString())
         deliveryLocationDao.deleteLocation(location.toData())
     }
 

@@ -142,7 +142,7 @@ class RestaurantDetailsViewModel @Inject constructor(
     private fun getDefaultLocation() {
         viewModelScope.launch {
             getDeliveryLocationUseCase().collect {
-                _restaurantDetailsStateFlow.update { currentState -> currentState.copy(defaultLocation = it.toPresentation()) }
+                _restaurantDetailsStateFlow.update { currentState -> currentState.copy(defaultLocation = it?.toPresentation()) }
             }
         }
     }

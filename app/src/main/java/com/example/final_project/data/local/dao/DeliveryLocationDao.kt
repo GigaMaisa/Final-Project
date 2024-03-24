@@ -14,7 +14,7 @@ interface DeliveryLocationDao {
     fun getAll(): Flow<List<DeliveryLocationEntity>>
 
     @Query("SELECT * FROM delivery_location WHERE isDeliveryDefault=1 LIMIT 1")
-    fun getOneLocation(): Flow<DeliveryLocationEntity>
+    fun getOneLocation(): Flow<DeliveryLocationEntity?>
 
     @Query("Update delivery_location set isDeliveryDefault=0")
     suspend fun updateDefaultToFalse()

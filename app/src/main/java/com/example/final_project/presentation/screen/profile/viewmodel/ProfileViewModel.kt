@@ -122,15 +122,13 @@ class ProfileViewModel @Inject constructor(
                     }
 
                     is Resource.Success -> {
-                        Log.d("RACXA VIEWMODEL", it.response)
                         _profileStateFlow.update { currentState ->
                             currentState.copy(imageUpload = it.response, isLoading = false)
                         }
+                        getImage()
                     }
 
                     is Resource.Error -> {
-                        Log.d("RACXA VIEWMODEL", "${it.error.errorCode}")
-
                         _profileStateFlow.update { currentState ->
                             currentState.copy(errorMessage = getErrorMessage(it.error), isLoading = false)
                         }

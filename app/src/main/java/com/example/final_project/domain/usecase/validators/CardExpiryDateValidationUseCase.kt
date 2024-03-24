@@ -10,7 +10,7 @@ import javax.inject.Inject
 class CardExpiryDateValidationUseCase @Inject constructor() {
     operator fun invoke(input: String): Boolean {
         val dateFormat = SimpleDateFormat("MM/yy", Locale.US)
-        dateFormat.isLenient = false // To strictly parse the date format
+        dateFormat.isLenient = false
 
         try {
             val expiryDateObj = dateFormat.parse(input)

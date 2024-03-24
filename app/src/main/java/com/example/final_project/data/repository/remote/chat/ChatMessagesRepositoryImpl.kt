@@ -22,7 +22,7 @@ import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
 
-class ChatMessagesRepositoryImpl @Inject constructor(private val auth: FirebaseAuth, private val databaseReference: DatabaseReference) :
+class ChatMessagesRepositoryImpl @Inject constructor(val auth: FirebaseAuth, private val databaseReference: DatabaseReference) :
     ChatMessagesRepository {
 
     override val currentUser = auth.currentUser

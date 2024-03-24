@@ -31,6 +31,7 @@ class LocationDeliveryRepositoryImpl @Inject constructor(private val databaseRef
                     }
                     trySend(Resource.Success(response = location.first().toDomain()))
                 }
+
                 override fun onCancelled(error: DatabaseError) {}
             })
         trySend(Resource.Loading(loading = false))

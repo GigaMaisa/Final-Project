@@ -43,16 +43,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setUpCategoriesRecycler()
     }
 
-    override fun setUpListeners()  {
+    override fun setUpListeners() = with(binding)  {
         restaurantsRecyclerAdapter.onClick = {
             viewModel.onEvent(HomeEvent.GoToRestaurantDetailsEvent(it))
         }
 
-        binding.btnSeeAllRestaurants.setOnClickListener {
+        btnSeeAllRestaurants.setOnClickListener {
             viewModel.onEvent(HomeEvent.GoToAllRestaurantsEvent())
         }
 
-        binding.btnSeeAllFavouriteRestaurants.setOnClickListener {
+        btnSeeAllFavouriteRestaurants.setOnClickListener {
             viewModel.onEvent(HomeEvent.GoToAllRestaurantsEvent(restaurantType = RestaurantType.FAVOURITES))
         }
 
@@ -64,8 +64,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             viewModel.onEvent(HomeEvent.GoToAllRestaurantsEvent(restaurantType = it))
         }
 
-        binding.imageBtnFilter.setOnClickListener {
-            viewModel.onEvent(HomeEvent.GoToAllRestaurantsEvent(searchFilter = binding.etSearch.text.toString()))
+        imageBtnFilter.setOnClickListener {
+            viewModel.onEvent(HomeEvent.GoToAllRestaurantsEvent(searchFilter = etSearch.text.toString()))
+            etSearch.setText("")
         }
 
         bannerAdapter.onBuyClick = {

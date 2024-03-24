@@ -19,7 +19,6 @@ class RestaurantDetailsRepositoryImpl @Inject constructor(
         return responseHandler.safeApiCall {
             restaurantDetailsApiService.getRestaurantsDetailsById(restaurantId)
         }.asResource {
-            d("showDetails", it.deliveryFee.toString())
             it.toDomain()
         }
     }

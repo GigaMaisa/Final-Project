@@ -1,7 +1,6 @@
 package com.example.final_project.data.local.datasource
 
 import android.content.Context
-import android.util.Log.d
 import com.google.auth.oauth2.GoogleCredentials
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers.IO
@@ -20,8 +19,7 @@ class ChatBotAuthTokenDataSource @Inject constructor(@ApplicationContext val con
             val accessToken = scopedCredentials.refreshAccessToken()
             token = accessToken.tokenValue
         }
-        catch (e: Exception) {
-            d("errorBroErro", e.toString())
+        catch (_: Exception) {
         }
     }
 }

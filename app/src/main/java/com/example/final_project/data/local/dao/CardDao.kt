@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.final_project.data.local.model.CardEntity
-import com.example.final_project.data.remote.common.Resource
 import kotlinx.coroutines.flow.Flow
 
 @Dao

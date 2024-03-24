@@ -23,7 +23,6 @@ class ChatBotRepositoryImpl @Inject constructor(
         request: PostChatBotModel,
         sessionId: String
     ): Flow<Resource<ChatBotResponse>> {
-        d("newTokenBro", chatBotAuthTokenDataSource.token)
         return handler.safeApiCall {
             chatBotApiService.postRequest(sessionId = sessionId, body = request.toData(), "Bearer ${chatBotAuthTokenDataSource.token}")
         }.asResource {

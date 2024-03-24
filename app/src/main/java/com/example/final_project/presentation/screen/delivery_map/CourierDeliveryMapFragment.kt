@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CourierDeliveryMapFragment : BaseFragment<FragmentCourierDeliveryMapBinding>(FragmentCourierDeliveryMapBinding::inflate)  {
-
+    private var refreshCount = 0
     private val viewModel: CourierDeliveryMapViewModel by viewModels()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var mMap: GoogleMap
@@ -42,7 +42,7 @@ class CourierDeliveryMapFragment : BaseFragment<FragmentCourierDeliveryMapBindin
 
     private val callback = OnMapReadyCallback { googleMap ->
         mMap = googleMap
-        updateLocationUi(LatLng(41.7934135, 44.8025545))
+//        updateLocationUi(LatLng(41.7934135, 44.8025545))
     }
 
     override fun setUp() {
@@ -74,6 +74,7 @@ class CourierDeliveryMapFragment : BaseFragment<FragmentCourierDeliveryMapBindin
         state.direction?.let {
             state.courierLocation?.let {courierLocation->
 
+
                 binding.map.isVisible = courierLocation.isActive
                 binding.progressBar.isVisible = !courierLocation.isActive
                 binding.tvLookingForOrder.isVisible = !courierLocation.isActive
@@ -95,6 +96,13 @@ class CourierDeliveryMapFragment : BaseFragment<FragmentCourierDeliveryMapBindin
                 mMap.clear()
                 mMap.addMarker(markerOptions)
                 mMap.addPolyline(polylineOptions)
+            }
+        }
+
+        state.defaultLocation?.let {
+            if (refreshCount < 1) {
+                updateLocationUi(it.location)
+                refreshCount++
             }
         }
     }

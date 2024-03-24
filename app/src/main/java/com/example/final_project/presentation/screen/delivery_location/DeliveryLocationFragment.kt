@@ -1,6 +1,5 @@
 package com.example.final_project.presentation.screen.delivery_location
 
-import android.util.Log.d
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -34,12 +33,10 @@ class DeliveryLocationFragment : BaseFragment<FragmentDeliveryLocationBinding>(F
         }
 
         deliveryLocationAdapter.onDeleteClick = {
-            d("clickIsNotHappening", it.toString())
             viewModel.onEvent(DeliveryLocationEvent.DeleteLocationEvent(it))
         }
 
         deliveryLocationAdapter.onSelectClick = {
-            d("clickIsNotHappening2", it.toString())
             viewModel.onEvent(DeliveryLocationEvent.UpdateDefaultLocationEvent(it))
         }
     }

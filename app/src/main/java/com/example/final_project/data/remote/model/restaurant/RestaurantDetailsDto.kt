@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 data class RestaurantDetailsDto(
     val restaurantId: Int,
-    val deliveryFee: Double?,
+    val deliveryFee: Int?,
     val description: String,
     val image: String,
     val latitude: Double,

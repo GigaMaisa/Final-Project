@@ -33,7 +33,6 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>
     private lateinit var modalBottomSheet: RestaurantBottomSheet
 
     override fun setUp() {
-        modalBottomSheet = RestaurantBottomSheet(this)
         setUpRecycler()
         viewModel.onEvent(RestaurantDetailsEvent.GetRestaurantDetailsEvent(args.restaurantId))
         viewModel.onEvent(RestaurantDetailsEvent.GetIfFavouriteEvent(args.restaurantId))
@@ -119,6 +118,7 @@ class RestaurantDetailsFragment : BaseFragment<FragmentRestorauntDetailsBinding>
     }
 
     private fun setUpBottomSheet(menuOrderDetails: MenuOrderDetails) {
+        modalBottomSheet = RestaurantBottomSheet(this)
         modalBottomSheet.show(childFragmentManager, RestaurantBottomSheet.RESTAURANT_MENU_BOTTOM_SHEET)
         modalBottomSheet.menuOrderDetails = menuOrderDetails
     }

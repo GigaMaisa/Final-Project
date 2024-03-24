@@ -70,7 +70,7 @@
         <action
             android:id="@+id/action_deliveryLocationAddFragment_to_deliveryLocationFragment"
             app:destination="@id/deliveryLocationFragment"
-            app:popUpTo="@id/deliveryLocationFragment"
+            app:popUpTo="@id/deliveryLocationAddFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

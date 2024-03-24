@@ -2,7 +2,7 @@ package com.example.final_project.presentation.model.restaurant
 
 data class RestaurantDetails(
     val restaurantId: Int,
-    val deliveryFee: Double?,
+    val deliveryFee: Int?,
     val description: String,
     val image: String,
     val latitude: Double,

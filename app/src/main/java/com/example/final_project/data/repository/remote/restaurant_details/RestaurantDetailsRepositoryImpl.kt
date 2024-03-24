@@ -1,5 +1,6 @@
 package com.example.final_project.data.repository.remote.restaurant_details
 
+import android.util.Log.d
 import com.example.final_project.data.remote.common.Resource
 import com.example.final_project.data.remote.common.ResponseHandler
 import com.example.final_project.data.remote.mapper.base.asResource
@@ -18,6 +19,7 @@ class RestaurantDetailsRepositoryImpl @Inject constructor(
         return responseHandler.safeApiCall {
             restaurantDetailsApiService.getRestaurantsDetailsById(restaurantId)
         }.asResource {
+            d("showDetails", it.deliveryFee.toString())
             it.toDomain()
         }
     }
